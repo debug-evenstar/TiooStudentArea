@@ -2,21 +2,22 @@ import React from "react";
 
 interface AuthLayoutProps {
   children?: React.ReactNode;
+  register?: boolean
 }
 
-const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
+const AuthLayout: React.FC<AuthLayoutProps> = ({ children, register }) => {
   return (
-    <div className="h-[100vh] fixed overflow-y-scroll pb-[80px] w-full bg-[#E3E2FF]">
-      <div className="w-full flex items-start justify-start">
-        <h3 className="font-semibold text-[22px] pt-10 mx-12">
+    <div className={`h-[100vh] fixed lg:grid place-content-center overflow-y-scroll w-full bg-[#E3E2FF] ${register && 'pb-16'}`}>
+      <div className="fixed">
+        <h3 className="font-semibold text-[22px] pt-4 lg:pt-10 lg:mx-12 mx-2">
           Company's Logo
         </h3>
       </div>
-
-      <div className="w-full flex items-center justify-center py-[60px] relative">
-        <div className="max-w-[717px] w-full px-[60px] pt-[46px] pb-[56px] bg-white shadow-lg rounded-tl-[8px] rounded-tr-[8px] rounded-bl-[8px] absolute top-[60px] z-30 border border-[#4F46E5]">
+      <div className="w-full lg:min-w-[650px] bg-white min-h-[450px] relative round-box z-30 mt-24 lg:mt-0">
+        <div className="max-w-[717px] min-h-[450px] shades w-full bg-white round-box absolute z-20 p-8">
           {children}
         </div>
+        <div className={`hidden lg:block max-w-[717px] min-h-[450px] rotates shades w-full bg-white  round-box absolute z-10 ${register? 'h-[750px]' : ''}`}></div>
       </div>
     </div>
   );
