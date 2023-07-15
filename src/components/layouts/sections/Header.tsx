@@ -30,7 +30,7 @@ const Header = () => {
                 </NavLink>
               </li>
               <li className="p-[10px] cursor-pointer relative">
-                <p className="text-[9px] text-[#FAB814] absolute -top-0">Coming soon</p>
+                <p className="text-[9px] text-[#FAB814] absolute -top-0 px-[4px] rounded-lg border border-[#FAB81429] bg-[#FAB8140D]">Coming soon</p>
                 <p>Network</p>
               </li>
               <li>

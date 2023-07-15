@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
-import useBoolean from "../../hooks/useBoolean";
+import { useNavigate } from "react-router-dom";
 
 const SubjectContainer = () => {
+  const navigate = useNavigate()
   const [isClosed, setClosed] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(true);
   const closeContainer = () => {
@@ -12,10 +13,13 @@ const SubjectContainer = () => {
       setClosed(false)
     }, 450);
   }
+  const gotoSubDetail = (id:any) => {
+    navigate(`/home/subjects/${id}`)
+  }
 
   const SubjectItem = ({ item }: any) => {
     return (
-      <div className="subject-con hover:scale-105 duration-100 cursor-pointer">
+      <div className="subject-con hover:scale-105 duration-100 cursor-pointer" onClick={() => gotoSubDetail(item.name)}>
         <img src={item.img} alt={item.name} className="w-full h-[130px]" />
         <div className="min-h-[100px] p-3">
           <p className="fw-600">{item.name}</p>

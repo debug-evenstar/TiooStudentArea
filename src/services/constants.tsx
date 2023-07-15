@@ -15,3 +15,7 @@ export enum CACHE_LIFETIME {
   }
 
   export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+  // auth
+
+  export const STUDENT_LOGIN = 'account/signin'

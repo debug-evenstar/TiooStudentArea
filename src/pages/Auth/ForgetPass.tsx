@@ -52,7 +52,18 @@ const ForgetPasswordScreen = () => {
           />
         </div>
         <div className="mt-8">
-          {/* <Button title={isBusy ? <ScaleSpinner size={14} color="white"/> : "Continue"} disabled={!isValid} /> */}
+          {/* <div className="w-10/12 mx-auto">
+                  <Button
+                    title={
+                      isBusy ? (
+                        <HashSpinner size={14} color="white" />
+                      ) : (
+                        "Sign Up"
+                      )
+                    }
+                    disabled={!isValid}
+                  />
+                </div> */}
           <Link to='/dashboard' className="btn-like block text-center w-10/12 mx-auto lg:py-4">Continue</Link>
         </div>
             </form>

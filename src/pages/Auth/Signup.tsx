@@ -27,7 +27,7 @@ const SignupScreen = () => {
   });
   return (
     <>
-      <AuthLayout register>
+      <AuthLayout type="register">
         <div>
           <div className="text-center lg:w-9/12 mx-auto pb-3 border-b-[4px] border-[#4F46E5]">
             <p className="text-primary text-2xl fw-600">Student sign Up</p>

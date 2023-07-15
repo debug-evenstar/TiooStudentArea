@@ -368,4 +368,7 @@ input[type="checkbox"]:checked {
   .rotate-icon {
     rotate: z -45deg;
   }
+  .box-shade{
+    box-shadow: 0.4000000059604645px 0.4000000059604645px 4px 0px #00000040;
+  }
 }

@@ -47,11 +47,11 @@ const DashboardHomePage = () => {
                         </div>
                     </div>
                 </div>
-                <div className='flex justify-between mt-12 gap-x-8 lg:px-7'>
-                    <div className='w-[72%]'>
+                <div className='lg:flex justify-between mt-12 gap-x-8 lg:px-7'>
+                    <div className='lg:w-[72%]'>
                         <SubjectContainer/>
                     </div>
-                    <div className='w-[28%]'>
+                    <div className='lg:w-[28%]'>
                         <div>
                             <ComingUp/>
                         </div>
