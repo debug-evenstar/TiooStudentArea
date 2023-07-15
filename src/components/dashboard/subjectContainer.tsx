@@ -1,29 +1,35 @@
 import React, { useState } from "react";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { useGetSubjectsQuery } from "../../services/api/subjectSlice";
+import { SubjectSkelLoader } from "../Ui/SkeltonLoader";
 
 const SubjectContainer = () => {
-  const navigate = useNavigate()
+  const { data: subjects, isLoading, isError, refetch } = useGetSubjectsQuery();
+  const navigate = useNavigate();
   const [isClosed, setClosed] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(true);
   const closeContainer = () => {
-    setClosed(true)
+    setClosed(true);
     setTimeout(() => {
-      setOpen(!open)
-      setClosed(false)
+      setOpen(!open);
+      setClosed(false);
     }, 450);
-  }
-  const gotoSubDetail = (id:any) => {
-    navigate(`/home/subjects/${id}`)
-  }
+  };
+  const gotoSubDetail = (id: any) => {
+    navigate(`/home/subjects/${id}`);
+  };
 
   const SubjectItem = ({ item }: any) => {
     return (
-      <div className="subject-con hover:scale-105 duration-100 cursor-pointer" onClick={() => gotoSubDetail(item.name)}>
-        <img src={item.img} alt={item.name} className="w-full h-[130px]" />
+      <div
+        className="subject-con hover:scale-105 duration-100 cursor-pointer"
+        onClick={() => gotoSubDetail(item.name)}
+      >
+        <img src={item.image} alt={item.naming} className="w-full h-[130px]" />
         <div className="min-h-[100px] p-3">
-          <p className="fw-600">{item.name}</p>
-          <p className="fs-400">{item.content}</p>
+          <p className="fw-600">{item.naming}</p>
+          <p className="fs-400">{item.description}</p>
         </div>
       </div>
     );
@@ -38,19 +44,33 @@ const SubjectContainer = () => {
           </div>
           <div>
             {open ? (
-              <FaAngleDown className="text-xl cursor-pointer" onClick={closeContainer} />
+              <FaAngleDown
+                className="text-xl cursor-pointer"
+                onClick={closeContainer}
+              />
             ) : (
-              <FaAngleUp className="text-xl cursor-pointer" onClick={() => setOpen(true)}  />
+              <FaAngleUp
+                className="text-xl cursor-pointer"
+                onClick={() => setOpen(true)}
+              />
             )}
           </div>
         </div>
         {open && (
-          <div className={`bg-white grid lg:grid-cols-3 p-8 gap-12 ${isClosed? 'dropoff' : 'dropin'}`}>
-            {dummy &&
-              !!dummy.length &&
-              dummy.map((item: any, index: number) => (
-                <SubjectItem item={item} key={index} />
-              ))}
+          <div className={`${
+            isClosed ? "dropoff" : "dropin"
+          }`}>
+            <div
+              className={`bg-white grid lg:grid-cols-3 p-8 gap-12`}
+            >
+              {subjects &&
+                !!subjects?.subjects?.length &&
+                subjects.subjects.map((item: any, index: number) => (
+                  <SubjectItem item={item} key={index} />
+                ))}
+            </div>
+            {isLoading && <SubjectSkelLoader />}
+            {subjects && !subjects?.subjects.length || isError  && "Empty"}
           </div>
         )}
       </div>
