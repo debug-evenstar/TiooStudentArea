@@ -6,5 +6,5 @@ export interface BaseResult {
 export interface ErrorResult {
     success: boolean;
     message: string;
-    errors: string;
+    [key: string]: any;
 }

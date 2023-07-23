@@ -1,6 +1,8 @@
 import React from "react";
+import { useGetClassQuery } from "../../services/api/routineSlice";
 
 const MeetClass = () => {
+  const {data} = useGetClassQuery()
   return (
     <>
       <div className="">

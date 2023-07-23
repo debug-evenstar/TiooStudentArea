@@ -1,25 +1,29 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { UserProfile } from "../../utils/dataTypes/auth";
+import { StudentProfile } from "../../utils/dataTypes/auth";
 
 const initialState = {
   user: {
+    AccountId: 0,
     name: "",
-    id: "",
-    schoolId: "",
-    status: "",
     email: "",
-    account_type: "",
     phone: "",
-    token: "",
-  } as UserProfile,
+    account_type: "",
+    verification_status: 0,
+    flag: "",
+    schoolName: "",
+    studentClass: "",
+    subjectsCount: 0,
+    term: "",
+    status: "",
+  } as StudentProfile,
 };
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    saveUser: (state, action: PayloadAction<UserProfile>) => {
+    saveUser: (state, action: PayloadAction<StudentProfile>) => {
       state.user = action.payload;
     },
     resetUser: (state) => {

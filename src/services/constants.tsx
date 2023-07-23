@@ -14,8 +14,14 @@ export enum CACHE_LIFETIME {
     DELETE = "DELETE",
   }
 
-  export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+  export const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   // auth
 
   export const STUDENT_LOGIN = 'account/signin'
+
+  // subjects
+  export const FETCH_SUBJECTS = 'student/subjects'
+
+  // classmates
+  export const FETCH_CLASS_PUPIL = 'student/classmates'

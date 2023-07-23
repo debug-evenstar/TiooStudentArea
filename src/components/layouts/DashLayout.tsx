@@ -1,7 +1,6 @@
 import React from "react";
 import Header from "./sections/Header";
-// import Header from "../components/Header";
-// import Sidebar from "../components/Sidebar";
+import AddAuth from "./AddAuth";
 
 interface DashLayoutProps {
   children?: React.ReactNode;
@@ -19,4 +18,4 @@ const DashLayout: React.FC<DashLayoutProps> = ({ children, title }) => {
   );
 };
 
-export default DashLayout;
+export default AddAuth(DashLayout);

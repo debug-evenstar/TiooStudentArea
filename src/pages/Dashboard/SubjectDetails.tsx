@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import DashLayout from "../../components/layouts/DashLayout";
 import { MdOutlineArrowBack } from "react-icons/md";
 import ComingUp from "../../components/dashboard/comingUp";
@@ -8,6 +8,7 @@ import TopicComponent from "../../components/dashboard/topicComp";
 
 const SubjectDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate()
 
   return (
     <>
@@ -16,7 +17,7 @@ const SubjectDetails = () => {
           <div className="lg:flex justify-between pt-7 gap-x-8 lg:px-7">
             <div className="lg:w-[72%]">
               <div className="flex">
-                <div className="flex items-center gap-x-3">
+                <div className="flex items-center gap-x-3" onClick={() => navigate(-1)}>
                   <MdOutlineArrowBack className="text-4xl text-primary" />
                   <p className="text-2xl fw-600">Back</p>
                 </div>
