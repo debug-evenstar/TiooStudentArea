@@ -5,15 +5,21 @@ export interface StudentLoginInput {
     password: string;
   }
 export interface StudentLoginResult extends BaseResult{
-    profile: UserProfile
-}
-export interface UserProfile {
-    name: string
-    id: string
-    schoolId: string
-    status: string
-    email: string
-    account_type: string
-    phone: string
+    profile: StudentProfile
     token: string
+}
+export interface StudentProfile {
+    AccountId: number
+    name: string
+    email: string
+    phone: string
+    account_type: string
+    verification_status: number
+    flag: string
+    schoolName: string
+    studentClass: string
+    subjectsCount: number
+    term: string
+    status: string
+    token?: string
 }
