@@ -40,7 +40,7 @@ const SubjectContainer = () => {
         <div className="flex items-center p-5 bg-brown justify-between">
           <div className="flex items-center gap-x-2">
             <p className="fw-600 lg:text-2xl">Subjects</p>
-            <p className="lg:text-2xl">(5)</p>
+            <p className="lg:text-2xl text-[#1E1B1B80]">({subjects?.subjects.length})</p>
           </div>
           <div>
             {open ? (
@@ -60,6 +60,8 @@ const SubjectContainer = () => {
           <div className={`${
             isClosed ? "dropoff" : "dropin"
           }`}>
+            {isLoading && <SubjectSkelLoader />}
+            {subjects && !subjects?.subjects.length || isError  && <p className="fw-600 p-5 bg-white">Empty</p>}
             <div
               className={`bg-white grid lg:grid-cols-3 p-8 gap-12`}
             >
@@ -69,8 +71,6 @@ const SubjectContainer = () => {
                   <SubjectItem item={item} key={index} />
                 ))}
             </div>
-            {isLoading && <SubjectSkelLoader />}
-            {subjects && !subjects?.subjects.length || isError  && "Empty"}
           </div>
         )}
       </div>
@@ -80,7 +80,7 @@ const SubjectContainer = () => {
 
 export default SubjectContainer;
 
-const dummy = [
+export const dummy = [
   {
     name: "Basic Science",
     img: "https://res.cloudinary.com/dic7regoe/image/upload/v1689279991/praxeum/image_14_jeqsjo.png",
@@ -89,7 +89,7 @@ const dummy = [
   },
   {
     name: "Mathematics",
-    img: "https://res.cloudinary.com/dic7regoe/image/upload/v1689279991/praxeum/image_14_jeqsjo.png",
+    img: "https://res.cloudinary.com/dic7regoe/image/upload/v1690134583/praxeum/Frame_1000004498_eke756.png",
     content:
       "Calculations made easier. Learn to add, multiply, divide & subtract.",
     id: 2,
@@ -102,7 +102,7 @@ const dummy = [
   },
   {
     name: "English - Grammar",
-    img: "https://res.cloudinary.com/dic7regoe/image/upload/v1689279991/praxeum/image_14_jeqsjo.png",
+    img: "https://res.cloudinary.com/dic7regoe/image/upload/v1690134583/praxeum/Frame_1000004498_eke756.png",
     content:
       "Learners will develop their speaking and listening skills to communicate",
     id: 4,
