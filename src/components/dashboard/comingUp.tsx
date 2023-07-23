@@ -12,7 +12,7 @@ const ComingUp = () => {
           <MdOutlineKeyboardArrowDown className="text-2xl cursor-pointer absolute -right-1 -top-0" onClick={() => setSlide(false)}/>
         </div>
         <div className="mt-4">
-          <p>{item.desc}</p>
+          <p className="text-[#1E1E1E80] fs-500">{item.desc}</p>
         </div>
       </div>
     );
@@ -27,7 +27,7 @@ const ComingUp = () => {
             <p className="bg-[#FF006E] w-4 h-4 rotate-icon"></p>
           </div>
         </div>
-        <div className="mt-4 text-center fw-600 w-8/12 mx-auto pb-6">
+        <div className="mt-4 text-center fw-600 w-9/12 mx-auto pb-6">
           
           <p className="text-[13px] text-[#87909E] mb-2">19 -24 June</p>
           {slide && <AppSwiper
@@ -43,7 +43,7 @@ const ComingUp = () => {
             effect="fade"
             slidesPerView={1}
             spaceBetween={20}
-            className="w-full h-full lg:px-12 px-4"
+            className="w-full h-44 lg:px-10 px-4"
           />}
           <div>
           {
@@ -54,7 +54,7 @@ const ComingUp = () => {
                     <p className={`underline mt-2 ${index <= 1? 'text-[#E7A70B]' : 'text-[#86A94B]'}`}>{item.name}</p>
                   ))
                 }
-                <MdOutlineKeyboardArrowUp className="text-2xl cursor-pointer absolute -top-0 -right-5" onClick={() => setSlide(true)}/>
+                <MdOutlineKeyboardArrowUp className="text-2xl cursor-pointer absolute -top-0 -right-8" onClick={() => setSlide(true)}/>
               </div>
             )
           }

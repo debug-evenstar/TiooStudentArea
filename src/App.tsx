@@ -10,6 +10,7 @@ import SubjectDetails from "./pages/Dashboard/SubjectDetails";
 import VerifyEmailScreen from "./pages/Auth/VerifyEmail";
 import CompleteSignupScreen from "./pages/Auth/CompleteSigup";
 import ScrollToTop from "./utils/scrollTop";
+import LibraryHome from "./pages/Library";
 
 function App() {
   return (
@@ -26,6 +27,8 @@ function App() {
         {/* dasboard routes */}
         <Route path="/home" element={<DashboardHomePage />} />
         <Route path="/home/subjects/:id" element={<SubjectDetails />} />
+        <Route path="/library" element={<LibraryHome />} />
+        <Route path="/library/subjects/:id" element={<SubjectDetails />} />
       </Routes>
     </BrowserRouter>
   );
