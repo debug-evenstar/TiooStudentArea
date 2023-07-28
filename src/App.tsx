@@ -11,6 +11,7 @@ import VerifyEmailScreen from "./pages/Auth/VerifyEmail";
 import CompleteSignupScreen from "./pages/Auth/CompleteSigup";
 import ScrollToTop from "./utils/scrollTop";
 import LibraryHome from "./pages/Library";
+import LogToken from "./pages/Auth/LogToken";
 
 function App() {
   return (
@@ -18,12 +19,12 @@ function App() {
       <ScrollToTop />
       <Routes>
         {/* auth routes */}
-        <Route path="/" element={<LoginScreen />} />
-        <Route path="/register" element={<SignupScreen />} />
+        <Route path="/:token" element={<LogToken />} />
+        {/* <Route path="/register" element={<SignupScreen />} />
         <Route path="/forget" element={<ForgetPasswordScreen />} />
         <Route path="/reset" element={<ResetPasswordScreen />} />
         <Route path="/verify-email" element={<VerifyEmailScreen />} />
-        <Route path="/complete-signup" element={<CompleteSignupScreen />} />
+        <Route path="/complete-signup" element={<CompleteSignupScreen />} /> */}
         {/* dasboard routes */}
         <Route path="/home" element={<DashboardHomePage />} />
         <Route path="/home/subjects/:id" element={<SubjectDetails />} />
