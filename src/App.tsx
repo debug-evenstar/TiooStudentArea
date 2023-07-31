@@ -19,7 +19,7 @@ function App() {
       <ScrollToTop />
       <Routes>
         {/* auth routes */}
-        <Route path="/:token" element={<LogToken />} />
+        <Route path="/auth/:token" element={<LogToken />} />
         {/* <Route path="/register" element={<SignupScreen />} />
         <Route path="/forget" element={<ForgetPasswordScreen />} />
         <Route path="/reset" element={<ResetPasswordScreen />} />
