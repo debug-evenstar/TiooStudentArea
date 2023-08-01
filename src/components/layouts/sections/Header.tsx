@@ -18,6 +18,7 @@ const Header = () => {
   const user = useAppSelector((state) => state.user.user);
   const logotUser = () => {
     dispatch(resetStateAction())
+    localStorage.clear()
     window.location.replace('https://hellotioo.com/login')
   }
   return (
@@ -25,7 +26,7 @@ const Header = () => {
       <div className="flex py-5 px-8 justify-between items-center bg-[#1E1B1B] text-white">
         <div className="flex items-center gap-x-6">
           <div>
-            <p className="text-lg fw-600">LOGO</p>
+          <img src="logo.png" alt="logo" className="w-12 lg:w-20"/>
           </div>
           <div>
             <ul className="flex items-center gap-x-4 mb-[2px]">
