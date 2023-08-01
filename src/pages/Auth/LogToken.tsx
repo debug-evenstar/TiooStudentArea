@@ -1,0 +1,101 @@
+import React, { useState, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { ThreeCirclesLoading } from '../../components/Ui/Loading';
+import { storeLocalToken } from '../../services/helpers';
+import { useAppDispatch } from '../../redux/store';
+import { saveUser } from '../../redux/reducers/userReducer';
+import { toast } from 'react-toastify';
+import { useLazyVerifyTokenQuery } from '../../services/api/authSlice';
+import { FailureCheck } from '../../components/Ui/AlertCheck';
+
+const LogToken = () => {
+    const [isBusy, setIsBusy] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const [verify] = useLazyVerifyTokenQuery()
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+    const {token} = useParams()
+    const verifyToken = async (data: any) => {
+        setIsBusy(true);
+        await verify(data)
+          .then((res:any) => {
+            if (res.isSuccess) {
+              dispatch(
+                saveUser({
+                    token: token,
+                    name: res.data.data.name,
+                    AccountId: res.data.data.AccountId,
+                    account_type: res.data.data.account_type,
+                    email: res.data.data.email,
+                    phone: res.data.data.phone,
+                    schoolName: res.data.data.schoolName,
+                    studentClass: res.data.data.studentClass,
+                    status: res.data.data.status,
+                    term: res.data.data.term,
+                    subjectsCount: res.data.data.subjectsCount,
+                    flag: res.data.data.flag,
+                    verification_status: res.data.data.verification_status,
+              }))
+              storeLocalToken("token", token) 
+            //   toast.success(res.data.message)
+              navigate("/home")
+            }else {
+              toast.error(res.error.data.message);
+              setIsBusy(false);
+              setFailed(true)
+            }
+          })
+          .catch((err) => {
+            toast.error(err?.error?.data?.message);
+            setIsBusy(false);
+            setFailed(true)
+          });
+      };
+      useEffect(() => {
+        if (token) {
+          verifyToken(token);
+        } // eslint-disable-next-line
+      }, [token]);
+  return (
+    <>
+         <>
+      <div className="h-screen bg-[#E3E2FF] flex justify-center items-center">
+        <div className="">
+          <div className="">
+            {isBusy && (
+              <div className="">
+                <div className="flex justify-center">
+                  <ThreeCirclesLoading size="200" color="#4f46e5" />
+                </div>
+              </div>
+            )}
+            {failed && (
+              <div className="">
+                <p className="text-2xl text-center fw-600">
+                  Failed Login Attempt
+                </p>
+                <div className="mt-6 lg:mt-12">
+                  <FailureCheck />
+                </div>
+                <div className="lg:w-5/12 mx-auto text-center">
+                  <p className="text-center px-2 lg:px-0">
+                    We're sorry, but it looks like your session token has expired, please login to gain access to your dashboard.
+                  </p>
+                  <div className="lg:w-10/12 mt-8 mx-auto">
+                    <a href="https://student.hellotioo.com/login" className='btn-like'>Return to Login</a>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="fixed top-3 left-4">
+          <img src='logo.png' alt='logo' className='w-24'/>
+        </div>
+      </div>
+    </>
+    </>
+  )
+}
+
+export default LogToken

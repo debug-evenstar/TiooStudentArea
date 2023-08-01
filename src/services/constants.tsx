@@ -19,6 +19,7 @@ export enum CACHE_LIFETIME {
   // auth
 
   export const STUDENT_LOGIN = 'account/signin'
+  export const VERIFY_TOKEN = 'account/read'
 
   // subjects
   export const FETCH_SUBJECTS = 'student/subjects'
