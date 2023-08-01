@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import NameAvatar from "../../../utils/nameAvatar";
 import {
@@ -14,19 +14,19 @@ import { PiStudentBold } from 'react-icons/pi'
 import { resetStateAction } from "../../../redux/actions/resetState";
 
 const Header = () => {
-  const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const user = useAppSelector((state) => state.user.user);
   const logotUser = () => {
     dispatch(resetStateAction())
-    navigate("/")
+    localStorage.clear()
+    window.location.replace('https://hellotioo.com/login')
   }
   return (
     <>
       <div className="flex py-5 px-8 justify-between items-center bg-[#1E1B1B] text-white">
         <div className="flex items-center gap-x-6">
           <div>
-            <p className="text-lg fw-600">LOGO</p>
+          <img src="logo.png" alt="logo" className="w-12 lg:w-20"/>
           </div>
           <div>
             <ul className="flex items-center gap-x-4 mb-[2px]">
