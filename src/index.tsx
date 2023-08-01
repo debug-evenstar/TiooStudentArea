@@ -10,6 +10,7 @@ import { ThemeProvider } from "@material-tailwind/react";
 import reportWebVitals from "./reportWebVitals";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ThreeCirclesLoading } from "./components/Ui/Loading";
 
 let persistor = persistStore(store);
 
@@ -19,7 +20,14 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      <PersistGate
+        loading={
+          <div className="w-full h-screen grid place-content-center">
+            <ThreeCirclesLoading size="200" color="#4f46e5" />
+          </div>
+        }
+        persistor={persistor}
+      >
         <ToastContainer
           position="top-right"
           autoClose={3000}
