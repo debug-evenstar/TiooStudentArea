@@ -37,7 +37,6 @@ const LogToken = () => {
                     verification_status: res.data.data.verification_status,
               }))
               storeLocalToken("token", token) 
-            //   toast.success(res.data.message)
               navigate("/home")
             }else {
               toast.error(res.error.data.message);
@@ -90,7 +89,7 @@ const LogToken = () => {
           </div>
         </div>
         <div className="fixed top-3 left-4">
-          <img src='logo.png' alt='logo' className='w-24'/>
+          <img src="logo.png" alt="logo" className="w-12 lg:w-24"/>
         </div>
       </div>
     </>
