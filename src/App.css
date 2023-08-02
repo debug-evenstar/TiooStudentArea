@@ -371,4 +371,12 @@ input[type="checkbox"]:checked {
   .box-shade{
     box-shadow: 0.4000000059604645px 0.4000000059604645px 4px 0px #00000040;
   }
+  .poly {
+    clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
+    -webkit-clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
+  }
+  .poly-2 {
+    -webkit-clip-path: polygon(37% 0, 100% 0, 100% 100%, 0% 100%);
+    clip-path: polygon(37% 0, 100% 0, 100% 100%, 0% 100%);
+  }
 }
