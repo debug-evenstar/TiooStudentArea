@@ -22,4 +22,5 @@ export interface StudentProfile {
     term: string
     status: string
     token?: string
+    school?: boolean
 }

@@ -16,6 +16,7 @@ const initialState = {
     subjectsCount: 0,
     term: "",
     status: "",
+    school: false,
   } as StudentProfile,
 };
 
