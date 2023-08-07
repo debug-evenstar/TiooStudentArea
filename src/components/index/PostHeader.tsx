@@ -7,7 +7,7 @@ const PostHeader = () => {
   return (
     <div className="w-full h-[206px] bg-dash lg:bg-fit rounded-b-[16px] px-7 flex items-center justify-between">
             <div className="">
-              <div className="flex items-center gap-x-1">
+              {user.school && <div className="flex items-center gap-x-1">
                 <img
                   src="https://res.cloudinary.com/dic7regoe/image/upload/v1689193684/praxeum/Frame_1000003519_1_odn9t3.png"
                   alt="school"
@@ -16,7 +16,7 @@ const PostHeader = () => {
                 <p className="text-[#00000080] fs-500 fw-600 poppin">
                   {user.schoolName}
                 </p>
-              </div>
+              </div>}
               <div className="mt-2">
                 <div className="flex items-center gap-x-2">
                   <p className="nue text-[#00000080] fw-700 lg:text-4xl">
@@ -30,7 +30,7 @@ const PostHeader = () => {
                   />
                 </div>
               </div>
-              <div className="mt-4 flex gap-x-4 fw-600">
+              {user.school &&  <div className="mt-4 flex gap-x-4 fw-600">
                 <div className="flex gap-x-2">
                   <p className="text-[#00000080] nue">Class:</p>
                   <p className="nue">{user.studentClass}</p>
@@ -43,7 +43,7 @@ const PostHeader = () => {
                   <p className="text-[#00000080] nue">Term:</p>
                   <p className="nue">2nd</p>
                 </div>
-              </div>
+              </div>}
             </div>
             <div className="w-[300px] lg:w-[400px] bg-primary p-6 rounded-xl">
               <div className="text-center text-white">
