@@ -12,6 +12,7 @@ import {
 import { RiLogoutCircleLine } from "react-icons/ri";
 import { PiStudentBold } from 'react-icons/pi'
 import { resetStateAction } from "../../../redux/actions/resetState";
+// import logo from '../../../media/logo.png'
 
 const Header = () => {
   const dispatch = useAppDispatch()
@@ -23,12 +24,12 @@ const Header = () => {
   }
   return (
     <>
-      <div className="flex py-5 px-8 justify-between items-center bg-[#1E1B1B] text-white">
+      <div className="flex lg:py-5 lg:px-8 px-2 py-2 justify-between items-center bg-[#1E1B1B] text-white">
         <div className="flex items-center gap-x-6">
           <div>
-          <img src="logo.png" alt="logo" className="w-12 lg:w-20"/>
+          <img src="https://res.cloudinary.com/dic7regoe/image/upload/v1691522320/praxeum/IMG_8444_1_rdvfdw.png" alt="logo" className="w-16 lg:w-20"/>
           </div>
-          <div>
+          <div className="hidden lg:block">
             <ul className="flex items-center gap-x-4 mb-[2px]">
               <li className="">
                 <NavLink to="/home">
@@ -75,7 +76,8 @@ const Header = () => {
           <div className="w-12 h-12">
             <NameAvatar name={user.name} />
           </div>
-          <Menu placement="bottom-start">
+         <div className="hidden lg:block">
+         <Menu placement="bottom-start">
             <MenuHandler>
               <Button className="border-none px-0 bg-transparent shadow-none hover:shadow-none">
                 <div>
@@ -89,7 +91,45 @@ const Header = () => {
               <MenuItem className="flex items-center gap-x-2" onClick={logotUser}><RiLogoutCircleLine/>Log out</MenuItem>
             </MenuList>
           </Menu>
+         </div>
         </div>
+      </div>
+      <div className="pb-5 bg-[#FAFAFA] lg:hidden">
+      <ul className="flex items-center justify-between bg-white px-3 py-2 mb-[2px]">
+              <li className="bg-white">
+                <NavLink to="/home">
+                  {({ isActive, isPending }) => (
+                    <span className={isActive ? "active-sm" : ""}>
+                      Home
+                    </span>
+                  )}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/library">
+                  {({ isActive, isPending }) => (
+                    <span className={isActive ? "active-sm" : "p-[10px]"}>
+                      Library
+                    </span>
+                  )}
+                </NavLink>
+              </li>
+              <li className="p-[10px] cursor-pointer relative">
+                <p className="text-[9px] text-[#FAB814] absolute -top-0 px-[4px] rounded-lg border border-[#FAB81429] bg-[#FAB8140D]">
+                  Coming soon
+                </p>
+                <p>Network</p>
+              </li>
+              <li>
+                <NavLink to="/analytics">
+                  {({ isActive, isPending }) => (
+                    <span className={isActive ? "actives p-5" : "p-[10px]"}>
+                      Analytics
+                    </span>
+                  )}
+                </NavLink>
+              </li>
+            </ul>
       </div>
     </>
   );

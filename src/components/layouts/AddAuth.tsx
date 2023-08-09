@@ -10,11 +10,15 @@ const AddAuth = (Component: any) => {
     const gotoLogin = () => {
         navigate("/");
     }
-
-    if (!IsAuthenticated) {
-      gotoLogin()
-      return null;
+    const checkAuth = () => {
+      if (!IsAuthenticated) {
+        gotoLogin()
+        return null;
+      }
     }
+   useEffect(() => {
+    checkAuth()// eslint-disable-next-line 
+   }, [])
 
     return <Component {...props} />;
   };

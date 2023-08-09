@@ -177,6 +177,17 @@ input[type="checkbox"]:checked {
     height: 0px;
   }
 }
+.showfeed {
+  animation: showfeed 0.5s ease-in-out;
+}
+@keyframes showfeed {
+  0% {
+   right: -400px;
+  }
+  100% {
+    right:0px
+  }
+}
 
 @layer components {
   /* container settings */
@@ -358,6 +369,21 @@ input[type="checkbox"]:checked {
     display: block;
     padding: 10px;
   }
+  @media (max-width:960px) {
+    .active {
+      background-color: white;
+      border-radius: 0px;
+      display: block;
+      padding: 0px;
+    }
+  }
+  .active-sm {
+    border-bottom: 4px solid #4f46e5;
+    color: #4f46e5;
+    display: block;
+    padding: 0px;
+    background-color: white;
+  }
   .subject-con {
     border-radius: 8px;
     border: 1px solid rgba(0, 0, 0, 0.1);
@@ -376,7 +402,25 @@ input[type="checkbox"]:checked {
     -webkit-clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
   }
   .poly-2 {
-    -webkit-clip-path: polygon(37% 0, 100% 0, 100% 100%, 0% 100%);
-    clip-path: polygon(37% 0, 100% 0, 100% 100%, 0% 100%);
+    -webkit-clip-path:polygon(100% 0%, 100% 55%, 100% 100%, 25% 100%, 0% 50%, 25% 0%);
+    clip-path: polygon(100% 0%, 100% 55%, 100% 100%, 25% 100%, 0% 50%, 25% 0%);
+  }
+  .polywrapper {
+    width: fit-content;
+    margin: auto;
+    clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
+    background: #FFFFFF;
+    border: 3px solid #FFFFFF;
+    border-radius: 4px;
+}
+.polywrapper2 {
+  width: fit-content;
+  border-radius: 4px;
+  margin: auto;
+  clip-path: polygon(100% 0%, 100% 55%, 100% 100%, 25% 100%, 0% 50%, 25% 0%);
+  background: #030036BD;
+  border: 3px solid #030036BD}
+  .rhombus{
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
   }
 }
