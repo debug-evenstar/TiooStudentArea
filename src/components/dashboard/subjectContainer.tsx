@@ -5,7 +5,7 @@ import { useGetSubjectsQuery } from "../../services/api/subjectSlice";
 import { SubjectSkelLoader } from "../Ui/SkeltonLoader";
 
 const SubjectContainer = () => {
-  const { data: subjects, isLoading, isError, refetch } = useGetSubjectsQuery();
+  const { data: subjects, isLoading, isError } = useGetSubjectsQuery();
   const navigate = useNavigate();
   const [isClosed, setClosed] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(true);
@@ -24,7 +24,7 @@ const SubjectContainer = () => {
     return (
       <div
         className="subject-con hover:scale-105 duration-100 cursor-pointer"
-        onClick={() => gotoSubDetail(item.name)}
+        onClick={() => gotoSubDetail(item.id)}
       >
         <img src={item.image} alt={item.naming} className="w-full h-[130px]" />
         <div className="min-h-[100px] p-3">
@@ -61,12 +61,12 @@ const SubjectContainer = () => {
             isClosed ? "dropoff" : "dropin"
           }`}>
             {isLoading && <SubjectSkelLoader />}
-            {subjects && !subjects?.subjects.length || isError  && <p className="fw-600 p-5 bg-white">Empty</p>}
+            {((subjects && !subjects?.subjects.length) || isError)  && <p className="fw-600 p-5 bg-white">Empty</p>}
             <div
-              className={`bg-white grid lg:grid-cols-3 p-8 gap-12`}
+              className={`bg-white grid grid-cols-2 lg:grid-cols-3 px-2 py-6 gap-4 lg:p-8 lg:gap-12`}
             >
-              {subjects &&
-                !!subjects?.subjects?.length &&
+              {(subjects &&
+                !!subjects?.subjects?.length) &&
                 subjects.subjects.map((item: any, index: number) => (
                   <SubjectItem item={item} key={index} />
                 ))}

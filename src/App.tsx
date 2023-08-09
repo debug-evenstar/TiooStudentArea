@@ -6,6 +6,7 @@ import SubjectDetails from "./pages/Dashboard/SubjectDetails";
 import ScrollToTop from "./utils/scrollTop";
 import LibraryHome from "./pages/Library";
 import LogToken from "./pages/Auth/LogToken";
+import LessonComponent from "./pages/LessonComponent";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/home/subjects/:id" element={<SubjectDetails />} />
         <Route path="/library" element={<LibraryHome />} />
         <Route path="/library/subjects/:id" element={<SubjectDetails />} />
+        <Route path="/lesson/:id" element={<LessonComponent />} />
       </Routes>
     </BrowserRouter>
   );
