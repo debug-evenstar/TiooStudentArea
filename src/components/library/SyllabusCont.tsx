@@ -6,7 +6,7 @@ import { SubjectSkelLoader } from "../Ui/SkeltonLoader";
 import { dummy } from "../dashboard/subjectContainer";
 
 const SyllabusContainer = () => {
-  const { data: subjects, isLoading, isError, refetch } = useGetSubjectsQuery();
+  const { data: subjects, isLoading, } = useGetSubjectsQuery();
   const navigate = useNavigate();
   const [isClosed, setClosed] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(true);
@@ -27,9 +27,9 @@ const SyllabusContainer = () => {
         className="subject-con hover:scale-105 duration-100 cursor-pointer"
         onClick={() => gotoSubDetail(item.name)}
       >
-        <img src={item.img} alt={item.naming} className="w-full h-[130px]" />
+        <img src={item.img} alt={item.naming} className="w-full h-[100px] lg:h-[130px]" />
         <div className="min-h-[100px] p-3">
-          <p className="fw-600">{item.name}</p>
+          <p className="fw-600 fs-500 lg:fs-600">{item.name}</p>
           <p className="fs-400">{item.content}</p>
         </div>
       </div>
@@ -64,7 +64,7 @@ const SyllabusContainer = () => {
             {isLoading && <SubjectSkelLoader />}
             {/* {dummy && !dummy.length || isError  && <p className="fw-600 p-5 bg-white">Empty</p>} */}
             <div
-              className={`bg-white grid lg:grid-cols-3 p-8 gap-12`}
+              className={`bg-white grid grid-cols-2 lg:grid-cols-3 px-2 py-6 gap-4 lg:p-8 lg:gap-12`}
             >
               {dummy &&
                 !!dummy?.length &&

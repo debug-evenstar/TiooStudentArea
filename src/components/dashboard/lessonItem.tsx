@@ -1,15 +1,17 @@
 import React, {FC, useState} from 'react'
 import { HiOutlineArrowPath } from 'react-icons/hi2'
 import { formatLessonColor, formatLessonStatus } from '../../utils/format'
+import { useNavigate } from 'react-router-dom'
 
 interface Props {
     item: any
 }
 const LessonItem:FC<Props> = ({item}) => {
     const [showWeek, setShowWeek] = useState(true)
+    const navigate = useNavigate()
   return (
     <>
-        <div className='box-shade relative rounded-[8px] p-5 hover:scale-105 duration-100 cursor-pointer'>
+        <div className='box-shade relative rounded-[8px] p-5 hover:scale-105 duration-100 cursor-pointer' onClick={() => navigate(`/lesson/${item.week}`)}>
             <div className='flex items-center gap-x-1'>
                 <p className='fw-600'>{showWeek && `Week ${item.week}`}</p>
                 <p className='fw-400'>{!showWeek && item.time_frame}</p>

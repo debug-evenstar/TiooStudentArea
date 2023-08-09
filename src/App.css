@@ -369,6 +369,21 @@ input[type="checkbox"]:checked {
     display: block;
     padding: 10px;
   }
+  @media (max-width:960px) {
+    .active {
+      background-color: white;
+      border-radius: 0px;
+      display: block;
+      padding: 0px;
+    }
+  }
+  .active-sm {
+    border-bottom: 4px solid #4f46e5;
+    color: #4f46e5;
+    display: block;
+    padding: 0px;
+    background-color: white;
+  }
   .subject-con {
     border-radius: 8px;
     border: 1px solid rgba(0, 0, 0, 0.1);
