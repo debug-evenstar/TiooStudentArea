@@ -17,9 +17,7 @@ const Button: React.FC<Props> = ({
   title,
   onClick,
   capitalizeTitle,
-  secondary,
   disabled,
-  className,
   altClassName,
   isBusy,
 }) => {
