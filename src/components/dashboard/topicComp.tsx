@@ -32,7 +32,7 @@ const TopicComponent = () => {
         </div>
         {open && (
           <div
-            className={`bg-white grid lg:grid-cols-3 p-8 gap-12 ${
+            className={`bg-white grid lg:grid-cols-3 px-2 py-4 lg:p-8 gap-y-4 lg:gap-12 ${
               isClosed ? "dropoff" : "dropin"
             }`}
           >
