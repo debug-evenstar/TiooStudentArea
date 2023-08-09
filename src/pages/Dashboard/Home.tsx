@@ -16,15 +16,15 @@ const DashboardHomePage = () => {
         <div className={`nue h-full pb-16 ${user.school && 'bg-[#FAFAFA]'}`}>
           <PostHeader />
           {user.school && (
-            <div className="lg:flex justify-between mt-12 gap-x-8 lg:px-7">
-              <div className="lg:w-[72%]">
+            <div className="lg:flex justify-between mt-6 lg:mt-12 gap-x-8 lg:px-7">
+              <div className="lg:w-[72%] mb-8 lg:mb-0">
                 <SubjectContainer />
               </div>
               <div className="lg:w-[28%]">
-                <div>
+                <div className="px-2 lg:px-0">
                   <ComingUp />
                 </div>
-                <div className="mt-12">
+                <div className="mt-12 px-2 lg:px-0">
                   <MeetClass />
                 </div>
               </div>

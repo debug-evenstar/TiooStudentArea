@@ -13,6 +13,7 @@ module.exports = withMT({
         'bgcomp': "url('https://res.cloudinary.com/dic7regoe/image/upload/v1691354626/praxeum/Frame_1000004416_iflseu.png')",
         'bgsuccess': "url('https://res.cloudinary.com/dic7regoe/image/upload/v1691484705/praxeum/success_q0ntxg.png')",
         'bgfailure': "url('https://res.cloudinary.com/dic7regoe/image/upload/v1691484705/praxeum/fail_gtdllx.png')",
+        'mobilesuccess': "url('https://res.cloudinary.com/dic7regoe/image/upload/v1691568250/praxeum/Group_12599_skzl8n.png')",
       },
     },
   },
