@@ -26,3 +26,4 @@ export enum CACHE_LIFETIME {
 
   // classmates
   export const FETCH_CLASS_PUPIL = 'student/classmates'
+  export const FETCH_CLASSMATE = 'class/students/'

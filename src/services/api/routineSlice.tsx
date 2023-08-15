@@ -18,10 +18,22 @@ export const routineApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: ENDPOINT.CACHE_LIFETIME.EXTENDED,
     }),
+
+    getClassMates: builder.query<any | ErrorResult, string>({
+      query: (param) => ({
+        url: `${ENDPOINT.FETCH_CLASSMATE}/${param}`,
+        method: ENDPOINT.HTTP_METHODS.GET,
+        headers: {
+            Authorization: requestAuthorization(),
+          },
+      }),
+      keepUnusedDataFor: ENDPOINT.CACHE_LIFETIME.EXTENDED,
+    }),
   }),
   overrideExisting: true,
 });
 
 export const {
-  useGetClassQuery
+  useGetClassQuery,
+  useGetClassMatesQuery
 } = routineApiSlice;

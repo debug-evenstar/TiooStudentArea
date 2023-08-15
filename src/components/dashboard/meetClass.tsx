@@ -1,8 +1,10 @@
 import React from "react";
-import { useGetClassQuery } from "../../services/api/routineSlice";
+import { useGetClassMatesQuery, useGetClassQuery } from "../../services/api/routineSlice";
+import { useAppSelector } from "../../redux/store";
 
 const MeetClass = () => {
-  const {data} = useGetClassQuery()
+  // const id = useAppSelector((state) => state.user.user.)
+  const {data} = useGetClassMatesQuery('12')
   return (
     <>
       <div className="">
