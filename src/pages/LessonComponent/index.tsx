@@ -6,10 +6,10 @@ import RenderComponent from "./renderComp";
 const LessonComponent = () => {
   return (
     <>
-      <div className="bg-[#27397A] lg:bg-compbg lg:bg-cover nue w-full h-screen px-3 lg:px-6 xl:px-12">
+      <div className="bg-[#27397A] lg:bg-compbg lg:bg-cover nue w-full lg:h-screen pb-24 lg:pb-0 px-3 lg:px-6 xl:px-12">
         <div className="hidden lg:flex text-white justify-between">
           <div className="lg:w-3/12 pt-6">
-            <Link to="/home" className="flex gap-x-2 item-center">
+            <Link to="/home/subjects/6" className="flex gap-x-2 item-center">
               <MdArrowBack className="text-4xl" />
               <span className="fw-600 text-2xl mt-1">EXIT</span>
             </Link>
