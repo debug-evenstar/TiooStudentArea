@@ -6,11 +6,10 @@ const MobileComponent = () => {
     const [SuccessFeed, setSuccessFeed] = useState(false)
     // const [FailureFeed, setFailureFeed] = useState(false)
     const [prevBtn, setPrevBtn] = useState(true)
-    const [nextBtn, setNextBtn] = useState(false)
+    const [nextBtn, setNextBtn] = useState(true)
 
     const showSuccess = () => {
         setSuccessFeed(true)
-        setPrevBtn(false)
         setNextBtn(true)
     }
   return (
@@ -26,13 +25,13 @@ const MobileComponent = () => {
             <div>
                 {
                     nextBtn &&
-                    <p className='absolute bottom-0 left-0 p-5 rounded-t-[30px] text-center fw-600 text-xl text-white bg-[#86A94B] w-full'>
+                    <p className='fixed bottom-0 right-0 p-5 py-3 rounded-tl-[30px] text-center fw-600 text-xl text-white bg-[#86A94B] w-5/12'>
                         Continue
                     </p>
                 }
                 {
                     prevBtn &&
-                    <p className='absolute bottom-0 left-0 p-5 rounded-tr-[30px] text-center fw-700 text-xl text-[#27397A] bg-[#E3E2FF] w-5/12' onClick={showSuccess}>
+                    <p className='fixed bottom-0 left-0 p-5 py-3 rounded-tr-[30px] text-center fw-700 text-xl text-[#27397A] bg-[#E3E2FF] w-5/12' onClick={showSuccess}>
                         Previous
                     </p>
                 }

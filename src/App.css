@@ -182,10 +182,10 @@ input[type="checkbox"]:checked {
 }
 @keyframes showfeed {
   0% {
-   right: -400px;
+    right: -400px;
   }
   100% {
-    right:0px
+    right: 0px;
   }
 }
 
@@ -369,7 +369,7 @@ input[type="checkbox"]:checked {
     display: block;
     padding: 10px;
   }
-  @media (max-width:960px) {
+  @media (max-width: 960px) {
     .active {
       background-color: white;
       border-radius: 0px;
@@ -389,12 +389,12 @@ input[type="checkbox"]:checked {
     border: 1px solid rgba(0, 0, 0, 0.1);
     background: #fff;
     box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.1);
-    overflow:hidden
+    overflow: hidden;
   }
   .rotate-icon {
     rotate: z -45deg;
   }
-  .box-shade{
+  .box-shade {
     box-shadow: 0.4000000059604645px 0.4000000059604645px 4px 0px #00000040;
   }
   .poly {
@@ -402,25 +402,34 @@ input[type="checkbox"]:checked {
     -webkit-clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
   }
   .poly-2 {
-    -webkit-clip-path:polygon(100% 0%, 100% 55%, 100% 100%, 25% 100%, 0% 50%, 25% 0%);
+    -webkit-clip-path: polygon(
+      100% 0%,
+      100% 55%,
+      100% 100%,
+      25% 100%,
+      0% 50%,
+      25% 0%
+    );
     clip-path: polygon(100% 0%, 100% 55%, 100% 100%, 25% 100%, 0% 50%, 25% 0%);
+    border-radius: inset(0% 45% 0% 45% round 10px);
   }
   .polywrapper {
     width: fit-content;
     margin: auto;
     clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
-    background: #FFFFFF;
-    border: 3px solid #FFFFFF;
-    border-radius: 4px;
-}
-.polywrapper2 {
-  width: fit-content;
-  border-radius: 4px;
-  margin: auto;
-  clip-path: polygon(100% 0%, 100% 55%, 100% 100%, 25% 100%, 0% 50%, 25% 0%);
-  background: #030036BD;
-  border: 3px solid #030036BD}
-  .rhombus{
+    background: #ffffff;
+    border: 5px solid #ffffff;
+    border-radius: 5px;
+  }
+  .polywrapper2 {
+    width: fit-content;
+    border-radius: 5px;
+    margin: auto;
+    clip-path: polygon(100% 0%, 100% 55%, 100% 100%, 25% 100%, 0% 50%, 25% 0%);
+    background: #030036bd;
+    border: 5px solid #030036bd;
+  }
+  .rhombus {
     clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
   }
 }

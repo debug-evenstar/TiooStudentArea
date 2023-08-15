@@ -43,7 +43,7 @@ const TopicComponent = () => {
               ))}
           </div>
         )}
-        <div className="p-6 bg-white rounded-b-[8px] border-t border-[#E3E2FF] flex justify-between items-center">
+        <div className="p-6 bg-white rounded-b-[8px] border-t border-[#E3E2FF] flex justify-between items-center" onClick={open? closeContainer : () => setOpen(true)}>
           <div className="flex items-center gap-x-2">
             <p className="text-[#87909E] fw-600">{`${lessons.length} lessons,`}</p>
             <p className="text-[#87909E] fw-600">25 slides</p>

@@ -9,13 +9,19 @@ interface Props {
 const LessonItem:FC<Props> = ({item}) => {
     const [showWeek, setShowWeek] = useState(true)
     const navigate = useNavigate()
+    const showTime = (e:any) => {
+        e.preventDefault();
+        setShowWeek(!showWeek)
+    }
   return (
     <>
         <div className='box-shade relative rounded-[8px] p-5 hover:scale-105 duration-100 cursor-pointer' onClick={() => navigate(`/lesson/${item.week}`)}>
             <div className='flex items-center gap-x-1'>
                 <p className='fw-600'>{showWeek && `Week ${item.week}`}</p>
                 <p className='fw-400'>{!showWeek && item.time_frame}</p>
-                <HiOutlineArrowPath className='text-xl text-[#87909E]' onClick={() => setShowWeek(!showWeek)}/>
+                <div onClick={(e: any) => e.stopPropagation()}>
+                <HiOutlineArrowPath className='text-xl text-[#87909E]' onClick={showTime}/>
+                </div>
             </div>
             <div>
                 <p className='fw-600'>{formatLessonColor(item.name, item.status)}</p>
