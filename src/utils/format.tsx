@@ -10,6 +10,7 @@ export const capitalizeFirstLetter = (string: string) => {
     } else return string;
   };
   
+  
   export const classNames = (...classes: string[]) => {
     return classes.filter(Boolean).join(" ");
   };
