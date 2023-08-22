@@ -1,14 +1,39 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import DashLayout from "../../components/layouts/DashLayout";
 import { MdOutlineArrowBack } from "react-icons/md";
 import ComingUp from "../../components/dashboard/comingUp";
 import MeetClass from "../../components/dashboard/meetClass";
 import TopicComponent from "../../components/dashboard/topicComp";
+import { useLazyGetSubjectQuery, useLazyGetSubjectLessonsQuery } from "../../services/api/subjectSlice";
+import { useAppSelector } from "../../redux/store";
 
 const SubjectDetails = () => {
-  // const { id } = useParams();
-  const navigate = useNavigate()
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const student = useAppSelector((state) => state.user.user);
+  const [getSubject] = useLazyGetSubjectQuery();
+  const [getSubjectLessons] = useLazyGetSubjectLessonsQuery();
+  const [subject, setSubject] = useState<any>();
+  const [subjectLessons, setSubjectLessons] = useState<any[]>([]);
+
+  const loadSubject = async (id : any) => {
+    await getSubject(id).then((response : any) => {
+      setSubject(response.data.data);
+    })
+  }
+
+  const loadSubjectLessons = async (id : any) => {
+    await getSubjectLessons(id).then((response : any) => {
+      setSubjectLessons(response.data.data);
+    })
+  }
+
+
+  useEffect(()=>{
+    loadSubject(id);
+    loadSubjectLessons(id);
+  },[]);
 
   return (
     <>
@@ -23,14 +48,16 @@ const SubjectDetails = () => {
                 </div>
               </div>
               <div className="mt-4 lg:mt-8 flex items-center gap-x-3">
+              {subject && (<>
                 <img src="https://res.cloudinary.com/dic7regoe/image/upload/v1689279991/praxeum/image_14_jeqsjo.png" alt="subject" className="w-[100px] h-[100px] circle"/>
                 <div>
-                    <p className="text-[#FF006E] fw-600 text-xl lg:text-4xl">Basic Science</p>
-                    <p className="text-[#1E1B1BB2] fw-600 lg:text-xl mt-1">Everything science, the environment, and phenomenon</p>
+                    <p className="text-[#FF006E] fw-600 text-xl lg:text-4xl">{subject.naming}</p>
+                    <p className="text-[#1E1B1BB2] fw-600 lg:text-xl mt-1">{subject.description}</p>
                 </div>
+              </>)}
               </div>
               <div className="mt-6 lg:mt-10">
-                <TopicComponent/>
+                <TopicComponent lessons={subjectLessons}/>
               </div>
             </div>
             <div className="lg:w-[28%] mt-6 lg:mt-0 px-2 lg:px-0">

@@ -18,6 +18,7 @@ export interface StudentProfile {
     flag: string
     schoolName: string
     studentClass: string
+    studentClassArm: string
     subjectsCount: number
     term: string
     status: string
