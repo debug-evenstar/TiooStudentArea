@@ -3,8 +3,8 @@ import { useGetClassMatesQuery, useGetClassQuery } from "../../services/api/rout
 import { useAppSelector } from "../../redux/store";
 
 const MeetClass = () => {
-  // const id = useAppSelector((state) => state.user.user.)
-  const {data} = useGetClassMatesQuery('12')
+  const id = useAppSelector((state) => state.user.user.AccountId)
+  const {data} = useGetClassQuery(id)
   return (
     <>
       <div className="">

@@ -24,7 +24,7 @@ const LogToken = () => {
                 saveUser({
                     token: token,
                     name: res.data.data.name,
-                    AccountId: res.data.data.AccountId,
+                    AccountId: res.data.data.id,
                     account_type: res.data.data.account_type,
                     email: res.data.data.email,
                     phone: res.data.data.phone,

@@ -8,9 +8,9 @@ import { ErrorResult } from "../../utils/dataTypes";
 
 export const routineApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getClass: builder.query<StudentLoginResult | ErrorResult, void>({
-      query: () => ({
-        url: `${ENDPOINT.FETCH_CLASS_PUPIL}`,
+    getClass: builder.query<StudentLoginResult | ErrorResult, number>({
+      query: (param) => ({
+        url: `${ENDPOINT.FETCH_CLASS_PUPIL}/${param}`,
         method: ENDPOINT.HTTP_METHODS.GET,
         headers: {
             Authorization: requestAuthorization(),
