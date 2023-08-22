@@ -7,7 +7,8 @@ const LessonComponent = () => {
   return (
     <>
       <div className="bg-[#27397A] lg:bg-compbg lg:bg-cover nue w-full lg:h-screen pb-24 lg:pb-0 px-3 lg:px-6 xl:px-12">
-        <div className="hidden lg:flex text-white justify-between">
+        <div className="">
+        <div className="flex text-white justify-between">
           <div className="lg:w-3/12 pt-6">
             <Link to="/home/subjects/6" className="flex gap-x-2 item-center">
               <MdArrowBack className="text-4xl" />
@@ -33,6 +34,7 @@ const LessonComponent = () => {
               Chapter 1: Introduction to Basic science Lesson 3 of 5
             </p>
           </div>
+        </div>
         </div>
         <div className="lg:hidden text-white">
           <div className="flex items-center justify-between pt-4">
