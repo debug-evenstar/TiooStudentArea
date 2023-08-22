@@ -24,7 +24,7 @@ const Header = () => {
   }
   return (
     <>
-      <div className="flex lg:py-5 lg:px-8 px-2 py-2 justify-between items-center bg-[#1E1B1B] text-white">
+      <div className="flex lg:py-3 lg:px-8 px-2 py-2 justify-between items-center bg-[#4F46E5] text-white">
         <div className="flex items-center gap-x-6">
           <div>
           <img src="https://res.cloudinary.com/dic7regoe/image/upload/v1691522320/praxeum/IMG_8444_1_rdvfdw.png" alt="logo" className="w-16 lg:w-20"/>

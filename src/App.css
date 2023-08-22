@@ -364,10 +364,12 @@ input[type="checkbox"]:checked {
     box-shadow: 0px 4px 17px rgba(0, 0, 0, 0.07);
   }
   .active {
-    background-color: #4f46e5;
+    background-color: white;
     border-radius: 10px;
     display: block;
     padding: 10px;
+    color: #4f46e5;
+    font-weight: 600;
   }
   @media (max-width: 960px) {
     .active {
