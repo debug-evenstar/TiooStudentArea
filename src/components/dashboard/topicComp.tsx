@@ -8,7 +8,7 @@ interface LessonTopics {
 
 const TopicComponent:FC<LessonTopics> = ({lessons}) => {
   const [isClosed, setClosed] = useState<boolean>(false);
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(true);
   const closeContainer = () => {
     setClosed(true);
     setTimeout(() => {

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { MdArrowBack } from "react-icons/md";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import RenderComponent from "./renderComp";
 import { useLazyGetLessonSlidesQuery } from "../../services/api/lessonSlice";
 import { useAppSelector } from "../../redux/store";
 
 const LessonComponent = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const student = useAppSelector((state) => state.user.user);
   const [getLesson] = useLazyGetLessonSlidesQuery();
   const [lesson, setLesson] = useState<any>();
@@ -29,10 +30,10 @@ const LessonComponent = () => {
         <div className="">
         <div className="flex text-white justify-between">
           <div className="lg:w-3/12 pt-6">
-            <Link to="/home/subjects/6" className="flex gap-x-2 item-center">
+            <div className="flex gap-x-2 item-center" onClick={() => navigate(-1)}>
               <MdArrowBack className="text-4xl" />
               <span className="fw-600 text-2xl mt-1">EXIT</span>
-            </Link>
+            </div>
             { lesson && student && (<p className="mt-4">{lesson.Subject.naming} : {student.studentClassArm}</p>)}
           </div>
           <div className="w-6/12 relative">
