@@ -30,6 +30,7 @@ const LogToken = () => {
                     phone: res.data.data.phone,
                     schoolName: res.data.data.schoolName,
                     studentClass: res.data.data.studentClass,
+                    studentClassArm: res.data.data.studentClassArm,
                     status: res.data.data.status,
                     term: res.data.data.term,
                     subjectsCount: res.data.data.subjectsCount,
