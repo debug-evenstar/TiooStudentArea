@@ -1,10 +1,15 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, FC} from 'react'
 import MobileComponent from '../../components/lessonComponent/MobileComponent'
 import DesktopComponent from '../../components/lessonComponent/DesktopComponent'
 
-const RenderComponent = () => {
-    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+interface ComponentSlides {
+  slides : any[]
+}
+// Will make typed later
+//lessonSlides: (TextData | ButtonGroupData | SliderData | ImageData | FlashCardData | VideoData | WordMatchData | OptionData)[][];
 
+const RenderComponent : FC<ComponentSlides> = ({slides}) => {
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   useEffect(() => {
     // Event listener function to update the screen width state
     const handleResize = () => {
@@ -27,7 +32,7 @@ const RenderComponent = () => {
       {screenWidth < breakpoint ? (
         <MobileComponent />
       ) : (
-        <DesktopComponent />
+        <DesktopComponent slides={slides}/>
       )}
     </div>
   );
