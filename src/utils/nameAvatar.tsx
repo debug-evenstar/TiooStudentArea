@@ -9,10 +9,10 @@ const NameAvatar:FC<Props> = ({name}) => {
     const firstLetter = nameRow[0]?.charAt(0)
     const lastLetter = nameRow[1]?.charAt(0)
   return (
-    <div className='w-full h-full grid place-content-center bg-[#4F46E5] rounded-[50%]'>
+    <div className='w-full h-full grid place-content-center bg-[#fff] rounded-[50%]'>
         <div className='flex'>
-        <p className='fw-600text-white capitalize'>{firstLetter}</p>
-        <p className='fw-600text-white capitalize pl-[1px]'>{lastLetter}</p>
+        <p className='fw-600 text-[#4F46E5] capitalize'>{firstLetter}</p>
+        <p className='fw-600 text-[#4F46E5] capitalize pl-[1px]'>{lastLetter}</p>
         </div>
     </div>
   )

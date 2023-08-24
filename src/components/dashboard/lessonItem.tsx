@@ -1,6 +1,6 @@
 import React, {FC, useState} from 'react'
 import { HiOutlineArrowPath } from 'react-icons/hi2'
-import { formatLessonColor, formatLessonStatus } from '../../utils/format'
+import { formatLessonColor, formatLessonStatus, nthNumber } from '../../utils/format'
 import { useNavigate } from 'react-router-dom'
 
 interface Props {
@@ -9,17 +9,32 @@ interface Props {
 const LessonItem:FC<Props> = ({item}) => {
     const [showWeek, setShowWeek] = useState(true)
     const navigate = useNavigate()
+    const showTime = (e:any) => {
+        e.preventDefault();
+        setShowWeek(!showWeek)
+    }
+
+    const getTimeFrame = () => {
+        const start = new Date(item.start_date);
+        const end = new Date(item.end_date);
+        const timeFrameStart = Number.parseInt( start.toLocaleDateString().split("/")[0] );
+        const timeFrameEnd = Number.parseInt( end.toLocaleDateString().split("/")[0] );
+        return `${timeFrameStart}${nthNumber(timeFrameStart)}-${timeFrameEnd}${nthNumber(timeFrameEnd)}`;
+    }
+
   return (
     <>
-        <div className='box-shade relative rounded-[8px] p-5 hover:scale-105 duration-100 cursor-pointer' onClick={() => navigate(`/lesson/${item.week}`)}>
+        <div className='box-shade relative rounded-[8px] p-5 hover:scale-105 duration-100 cursor-pointer' onClick={() => navigate(`/lesson/${item.id}`)}>
             <div className='flex items-center gap-x-1'>
-                <p className='fw-600'>{showWeek && `Week ${item.week}`}</p>
-                <p className='fw-400'>{!showWeek && item.time_frame}</p>
-                <HiOutlineArrowPath className='text-xl text-[#87909E]' onClick={() => setShowWeek(!showWeek)}/>
+                <p className='fw-600'>{showWeek && `${item.week}`}</p>
+                <p className='fw-400'>{!showWeek && getTimeFrame()}</p>
+                <div onClick={(e: any) => e.stopPropagation()}>
+                <HiOutlineArrowPath className='text-xl text-[#87909E]' onClick={showTime}/>
+                </div>
             </div>
             <div>
-                <p className='fw-600'>{formatLessonColor(item.name, item.status)}</p>
-                <p className='mt-3 text-[#87909E]'>5 Slides</p>
+                <p className='fw-600'>{formatLessonColor(item.topic, item.status)}</p>
+                <p className='mt-3 text-[#87909E]'>{item.LessonSlides.length} Slides</p>
             </div>
             <div className='absolute top-2 right-2'>
                 {formatLessonStatus(item.status)}

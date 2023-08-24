@@ -23,6 +23,12 @@ export enum CACHE_LIFETIME {
 
   // subjects
   export const FETCH_SUBJECTS = 'student/subjects'
+  export const FETCH_SUBJECT = '/subjects/read'
+  export const FETCH_SUBJECT_LESSONS = (id : any) => `subjects/${id}/student/lessons`;
+
+  // lesson
+  export const FETCH_LESSON_SLIDES = (id : any) => `lesson/${id}/template`;
 
   // classmates
   export const FETCH_CLASS_PUPIL = 'student/classmates'
+  export const FETCH_CLASSMATE = 'class/students/'
