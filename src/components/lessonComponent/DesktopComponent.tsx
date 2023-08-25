@@ -24,9 +24,12 @@ const DesktopComponent : FC<ComponentSlides> = ({slides}) => {
         setCanProceed(false);
     };
 
+    const handlePrevious = () => {
+        slideManagerRef?.current?.navigator(-1);
+        setCanProceed(false);
+    }
+
     const triggerFeedback = (text: string, type: string) => {
-        console.log(text);
-        console.log(type);
         setMessage(text);
         if (type === "success") {
             setSuccessFeed(true);
@@ -43,7 +46,7 @@ const DesktopComponent : FC<ComponentSlides> = ({slides}) => {
     return (
         <>
             <div className="flex justify-between items-center">
-                <div className="w-[120px]" onClick={() => setFailureFeed(true)}>
+                <div className="w-[120px]" onClick={() => handlePrevious()}>
                     <CompButton title="Previous" prev />
                 </div>
                 <div className="lg:w-9/12 xl:w-8/12 2xl:w-7/12 ">
