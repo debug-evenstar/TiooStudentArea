@@ -16,5 +16,7 @@ jobs:
      
           script: |
             cd "${{secrets.STUDENT_WORK_TREE}}"
+            git --work-tree="${{secrets.STUDENT_WORK_TREE}}" --git-dir="${{secrets.STUDENT_GIT_DIR}}" add .
+            git --work-tree="${{secrets.STUDENT_WORK_TREE}}" --git-dir="${{secrets.STUDENT_GIT_DIR}}" reset --hard
             git --work-tree="${{secrets.STUDENT_WORK_TREE}}" --git-dir="${{secrets.STUDENT_GIT_DIR}}" pull origin staging
             echo 'Deployment successful to server'
