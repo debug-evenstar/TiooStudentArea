@@ -25,8 +25,8 @@ const CompButton: React.FC<Props> = ({
 }) => {
   return (
     <div className={disabled? "opacity-75 " : ""}>
-      <div className={prev? "polywrapper2" : "polywrapper"}>
-      <button className={`text-center py-6 text-xl w-[120px] fw-600 cursor-pointer ${prev? "bg-[#E3E2FF] pl-2 poly-2" : "poly pr-2 text-white bg-[#86A94B]"}`} onClick={onClick ? onClick : undefined} disabled={disabled}>
+      <div className={prev? "polywrapper2" : "polygon-clip"}>
+      <button className={`text-center py-6 text-2xl w-[120px] fw-600 cursor-pointer ${prev? "bg-[#E3E2FF] pl-2 poly-2" : " pr-2 text-white bg-[#86A94B]"}`} onClick={onClick ? onClick : undefined} disabled={disabled}>
       {isBusy ? (
           "loading"
         ) : capitalizeTitle ? (

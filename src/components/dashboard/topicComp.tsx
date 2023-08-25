@@ -23,6 +23,7 @@ const TopicComponent:FC<LessonTopics> = ({lessons}) => {
     });
     return slideCount;
   }
+  const displayLesson = lessons?.filter((where:any) => where.admin_status !== "Locked")
   return (
     <>
       <div className="rounded-[8px] box-shade overflow-hidden">
@@ -47,16 +48,16 @@ const TopicComponent:FC<LessonTopics> = ({lessons}) => {
               isClosed ? "dropoff" : "dropin"
             }`}
           >
-            {lessons &&
-              !!lessons.length &&
-              lessons.map((item : any, index : any) => (
+            {displayLesson &&
+              !!displayLesson.length &&
+              displayLesson.map((item : any, index : any) => (
                 <LessonItem key={index} item={item}/>
               ))}
           </div>
         )}
         <div className="p-6 bg-white rounded-b-[8px] border-t border-[#E3E2FF] flex justify-between items-center" onClick={open? closeContainer : () => setOpen(true)}>
           <div className="flex items-center gap-x-2">
-            <p className="text-[#87909E] fw-600">{`${lessons.length} lessons,`}</p>
+            <p className="text-[#87909E] fw-600">{`${displayLesson.length} lessons,`}</p>
             <p className="text-[#87909E] fw-600">{totalSlides()} slides</p>
           </div>
           {open ? (
