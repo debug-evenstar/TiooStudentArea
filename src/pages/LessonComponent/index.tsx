@@ -21,6 +21,9 @@ const LessonComponent = () => {
       setLessonSlides(parseSlides);
     });
   }
+  const returnToLessons = () => {
+    navigate(`/home/subjects/${lesson.Subject.id}`);
+  }
   useEffect(()=>{
     fetchLessonData(id);
   },[]);
@@ -80,7 +83,7 @@ const LessonComponent = () => {
           </div>
         </div>
         <div className="lg:mt-16 mb-16 w-full">
-          {lessonSlides && lessonSlides.length && (<RenderComponent slides={lessonSlides}/>)}
+          {lessonSlides && lessonSlides.length && (<RenderComponent slides={lessonSlides} back={returnToLessons}/>)}
         </div>
       </div>
     </>

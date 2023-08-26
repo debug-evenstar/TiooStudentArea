@@ -7,9 +7,10 @@ import { SlideManager } from "@Praxeum-ai/LearnBlocks";
 
 interface ComponentSlides {
     slides: any[];
+    back : Function;
 }
 
-const DesktopComponent: FC<ComponentSlides> = ({ slides }) => {
+const DesktopComponent: FC<ComponentSlides> = ({ slides , back}) => {
     const [SuccessFeed, setSuccessFeed] = useState(false);
     const [FailureFeed, setFailureFeed] = useState(false);
     const [message, setMessage] = useState<string>("");
@@ -19,10 +20,16 @@ const DesktopComponent: FC<ComponentSlides> = ({ slides }) => {
     const [canProceed, setCanProceed] = useState<boolean>(true);
 
     const handleContinue = () => {
-        slideManagerRef?.current?.navigator(1);
-        setCanProceed(false);
-        setSuccessFeed(false);
-        setFailureFeed(false);
+        const currentSlideIndex = slideManagerRef?.current?.activeSlideIndex();
+        if( currentSlideIndex === (slides.length - 1) ) {
+            back();
+        }else{
+            slideManagerRef?.current?.navigator(1);
+            setCanProceed(false);
+            setSuccessFeed(false);
+            setFailureFeed(false);
+        }
+
     };
 
     const handlePrevious = () => {
