@@ -45,6 +45,7 @@ const DesktopComponent: FC<ComponentSlides> = ({ slides }) => {
             setFailureFeed(false);
         } else {
             setFailureFeed(true);
+            setSuccessFeed(false);
         }
     };
 
