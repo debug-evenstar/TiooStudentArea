@@ -8,9 +8,9 @@ const FailureFeedback:FC<Props> = ({close, message}) => {
   return (
     <>
         <div className=''>
-            <div className='h-[80vh] w-[270px] absolute bottom-0 -right-3 bg-bgfailure bg-fit flex  justify-end showfeed'>
-                <div className='text-center text-white fw-600 w-11/12 pr-4 mb-6 '>
-                    <p className='lg:text-xl'>{message}</p>
+            <div className='h-[80vh] w-[300px] absolute bottom-0 -right-3 bg-bgfailure bg-fit flex  justify-end showfeed'>
+                <div className='text-center text-white fw-600 w-[85%] pr-4 mb-6 mt-[120px]'>
+                    <p className='fs-700 blob-thing'>{message}</p>
                 </div>
                 <MdOutlineCancelPresentation className='text-white text-3xl absolute top-10 right-10 cursor-pointer' onClick={close}/>
             </div>
