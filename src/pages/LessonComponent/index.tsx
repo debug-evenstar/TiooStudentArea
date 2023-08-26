@@ -26,9 +26,9 @@ const LessonComponent = () => {
   },[]);
   return (
     <>
-      <div className="bg-[#27397A] lg:bg-compbg lg:bg-cover bg-fixed nue w-full lg:h-screen overflow-y-auto pb-24 lg:pb-0 px-3 lg:px-6 xl:px-12">
+      <div className="bg-[#27397A] lg:bg-compbg lg:bg-cover bg-fixed nue w-full h-screen overflow-y-auto pb-24 lg:pb-0 px-3 lg:px-6 xl:px-12">
         <div className="">
-        <div className="flex text-white justify-between">
+        <div className="hidden lg:flex text-white justify-between">
           <div className="lg:w-3/12 pt-6">
             <div className="flex gap-x-2 item-center cursor-pointer" onClick={() => navigate(-1)}>
               <MdArrowBack className="text-4xl" />
