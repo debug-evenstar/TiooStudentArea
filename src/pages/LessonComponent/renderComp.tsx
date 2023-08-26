@@ -30,7 +30,7 @@ const RenderComponent : FC<ComponentSlides> = ({slides}) => {
   return (
     <div>
       {screenWidth < breakpoint ? (
-        <MobileComponent />
+        <MobileComponent slides={slides}/>
       ) : (
         <DesktopComponent slides={slides}/>
       )}
