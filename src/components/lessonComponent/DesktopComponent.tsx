@@ -22,21 +22,27 @@ const DesktopComponent: FC<ComponentSlides> = ({ slides }) => {
         slideManagerRef?.current?.navigator(1);
         setCanProceed(false);
         setSuccessFeed(false);
+        setFailureFeed(false);
     };
 
     const handlePrevious = () => {
         slideManagerRef?.current?.navigator(-1);
         setCanProceed(false);
+        setSuccessFeed(false);
+        setFailureFeed(false);
     };
 
     const changeSlide = (index: number) => {
         slideManagerRef?.current?.navigator(1, index);
+        setSuccessFeed(false);
+        setFailureFeed(false);
     };
 
     const triggerFeedback = (text: string, type: string) => {
         setMessage(text);
         if (type === "success") {
             setSuccessFeed(true);
+            setFailureFeed(false);
         } else {
             setFailureFeed(true);
         }
