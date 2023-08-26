@@ -2,6 +2,7 @@ import React, {FC, useState} from 'react'
 import { HiOutlineArrowPath } from 'react-icons/hi2'
 import { formatLessonColor, formatLessonStatus, nthNumber } from '../../utils/format'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 interface Props {
     item: any
@@ -22,9 +23,17 @@ const LessonItem:FC<Props> = ({item}) => {
         return `${timeFrameStart}${nthNumber(timeFrameStart)}-${timeFrameEnd}${nthNumber(timeFrameEnd)}`;
     }
 
+    const openLesson = (item:any) => {
+        if(item.status === "Locked"){
+            toast.info("Lesson is Locked")
+        }else{
+            navigate(`/lesson/${item.id}`)
+        }
+    }
+
   return (
     <>
-        <div className='box-shade relative rounded-[8px] p-5 hover:scale-105 duration-100 cursor-pointer' onClick={() => navigate(`/lesson/${item.id}`)}>
+        <div className='box-shade relative rounded-[8px] p-5 hover:scale-105 duration-100 cursor-pointer' onClick={() => openLesson(item)}>
             <div className='flex items-center gap-x-1'>
                 <p className='fw-600'>{showWeek && `${item.week}`}</p>
                 <p className='fw-400'>{!showWeek && getTimeFrame()}</p>
