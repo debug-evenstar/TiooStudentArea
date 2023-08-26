@@ -56,7 +56,7 @@ export const ContinueBtn: React.FC<Props> = ({
     <div className={disabled? "opacity-75 " : ""}>
       <div className="relative">
         <div className=""></div>
-      <button className={` fw-600 cursor-pointer pr-4 text-white bg-[#86A94B] polygon-clip`} onClick={onClick ? onClick : undefined} disabled={disabled}>
+      <button className={` fw-600 cursor-pointer pr-4 text-white bg-[#86A94B] polygon-clip-next`} onClick={onClick ? onClick : undefined} disabled={disabled}>
       {isBusy ? (
           "loading"
         ) : capitalizeTitle ? (
@@ -83,6 +83,31 @@ export const PreviousBtn: React.FC<Props> = ({
       <div className="relative polygon-clip-prev">
         <div className=""></div>
       <button className={` fw-600 cursor-pointer pl-4 text-`} onClick={onClick ? onClick : undefined} disabled={disabled}>
+      {isBusy ? (
+          "loading"
+        ) : capitalizeTitle ? (
+          title
+        ) : (
+          title
+        )}
+      </button>
+      </div>
+    </div>
+  );
+}
+export const ContinueSmallBtn: React.FC<Props> = ({
+  title,
+  onClick,
+  capitalizeTitle,
+  disabled,
+  altClassName,
+  isBusy,
+  prev
+}) => {
+  return (
+    <div className={disabled? "opacity-75 " : ""}>
+      <div className="relative w-28 h-16 bg-smallbtn place-center">
+      <button className={` fw-600 cursor-pointer pr-8 text-white py-4 px-6`} onClick={onClick ? onClick : undefined} disabled={disabled}>
       {isBusy ? (
           "loading"
         ) : capitalizeTitle ? (
