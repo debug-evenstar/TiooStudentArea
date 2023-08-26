@@ -26,11 +26,11 @@ const LessonComponent = () => {
   },[]);
   return (
     <>
-      <div className="bg-[#27397A] lg:bg-compbg lg:bg-cover nue w-full lg:h-screen pb-24 lg:pb-0 px-3 lg:px-6 xl:px-12">
+      <div className="bg-[#27397A] lg:bg-compbg lg:bg-cover bg-fixed nue w-full lg:h-screen overflow-y-auto pb-24 lg:pb-0 px-3 lg:px-6 xl:px-12">
         <div className="">
         <div className="flex text-white justify-between">
           <div className="lg:w-3/12 pt-6">
-            <div className="flex gap-x-2 item-center" onClick={() => navigate(-1)}>
+            <div className="flex gap-x-2 item-center cursor-pointer" onClick={() => navigate(-1)}>
               <MdArrowBack className="text-4xl" />
               <span className="fw-600 text-2xl mt-1">EXIT</span>
             </div>
@@ -43,14 +43,14 @@ const LessonComponent = () => {
               className="w-full absolute"
             />
             <div className="mt-[9%] text-center relative">
-              <p className="fw-600 text-black">Lesson 1</p>
-              {lesson && (<p className="fw-600 text-[#FA14D5] text-lg">
+              <p className="fw-600 text-black text-lg">Lesson 1</p>
+              {lesson && (<p className="font-bold  text-[#FA14D5] text-2xl 2xl:text-3xl">
                 {lesson.topic}
               </p>)}
             </div>
           </div>
           <div className="lg:w-3/12 pt-6">
-            <p className="mt-8 lg:pl-8">
+            <p className="mt-8 lg:pl-8 hidden">
               Chapter 1: Introduction to Basic science Lesson 3 of 5
             </p>
           </div>
@@ -79,7 +79,7 @@ const LessonComponent = () => {
             </div>
           </div>
         </div>
-        <div className="lg:mt-8 xl:mt-16 2xl:mt-24 w-full">
+        <div className="lg:mt-16 mb-16 w-full">
           {lessonSlides && lessonSlides.length && (<RenderComponent slides={lessonSlides}/>)}
         </div>
       </div>
