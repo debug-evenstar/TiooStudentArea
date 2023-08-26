@@ -1,7 +1,7 @@
 import React, { useRef, useState, FC } from "react";
 import SlideIndicator from "./slideIndicator";
 import MobileSuccessFeedback from "./MobileSuccess";
-import MobileFailureFeedback from './MobileFailure';
+import MobileFailureFeedback from "./MobileFailure";
 import { SlideManager } from "@Praxeum-ai/LearnBlocks";
 
 interface ComponentSlides {
@@ -43,14 +43,14 @@ const MobileComponent: FC<ComponentSlides> = ({ slides }) => {
 
     return (
         <>
-            <div className='flex justify-between items-center mt-8'>
-                <div className='w-full'>
+            <div className="flex justify-between items-center mt-8">
+                <div className="w-full">
                     <SlideIndicator
                         num={slides.length}
                         active={activeSlide + 1}
                         changeSlide={changeSlide}
                     />
-                    <div className='h-[400px] border mt-4 w-full bg-bgcomp bg-cover rounded-lg'>
+                    <div className="h-[400px] border mt-4 w-full bg-bgcomp bg-cover rounded-lg">
                         <SlideManager
                             lessonSlides={slides}
                             ref={slideManagerRef}
@@ -58,14 +58,14 @@ const MobileComponent: FC<ComponentSlides> = ({ slides }) => {
                             handleFeedback={(text: string, type: string) =>
                                 triggerFeedback(text, type)
                             }
-                            updateActiveSlide={(i:number) => setActiveSlide(i)}
+                            updateActiveSlide={(i: number) => setActiveSlide(i)}
                         />
                     </div>
                 </div>
                 {/* nav buttons */}
                 <div>
                     {canProceed && (
-                        <p 
+                        <p
                             className="fixed bottom-0 right-0 p-5 py-3 rounded-tl-[30px] text-center fw-600 text-xl text-white bg-[#86A94B] w-5/12"
                             onClick={() => handleContinue()}
                         >
@@ -82,12 +82,24 @@ const MobileComponent: FC<ComponentSlides> = ({ slides }) => {
                     )}
                 </div>
             </div>
-        <div>
-            {SuccessFeed && <MobileSuccessFeedback close={() => setSuccessFeed(false)} message={message}/>}
-            {FailureFeed && <MobileFailureFeedback close={() => setFailureFeed(false)} message={message}/>}
-        </div>
-    </>
-  )
-}
+            <div>
+                {SuccessFeed && (
+                    <MobileSuccessFeedback
+                        close={() => setSuccessFeed(false)}
+                        message={message}
+                        canProceed={canProceed}
+                        proceed={() => handleContinue()}
+                    />
+                )}
+                {FailureFeed && (
+                    <MobileFailureFeedback
+                        close={() => setFailureFeed(false)}
+                        message={message}
+                    />
+                )}
+            </div>
+        </>
+    );
+};
 
 export default MobileComponent;
