@@ -87,6 +87,8 @@ const DesktopComponent: FC<ComponentSlides> = ({ slides }) => {
                     <SuccessFeedback
                         close={() => setSuccessFeed(false)}
                         message={message}
+                        canProceed={canProceed}
+                        proceed={() => handleContinue()}
                     />
                 )}
                 {FailureFeed && (
