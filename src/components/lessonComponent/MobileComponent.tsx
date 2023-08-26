@@ -21,6 +21,7 @@ const MobileComponent: FC<ComponentSlides> = ({ slides }) => {
     const handleContinue = () => {
         slideManagerRef?.current?.navigator(1);
         setCanProceed(false);
+        setSuccessFeed(false);
     };
 
     const handlePrevious = () => {
