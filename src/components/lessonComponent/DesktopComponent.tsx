@@ -1,5 +1,5 @@
 import React, { useState, useRef, FC } from "react";
-import CompButton from "../Ui/CompButton";
+import CompButton, { ContinueBtn, PreviousBtn } from "../Ui/CompButton";
 import SlideIndicator from "./slideIndicator";
 import SuccessFeedback from "./SuccessFeedback";
 import FailureFeedback from "./FailureFeedback";
@@ -49,9 +49,8 @@ const DesktopComponent: FC<ComponentSlides> = ({ slides }) => {
     return (
         <>
             <div className="flex justify-between items-center">
-                
                 <div className="w-[120px]" onClick={() => handlePrevious()}>
-                    {activeSlide > 0 && ( <CompButton title="Previous" prev /> )}
+                    {activeSlide > 0 && ( <PreviousBtn title="Previous" prev />)}
                 </div>
                 
                 <div className="lg:w-[calc(100%_-_300px)]">
@@ -80,7 +79,7 @@ const DesktopComponent: FC<ComponentSlides> = ({ slides }) => {
                     }
                     onClick={() => handleContinue()}
                 >
-                    <CompButton title="Continue" />
+                    <ContinueBtn title="Continue" />
                 </div>
             </div>
             <div>
