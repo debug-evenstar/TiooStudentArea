@@ -41,7 +41,7 @@ export const capitalizeFirstLetter = (string: string) => {
         return <p className="bg-[#E40FC2] py-1 px-2 text-white rounded-lg fw-500 fs-200">completed</p>
       case "ongoing":
         return <p className="bg-[#E7A70B] py-1 px-2 text-white rounded-lg fw-500 fs-300">Resume</p>
-      case "pending":
+      case "Locked":
         return <p className="text-[#86A94B] fw-500 mr-2"><RiLock2Line className='text-lg'/></p>
       default: return status
     }

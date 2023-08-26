@@ -49,9 +49,9 @@ const DesktopComponent : FC<ComponentSlides> = ({slides}) => {
                 <div className="w-[120px]" onClick={() => handlePrevious()}>
                     <CompButton title="Previous" prev />
                 </div>
-                <div className="lg:w-9/12 xl:w-8/12 2xl:w-7/12 ">
+                <div className="lg:w-[calc(100%_-_300px)]">
                     <SlideIndicator num={5} active={1} />
-                    <div className="mt-4 w-full bg-bgcomp bg-cover rounded-lg">
+                    <div className="mt-4 w-full bg-bgcomp bg-cover rounded-lg min-h-[70vh] place-center fw-600">
                         <SlideManager
                             lessonSlides={slides}
                             ref={slideManagerRef}

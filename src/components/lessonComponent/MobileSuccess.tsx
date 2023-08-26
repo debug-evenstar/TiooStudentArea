@@ -8,7 +8,7 @@ interface Props {
 const MobileSuccessFeedback:FC<Props> = ({message, close}) => {
   return (
     <>
-        <div className='fixed top-0 left-0 w-full h-full z-20'>
+        <div className='fixed top-0 left-0 w-full h-full z-0'>
             <div className='h-[250px] w-full absolute top-0 left-0 bg-mobilesuccess bg-cover bg-center flex items-center justify-center showfeel'>
                 <div className='text-center text-white fw-600 w-11/12 mb-6'>
                     <p className=''>{message}</p>
