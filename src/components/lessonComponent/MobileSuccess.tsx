@@ -1,5 +1,6 @@
 import React, {FC} from 'react'
 import { MdOutlineCancelPresentation } from 'react-icons/md'
+import { ContinueSmallBtn } from '../Ui/CompButton'
 
 interface Props {
     message:string
@@ -13,6 +14,7 @@ const MobileSuccessFeedback:FC<Props> = ({message, close}) => {
                 <div className='text-center text-white fw-600 w-11/12 mb-6'>
                     <p className=''>{message}</p>
                 </div>
+                <ContinueSmallBtn title={'Continue'}/>
                 <MdOutlineCancelPresentation className='text-white text-3xl absolute bottom-10 cursor-pointer' onClick={close}/>
             </div>
         </div>
