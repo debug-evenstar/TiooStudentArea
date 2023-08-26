@@ -29,7 +29,7 @@ const MobileComponent: FC<ComponentSlides> = ({ slides }) => {
     };
 
     const changeSlide = (index: number) => {
-        setActiveSlide(index);
+        slideManagerRef?.current?.navigator(1, index);
     };
 
     const triggerFeedback = (text: string, type: string) => {
@@ -58,7 +58,7 @@ const MobileComponent: FC<ComponentSlides> = ({ slides }) => {
                             handleFeedback={(text: string, type: string) =>
                                 triggerFeedback(text, type)
                             }
-                            updateActiveSlide={changeSlide}
+                            updateActiveSlide={(i:number) => setActiveSlide(i)}
                         />
                     </div>
                 </div>

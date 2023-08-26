@@ -29,7 +29,7 @@ const DesktopComponent: FC<ComponentSlides> = ({ slides }) => {
     };
 
     const changeSlide = (index: number) => {
-        setActiveSlide(index);
+        slideManagerRef?.current?.navigator(1, index);
     };
 
     const triggerFeedback = (text: string, type: string) => {
@@ -49,15 +49,15 @@ const DesktopComponent: FC<ComponentSlides> = ({ slides }) => {
     return (
         <>
             <div className="flex justify-between items-center">
-                {activeSlide > 0 && (
-                    <div className="w-[120px]" onClick={() => handlePrevious()}>
-                        <CompButton title="Previous" prev />
-                    </div>
-                )}
+                
+                <div className="w-[120px]" onClick={() => handlePrevious()}>
+                    {activeSlide > 0 && ( <CompButton title="Previous" prev /> )}
+                </div>
+                
                 <div className="lg:w-[calc(100%_-_300px)]">
                     <SlideIndicator
                         num={slides.length}
-                        active={activeSlide + 1}
+                        active={activeSlide}
                         changeSlide={changeSlide}
                     />
                     <div className="mt-4 w-full bg-bgcomp bg-cover rounded-lg min-h-[70vh] place-center fw-600">
@@ -68,7 +68,7 @@ const DesktopComponent: FC<ComponentSlides> = ({ slides }) => {
                             handleFeedback={(text: string, type: string) =>
                                 triggerFeedback(text, type)
                             }
-                            updateActiveSlide={changeSlide}
+                            updateActiveSlide={(i:number) => setActiveSlide(i)}
                         />
                     </div>
                 </div>
