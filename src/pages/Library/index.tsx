@@ -1,4 +1,3 @@
-import React from 'react'
 import DashLayout from '../../components/layouts/DashLayout'
 import PostHeader from '../../components/index/PostHeader'
 import ComingUp from '../../components/dashboard/comingUp'

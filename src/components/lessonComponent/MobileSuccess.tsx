@@ -5,8 +5,10 @@ import { ContinueSmallBtn } from '../Ui/CompButton'
 interface Props {
     message:string
     close: () => void
+    canProceed : boolean
+    proceed : Function
 }
-const MobileSuccessFeedback:FC<Props> = ({message, close}) => {
+const MobileSuccessFeedback:FC<Props> = ({message, close, canProceed, proceed}) => {
   return (
     <>
         <div className=''>
@@ -14,7 +16,7 @@ const MobileSuccessFeedback:FC<Props> = ({message, close}) => {
                 <div className='text-center text-white fw-600 w-11/12 mb-6'>
                     <p className=''>{message}</p>
                 </div>
-                <ContinueSmallBtn title={'Continue'}/>
+                {canProceed && (<ContinueSmallBtn title={'Continue'} onClick={() => proceed()}/>)}
                 <MdOutlineCancelPresentation className='text-white text-3xl absolute bottom-10 cursor-pointer' onClick={close}/>
             </div>
         </div>
