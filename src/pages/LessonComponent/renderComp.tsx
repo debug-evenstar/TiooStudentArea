@@ -1,14 +1,15 @@
-import React, {useState, useEffect, FC} from 'react'
+import {useState, useEffect, FC} from 'react'
 import MobileComponent from '../../components/lessonComponent/MobileComponent'
 import DesktopComponent from '../../components/lessonComponent/DesktopComponent'
 
 interface ComponentSlides {
   slides : any[]
+  back : Function;
 }
 // Will make typed later
 //lessonSlides: (TextData | ButtonGroupData | SliderData | ImageData | FlashCardData | VideoData | WordMatchData | OptionData)[][];
 
-const RenderComponent : FC<ComponentSlides> = ({slides}) => {
+const RenderComponent : FC<ComponentSlides> = ({slides, back}) => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   useEffect(() => {
     // Event listener function to update the screen width state
@@ -30,9 +31,9 @@ const RenderComponent : FC<ComponentSlides> = ({slides}) => {
   return (
     <div>
       {screenWidth < breakpoint ? (
-        <MobileComponent />
+        <MobileComponent slides={slides} back={back}/>
       ) : (
-        <DesktopComponent slides={slides}/>
+        <DesktopComponent slides={slides} back={back}/>
       )}
     </div>
   );

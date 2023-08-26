@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { MdArrowBack } from "react-icons/md";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import RenderComponent from "./renderComp";
@@ -20,6 +20,9 @@ const LessonComponent = () => {
       const parseSlides = lessonData.LessonSlides.map((slide : any) => slide.slide_data);
       setLessonSlides(parseSlides);
     });
+  }
+  const returnToLessons = () => {
+    navigate(`/home/subjects/${lesson.Subject.id}`);
   }
   useEffect(()=>{
     fetchLessonData(id);
@@ -80,7 +83,7 @@ const LessonComponent = () => {
           </div>
         </div>
         <div className="lg:mt-16 mb-16 w-full">
-          {lessonSlides && lessonSlides.length && (<RenderComponent slides={lessonSlides}/>)}
+          {lessonSlides && lessonSlides.length && (<RenderComponent slides={lessonSlides} back={returnToLessons}/>)}
         </div>
       </div>
     </>

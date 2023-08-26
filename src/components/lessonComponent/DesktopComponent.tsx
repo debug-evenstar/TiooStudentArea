@@ -5,33 +5,54 @@ import SuccessFeedback from "./SuccessFeedback";
 import FailureFeedback from "./FailureFeedback";
 import { SlideManager } from "@Praxeum-ai/LearnBlocks";
 
-
 interface ComponentSlides {
-    slides : any[]
+    slides: any[];
+    back : Function;
 }
 
-const DesktopComponent : FC<ComponentSlides> = ({slides}) => {
+const DesktopComponent: FC<ComponentSlides> = ({ slides , back}) => {
     const [SuccessFeed, setSuccessFeed] = useState(false);
     const [FailureFeed, setFailureFeed] = useState(false);
     const [message, setMessage] = useState<string>("");
+    const [activeSlide, setActiveSlide] = useState<number>(0);
 
     const slideManagerRef = useRef<any>(null);
-
     const [canProceed, setCanProceed] = useState<boolean>(true);
 
     const handleContinue = () => {
-        slideManagerRef?.current?.navigator(1);
+        const currentSlideIndex = slideManagerRef?.current?.activeSlideIndex();
+        if( currentSlideIndex === (slides.length - 1) ) {
+            back();
+        }else{
+            slideManagerRef?.current?.navigator(1);
+            setCanProceed(false);
+            setSuccessFeed(false);
+            setFailureFeed(false);
+        }
+
+    };
+
+    const handlePrevious = () => {
+        slideManagerRef?.current?.navigator(-1);
         setCanProceed(false);
+        setSuccessFeed(false);
+        setFailureFeed(false);
+    };
+
+    const changeSlide = (index: number) => {
+        slideManagerRef?.current?.navigator(1, index);
+        setSuccessFeed(false);
+        setFailureFeed(false);
     };
 
     const triggerFeedback = (text: string, type: string) => {
-        console.log(text);
-        console.log(type);
         setMessage(text);
         if (type === "success") {
             setSuccessFeed(true);
+            setFailureFeed(false);
         } else {
             setFailureFeed(true);
+            setSuccessFeed(false);
         }
     };
 
@@ -43,11 +64,16 @@ const DesktopComponent : FC<ComponentSlides> = ({slides}) => {
     return (
         <>
             <div className="flex justify-between items-center">
-                <div className="w-[120px]" onClick={() => setFailureFeed(true)}>
-                    <PreviousBtn title="Previous" prev />
+                <div className="w-[120px]" onClick={() => handlePrevious()}>
+                    {activeSlide > 0 && ( <PreviousBtn title="Previous" prev />)}
                 </div>
+                
                 <div className="lg:w-[calc(100%_-_300px)]">
-                    <SlideIndicator num={5} active={1} />
+                    <SlideIndicator
+                        num={slides.length}
+                        active={activeSlide}
+                        changeSlide={changeSlide}
+                    />
                     <div className="mt-4 w-full bg-bgcomp bg-cover rounded-lg min-h-[70vh] place-center fw-600">
                         <SlideManager
                             lessonSlides={slides}
@@ -56,6 +82,7 @@ const DesktopComponent : FC<ComponentSlides> = ({slides}) => {
                             handleFeedback={(text: string, type: string) =>
                                 triggerFeedback(text, type)
                             }
+                            updateActiveSlide={(i:number) => setActiveSlide(i)}
                         />
                     </div>
                 </div>
@@ -75,6 +102,8 @@ const DesktopComponent : FC<ComponentSlides> = ({slides}) => {
                     <SuccessFeedback
                         close={() => setSuccessFeed(false)}
                         message={message}
+                        canProceed={canProceed}
+                        proceed={() => handleContinue()}
                     />
                 )}
                 {FailureFeed && (

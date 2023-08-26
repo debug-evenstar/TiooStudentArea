@@ -1,4 +1,4 @@
-import React, {FC} from 'react'
+import {FC} from 'react'
 import { MdOutlineCancelPresentation } from 'react-icons/md'
 interface Props {
     close: () => void
