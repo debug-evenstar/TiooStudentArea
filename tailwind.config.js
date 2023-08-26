@@ -17,6 +17,7 @@ module.exports = withMT({
         'bgsuccess': "url('https://res.cloudinary.com/dic7regoe/image/upload/v1691484705/praxeum/success_q0ntxg.png')",
         'bgfailure': "url('https://res.cloudinary.com/dic7regoe/image/upload/v1691484705/praxeum/fail_gtdllx.png')",
         'mobilesuccess': "url('https://res.cloudinary.com/dic7regoe/image/upload/v1691568250/praxeum/Group_12599_skzl8n.png')",
+        "mobileFailure": "url('https://res.cloudinary.com/dic7regoe/image/upload/v1693040911/praxeum/Group_12610_qogt9r.png')"
       },
     },
   },
