@@ -5,18 +5,17 @@ import SuccessFeedback from "./SuccessFeedback";
 import FailureFeedback from "./FailureFeedback";
 import { SlideManager } from "@Praxeum-ai/LearnBlocks";
 
-
 interface ComponentSlides {
-    slides : any[]
+    slides: any[];
 }
 
-const DesktopComponent : FC<ComponentSlides> = ({slides}) => {
+const DesktopComponent: FC<ComponentSlides> = ({ slides }) => {
     const [SuccessFeed, setSuccessFeed] = useState(false);
     const [FailureFeed, setFailureFeed] = useState(false);
     const [message, setMessage] = useState<string>("");
+    const [activeSlide, setActiveSlide] = useState<number>(0);
 
     const slideManagerRef = useRef<any>(null);
-
     const [canProceed, setCanProceed] = useState<boolean>(true);
 
     const handleContinue = () => {
@@ -27,7 +26,11 @@ const DesktopComponent : FC<ComponentSlides> = ({slides}) => {
     const handlePrevious = () => {
         slideManagerRef?.current?.navigator(-1);
         setCanProceed(false);
-    }
+    };
+
+    const changeSlide = (index: number) => {
+        setActiveSlide(index);
+    };
 
     const triggerFeedback = (text: string, type: string) => {
         setMessage(text);
@@ -46,11 +49,17 @@ const DesktopComponent : FC<ComponentSlides> = ({slides}) => {
     return (
         <>
             <div className="flex justify-between items-center">
-                <div className="w-[120px]" onClick={() => handlePrevious()}>
-                    <CompButton title="Previous" prev />
-                </div>
+                {activeSlide > 0 && (
+                    <div className="w-[120px]" onClick={() => handlePrevious()}>
+                        <CompButton title="Previous" prev />
+                    </div>
+                )}
                 <div className="lg:w-[calc(100%_-_300px)]">
-                    <SlideIndicator num={5} active={1} />
+                    <SlideIndicator
+                        num={slides.length}
+                        active={activeSlide + 1}
+                        changeSlide={changeSlide}
+                    />
                     <div className="mt-4 w-full bg-bgcomp bg-cover rounded-lg min-h-[70vh] place-center fw-600">
                         <SlideManager
                             lessonSlides={slides}
@@ -59,6 +68,7 @@ const DesktopComponent : FC<ComponentSlides> = ({slides}) => {
                             handleFeedback={(text: string, type: string) =>
                                 triggerFeedback(text, type)
                             }
+                            updateActiveSlide={changeSlide}
                         />
                     </div>
                 </div>
