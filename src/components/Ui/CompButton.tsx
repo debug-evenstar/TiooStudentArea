@@ -25,8 +25,8 @@ const CompButton: React.FC<Props> = ({
 }) => {
   return (
     <div className={disabled? "opacity-75 " : ""}>
-      <div className={prev? "polywrapper2" : "polygon-clip"}>
-      <button className={`text-center py-6 text-2xl w-[120px] fw-600 cursor-pointer ${prev? "bg-[#E3E2FF] pl-2 poly-2" : " pr-2 text-white bg-[#86A94B]"}`} onClick={onClick ? onClick : undefined} disabled={disabled}>
+      <div className={prev? "polywrapper2" : "polygon-clip2"}>
+      <button className={` fw-600 cursor-pointer ${prev? "bg-[#E3E2FF] pl-2 poly-2" : " pr-4 text-white bg-[#86A94B] polygon-clip"}`} onClick={onClick ? onClick : undefined} disabled={disabled}>
       {isBusy ? (
           "loading"
         ) : capitalizeTitle ? (
@@ -41,3 +41,57 @@ const CompButton: React.FC<Props> = ({
 };
 
 export default CompButton;
+// text-center py-6 text-2xl w-[120px]
+
+export const ContinueBtn: React.FC<Props> = ({
+  title,
+  onClick,
+  capitalizeTitle,
+  disabled,
+  altClassName,
+  isBusy,
+  prev
+}) => {
+  return (
+    <div className={disabled? "opacity-75 " : ""}>
+      <div className="relative">
+        <div className=""></div>
+      <button className={` fw-600 cursor-pointer pr-4 text-white bg-[#86A94B] polygon-clip`} onClick={onClick ? onClick : undefined} disabled={disabled}>
+      {isBusy ? (
+          "loading"
+        ) : capitalizeTitle ? (
+          title
+        ) : (
+          title
+        )}
+      </button>
+      </div>
+    </div>
+  );
+}
+export const PreviousBtn: React.FC<Props> = ({
+  title,
+  onClick,
+  capitalizeTitle,
+  disabled,
+  altClassName,
+  isBusy,
+  prev
+}) => {
+  return (
+    <div className={disabled? "opacity-75 " : ""}>
+      <div className="relative polygon-clip-prev">
+        <div className=""></div>
+      <button className={` fw-600 cursor-pointer pl-4 text-`} onClick={onClick ? onClick : undefined} disabled={disabled}>
+      {isBusy ? (
+          "loading"
+        ) : capitalizeTitle ? (
+          title
+        ) : (
+          title
+        )}
+      </button>
+      </div>
+    </div>
+  );
+}
