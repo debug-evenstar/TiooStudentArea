@@ -42,7 +42,7 @@ const SubjectDetails = () => {
           <div className="lg:flex justify-between pt-2 lg:pt-7 gap-x-8 lg:px-7">
             <div className="lg:w-[72%]">
               <div className="flex">
-                <div className="flex items-center gap-x-3" onClick={() => navigate(-1)}>
+                <div className="flex items-center gap-x-3 cursor-pointer" onClick={() => navigate(-1)}>
                   <MdOutlineArrowBack className="text-4xl text-primary" />
                   <p className="text-2xl fw-600">Back</p>
                 </div>
