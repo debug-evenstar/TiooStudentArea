@@ -4,7 +4,7 @@ import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from "react-icon
 import { useGetUpcomingLessonQuery } from "../../services/api/routineSlice";
 
 const ComingUp = () => {
-  const [slide, setSlide] = useState(true)
+  const [slide, setSlide] = useState(false)
   const {data} = useGetUpcomingLessonQuery()
 
   const RenderLessonItem = ({ item, index }: any) => {
@@ -53,8 +53,8 @@ const ComingUp = () => {
             !slide && (
               <div className="relative">
                 {
-                  lessons && !!lessons.length && lessons.map((item, index) => (
-                    <p className={`underline mt-2 ${index <= 1? 'text-[#E7A70B]' : 'text-[#86A94B]'}`}>{item.name}</p>
+                  data && !!data.data.length && data.data.slice(0,5).map((item:any, index:number) => (
+                    <p className={`underline mt-2 ${index <= 1? 'text-[#E7A70B]' : 'text-[#86A94B]'}`}>{item.topic}</p>
                   ))
                 }
                 <MdOutlineKeyboardArrowUp className="text-2xl cursor-pointer absolute -top-0 -right-8" onClick={() => setSlide(true)}/>
