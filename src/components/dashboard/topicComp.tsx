@@ -23,7 +23,7 @@ const TopicComponent:FC<LessonTopics> = ({lessons}) => {
     });
     return slideCount;
   }
-  const displayLesson = lessons?.filter((where:any) => where.admin_status !== "Locked")
+  const displayLesson = lessons?.filter((where:any) => where.published !== 0)
   return (
     <>
       <div className="rounded-[8px] box-shade overflow-hidden">
