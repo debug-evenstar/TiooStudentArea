@@ -3,6 +3,9 @@ import { HiOutlineArrowPath } from 'react-icons/hi2'
 import { formatLessonColor, formatLessonStatus, nthNumber } from '../../utils/format'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import dayjs from 'dayjs'
+var advancedFormat = require('dayjs/plugin/advancedFormat')
+dayjs.extend(advancedFormat)
 
 interface Props {
     item: any
@@ -36,7 +39,7 @@ const LessonItem:FC<Props> = ({item}) => {
         <div className='box-shade relative rounded-[8px] p-5 hover:scale-105 duration-100 cursor-pointer' onClick={() => openLesson(item)}>
             <div className='flex items-center gap-x-1'>
                 <p className='fw-600'>{showWeek && `${item.week}`}</p>
-                <p className='fw-400'>{!showWeek && getTimeFrame()}</p>
+                <p className='fw-400'>{!showWeek && <span>{dayjs(item.start_date).format('Do')} - {dayjs(item.end_date).format('Do')}</span>}</p>
                 <div onClick={(e: any) => e.stopPropagation()}>
                 <HiOutlineArrowPath className='text-xl text-[#87909E]' onClick={showTime}/>
                 </div>

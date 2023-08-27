@@ -19,3 +19,17 @@ const NameAvatar:FC<Props> = ({name}) => {
 }
 
 export default NameAvatar
+
+export const DarkNameAvatar:FC<Props> = ({name}) => {
+  const nameRow = name?.split(' ')
+  const firstLetter = nameRow[0]?.charAt(0)
+  const lastLetter = nameRow[1]?.charAt(0)
+return (
+  <div className='w-full h-full grid place-content-center bg-[#4F46E5] rounded-[50%]'>
+      <div className='flex'>
+      <p className='fw-600 text-[18px] text-[#fff] capitalize'>{firstLetter}</p>
+      <p className='fw-600 text-[18px] text-[#fff] capitalize pl-[1px]'>{lastLetter}</p>
+      </div>
+  </div>
+)
+}

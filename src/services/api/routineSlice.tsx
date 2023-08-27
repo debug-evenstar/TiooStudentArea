@@ -8,9 +8,9 @@ import { ErrorResult } from "../../utils/dataTypes";
 
 export const routineApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getClass: builder.query<StudentLoginResult | ErrorResult, number>({
-      query: (param) => ({
-        url: `${ENDPOINT.FETCH_CLASS_PUPIL}/${param}`,
+    getClass: builder.query<any | ErrorResult, void>({
+      query: () => ({
+        url: `${ENDPOINT.FETCH_CLASS_PUPIL}`,
         method: ENDPOINT.HTTP_METHODS.GET,
         headers: {
             Authorization: requestAuthorization(),
@@ -29,11 +29,23 @@ export const routineApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: ENDPOINT.CACHE_LIFETIME.EXTENDED,
     }),
+
+    getUpcomingLesson: builder.query<any | ErrorResult, void>({
+      query: () => ({
+        url: `${ENDPOINT.FETCH_COMING_LESSON}`,
+        method: ENDPOINT.HTTP_METHODS.GET,
+        headers: {
+            Authorization: requestAuthorization(),
+          },
+      }),
+      keepUnusedDataFor: ENDPOINT.CACHE_LIFETIME.EXTENDED,
+    }),
   }),
   overrideExisting: true,
 });
 
 export const {
   useGetClassQuery,
-  useGetClassMatesQuery
+  useGetClassMatesQuery,
+  useGetUpcomingLessonQuery,
 } = routineApiSlice;
