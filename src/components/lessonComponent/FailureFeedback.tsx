@@ -8,7 +8,7 @@ const FailureFeedback:FC<Props> = ({close, message}) => {
   return (
     <>
         <div className=''>
-            <div className='h-[80vh] w-[300px] absolute bottom-0 -right-3 bg-bgfailure bg-fit flex  justify-end showfeed'>
+            <div className='h-[80vh] w-[280px] absolute bottom-0 -right-3 bg-bgfailure bg-fit flex  justify-end showfeed'>
                 <div className='text-center text-white fw-600 w-[85%] pr-4 mb-6 mt-[120px]'>
                     <p className='fs-700 blob-thing'>{message}</p>
                 </div>
