@@ -13,7 +13,7 @@ export const SubjectSkelLoader = () => {
 
 export const LessonSkelLoader = () => {
     return (
-        <div className="grid lg:grid-cols-3 px-2 py-4 lg:p-8 gap-y-4 lg:gap-12">
+        <div className="bg-white grid lg:grid-cols-3 px-2 py-4 lg:p-8 gap-y-4 lg:gap-12">
             <Skeleton className='h-32 !rounded-[8px] box-shade'/>
             <Skeleton className='hidden md:block h-32 rounded-[8px] box-shade'/>
             <Skeleton className='hidden lg:block h-32 rounded-[8px] box-shade'/>
