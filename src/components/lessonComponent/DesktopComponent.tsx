@@ -1,5 +1,5 @@
 import React, { useState, useRef, FC } from "react";
-import CompButton, { ContinueBtn, PreviousBtn } from "../Ui/CompButton";
+import { ContinueBtn, PreviousBtn } from "../Ui/CompButton";
 import SlideIndicator from "./slideIndicator";
 import SuccessFeedback from "./SuccessFeedback";
 import FailureFeedback from "./FailureFeedback";
