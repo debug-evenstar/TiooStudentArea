@@ -11,6 +11,7 @@ import { useAppSelector } from "../../redux/store";
 const SubjectDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [isBusy, setIsBusy] = useState(false)
   const student = useAppSelector((state) => state.user.user);
   const [getSubject] = useLazyGetSubjectQuery();
   const [getSubjectLessons] = useLazyGetSubjectLessonsQuery();
@@ -24,8 +25,10 @@ const SubjectDetails = () => {
   }
 
   const loadSubjectLessons = async (id : any) => {
+    setIsBusy(true)
     await getSubjectLessons(id).then((response : any) => {
       setSubjectLessons(response.data.data);
+      setIsBusy(false)
     })
   }
 
@@ -42,7 +45,7 @@ const SubjectDetails = () => {
           <div className="lg:flex justify-between pt-2 lg:pt-7 gap-x-8 lg:px-7">
             <div className="lg:w-[72%]">
               <div className="flex">
-                <div className="flex items-center gap-x-3 cursor-pointer" onClick={() => navigate(-1)}>
+                <div className="flex items-center gap-x-3 cursor-pointer" onClick={() => navigate('/home')}>
                   <MdOutlineArrowBack className="text-4xl text-primary" />
                   <p className="text-2xl fw-600">Back</p>
                 </div>
@@ -57,7 +60,7 @@ const SubjectDetails = () => {
               </>)}
               </div>
               <div className="mt-6 lg:mt-10">
-                <TopicComponent lessons={subjectLessons}/>
+                <TopicComponent lessons={subjectLessons} busy={isBusy}/>
               </div>
             </div>
             <div className="lg:w-[28%] mt-6 lg:mt-0 px-2 lg:px-0">
