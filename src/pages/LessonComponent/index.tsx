@@ -46,8 +46,8 @@ const LessonComponent = () => {
               className="w-full absolute"
             />
             <div className="mt-[9%] text-center relative">
-              <p className="fw-600 text-black text-lg hidden">Lesson 1</p>
-              {lesson && (<p className="font-bold  text-[#FA14D5] text-2xl 2xl:text-3xl">
+              {/* <p className="fw-600 text-black text-lg">Lesson 1</p> */}
+              {lesson && (<p className="font-bold  text-[#FA14D5] pt-3 text-2xl 2xl:text-3xl ">
                 {lesson.topic}
               </p>)}
             </div>
