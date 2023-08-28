@@ -30,6 +30,6 @@ export enum CACHE_LIFETIME {
   export const FETCH_LESSON_SLIDES = (id : any) => `lesson/${id}/template`;
 
   // classmates
-  export const FETCH_CLASS_PUPIL = 'student/classmates'
+  export const FETCH_CLASS_PUPIL = 'student/classteachersandmates'
   export const FETCH_CLASSMATE = 'class/students/'
   export const FETCH_COMING_LESSON = 'lesson/read'
