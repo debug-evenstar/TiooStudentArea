@@ -24,7 +24,7 @@ const ComingUp = () => {
     <>
       <div className="border-2 border-[#00000026] rounded p-2 bg-white">
         <div className="relative text-center border-b-2 pb-5 mb-5">
-          <p className="text-[#87909E]">Week 2</p>
+          {/* <p className="text-[#87909E]">Week 2</p> */}
           <p className="mt-1 fs-600 text-xl fw-600">Coming Up</p>
           <div className="absolute w-12 bg-white flex justify-center h-7 left-[45%] -bottom-5">
             <p className="bg-[#FF006E] w-4 h-4 rotate-icon"></p>
@@ -57,7 +57,7 @@ const ComingUp = () => {
                     <p className={`underline mt-2 ${index <= 1? 'text-[#E7A70B]' : 'text-[#86A94B]'}`}>{item.topic}</p>
                   ))
                 }
-                <MdOutlineKeyboardArrowUp className="text-2xl cursor-pointer absolute -top-0 -right-8" onClick={() => setSlide(true)}/>
+                <MdOutlineKeyboardArrowUp className="text-2xl cursor-pointer absolute -top-0 -right-8" onClick={() => setSlide(false)}/>
               </div>
             )
           }
