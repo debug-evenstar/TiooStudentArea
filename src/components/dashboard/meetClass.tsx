@@ -27,7 +27,7 @@ const MeetClass = () => {
             </div>
           </div>
         </div>
-        <div className="border-2 border-[#00000026] bg-white rounded p-2 lg:px-4 py-4 mt-3">
+        <div className="border-2 border-[#00000026] bg-white rounded-[8px] p-2 lg:px-4 py-4 mt-3">
           {data &&
             !!data?.data?.class_mates?.length &&
             data?.data?.class_mates?.map((item:any, index:number) => (

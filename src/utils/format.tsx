@@ -55,6 +55,12 @@ export const formatLessonStatus = (status: string) => {
           <SlLockOpen className="text-lg" />
         </p>
       );
+    case "unlocked":
+        return (
+          <p className="text-[#86A94B] fw-500 mr-2">
+            <SlLockOpen className="text-lg" />
+          </p>
+        );
     case "Active":
       return (
         <p className="text-[#86A94B] fw-500 mr-2">
