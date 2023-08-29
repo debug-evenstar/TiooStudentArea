@@ -4,6 +4,7 @@ import { useAppSelector } from '../../redux/store';
 
 const PostHeader = () => {
     const user = useAppSelector((state) => state.user.user);
+    console.log(user);
   return (
     <div className="w-full lg:h-[206px] bg-dash lg:bg-fit lg:rounded-b-[16px] px-2 py-4 lg:py-0  lg:px-7 flex items-center justify-between">
             <div className="">
@@ -33,7 +34,7 @@ const PostHeader = () => {
               {user.school &&  <div className="mt-4 grid grid-cols-2 lg:flex gap-x-4 fw-600">
                 <div className="flex gap-x-2">
                   <p className="text-[#00000080] nue">Class:</p>
-                  <p className="nue">{user.studentClass}</p>
+                  <p className="nue">{user.studentClassArm}</p>
                 </div>
                 <div className="flex gap-x-2">
                   <p className="text-[#00000080] nue">Subject:</p>
