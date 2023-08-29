@@ -19,14 +19,20 @@ const SubjectContainer = () => {
   const gotoSubDetail = (id: any) => {
     navigate(`/home/subjects/${id}`);
   };
-
-  const SubjectItem = ({ item }: any) => {
+  const banner: string[] = [
+    "https://res.cloudinary.com/dic7regoe/image/upload/v1693303588/praxeum/image_14_1_uedshj.png",
+    "https://res.cloudinary.com/dic7regoe/image/upload/v1693303621/praxeum/image_16_ayp3uy.png",
+    "https://res.cloudinary.com/dic7regoe/image/upload/v1693303621/praxeum/Frame_1000004400_1_j1coy2.png",
+    "https://res.cloudinary.com/dic7regoe/image/upload/v1693303599/praxeum/Frame_1000004400_ug7wgi.png",
+    "https://res.cloudinary.com/dic7regoe/image/upload/v1693303582/praxeum/image_17_hou0nj.png",
+  ];
+  const SubjectItem = ({ item, img }: any) => {
     return (
       <div
         className="subject-con hover:scale-105 duration-100 cursor-pointer"
         onClick={() => gotoSubDetail(item.id)}
       >
-        <img src={item.image} alt={item.naming} className="w-full h-[130px]" />
+        <img src={img} alt={item.naming} className="w-full h-[130px]" />
         <div className="min-h-[100px] p-3">
           <p className="fw-600">{item.naming}</p>
           <p className="fs-400">{item.description}</p>
@@ -67,9 +73,11 @@ const SubjectContainer = () => {
             >
               {(subjects &&
                 !!subjects?.subjects?.length) &&
-                subjects.subjects.map((item: any, index: number) => (
-                  <SubjectItem item={item} key={index} />
-                ))}
+                subjects.subjects.map((item: any, index: number) => {
+                  const imgIndex = index % banner.length;
+                  const img = banner[imgIndex];
+                return ( <SubjectItem item={item} key={index} img={img} />)
+})}
             </div>
           </div>
         )}
