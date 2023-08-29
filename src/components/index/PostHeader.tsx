@@ -33,7 +33,7 @@ const PostHeader = () => {
               {user.school &&  <div className="mt-4 grid grid-cols-2 lg:flex gap-x-4 fw-600">
                 <div className="flex gap-x-2">
                   <p className="text-[#00000080] nue">Class:</p>
-                  <p className="nue">{user.studentClass}</p>
+                  <p className="nue">{user.studentClassArm}</p>
                 </div>
                 <div className="flex gap-x-2">
                   <p className="text-[#00000080] nue">Subject:</p>
@@ -41,7 +41,7 @@ const PostHeader = () => {
                 </div>
                 <div className="flex gap-x-2">
                   <p className="text-[#00000080] nue">Term:</p>
-                  <p className="nue">2nd</p>
+                  <p className="nue">1st</p>
                 </div>
               </div>}
             </div>
