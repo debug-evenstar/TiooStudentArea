@@ -33,8 +33,8 @@ const TopicComponent:FC<LessonTopics> = ({lessons, busy}) => {
           <p className="text-lg lg:text-3xl fw-700 text-[#030036BD]">First Term</p>
           <div className="flex gap-x-2">
             {lessons &&
-              !!lessons.length &&
-              lessons.map((item:any) => (
+              !!displayLesson.length &&
+              displayLesson.map((item:any) => (
                 <div key={item.name} className="bg-[#4F46E5] rounded-[4px] w-6 h-6"></div>
               ))}
           </div>
