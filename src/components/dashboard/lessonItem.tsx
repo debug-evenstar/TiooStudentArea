@@ -36,7 +36,7 @@ const LessonItem:FC<Props> = ({item}) => {
 
   return (
     <>
-        <div className='box-shade relative rounded-[8px] p-5 hover:scale-105 duration-100 cursor-pointer' onClick={() => openLesson(item)}>
+        <div className='box-shade max-h-32 relative rounded-[8px] p-5 hover:scale-105 duration-100 cursor-pointer' onClick={() => openLesson(item)}>
             <div className='flex items-center gap-x-1'>
                 <p className='fw-600'>{showWeek && `${item.week}`}</p>
                 <p className='fw-400'>{!showWeek && <span>{dayjs(item.start_date).format('Do')} - {dayjs(item.end_date).format('Do')}</span>}</p>
