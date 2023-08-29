@@ -29,14 +29,14 @@ const TopicComponent:FC<LessonTopics> = ({lessons, busy}) => {
   return (
     <>
       <div className="rounded-[8px] box-shade overflow-hidden">
-        <div className="bg-frame bg-fit rounded-t-[8px] flex justify-between px-6 py-4">
-          <p className="text-lg lg:text-3xl fw-600 text-white">First Term</p>
-          <div className="flex gap-x-1">
-            {/* {lessons &&
+        <div className="bg-frame3 bg-fit rounded-t-[8px] flex items-center justify-between px-6 py-4">
+          <p className="text-lg lg:text-3xl fw-700 text-[#030036BD]">First Term</p>
+          <div className="flex gap-x-2">
+            {lessons &&
               !!lessons.length &&
-              lessons.map((item) => (
-                <div key={item.name} className="bg-white rounded w-6 h-6"></div>
-              ))} */}
+              lessons.map((item:any) => (
+                <div key={item.name} className="bg-[#4F46E5] rounded-[4px] w-6 h-6"></div>
+              ))}
           </div>
         </div>
         <div className="px-6 py-4 bg-white border-b border-[#E3E2FF]">
@@ -58,7 +58,7 @@ const TopicComponent:FC<LessonTopics> = ({lessons, busy}) => {
               ))}
           </div>
         )}
-        <div className="p-6 bg-white rounded-b-[8px] border-t border-[#E3E2FF] flex justify-between items-center" onClick={open? closeContainer : () => setOpen(true)}>
+        <div className="p-6 bg-white rounded-b-[8px] border-t border-[#E3E2FF] flex justify-between items-center relative index-20" onClick={open? closeContainer : () => setOpen(true)}>
           <div className="flex items-center gap-x-2">
             <p className="text-[#87909E] fw-600">{`${displayLesson.length} lessons,`}</p>
             <p className="text-[#87909E] fw-600">{totalSlides()} slides</p>

@@ -22,7 +22,7 @@ const ComingUp = () => {
   };
   return (
     <>
-      <div className="border-2 border-[#00000026] rounded p-2 bg-white">
+      <div className="border-2 border-[#00000026] rounded-[8px] p-2 bg-white">
         <div className="relative text-center border-b-2 pb-5 mb-5">
           {/* <p className="text-[#87909E]">Week 2</p> */}
           <p className="mt-1 fs-600 text-xl fw-600">Coming Up</p>
