@@ -18,14 +18,16 @@ const TopicComponent:FC<LessonTopics> = ({lessons, busy}) => {
       setClosed(false);
     }, 450);
   };
+  
+  const displayLesson = lessons?.filter((where:any) => where.published !== 0)
+  
   const totalSlides = () => {
     let slideCount = 0;
-    lessons.forEach((lesson :any )=>{
+    displayLesson.forEach((lesson :any )=>{
       slideCount += lesson.LessonSlides.length;
     });
     return slideCount;
   }
-  const displayLesson = lessons?.filter((where:any) => where.published !== 0)
   return (
     <>
       <div className="rounded-[8px] box-shade overflow-hidden">

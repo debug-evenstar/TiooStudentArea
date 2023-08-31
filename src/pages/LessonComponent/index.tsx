@@ -15,7 +15,6 @@ const LessonComponent = () => {
   const fetchLessonData = async (id:any) => {
     await getLesson(id).then(response => {
       const lessonData = response.data.data;
-      console.log(lessonData);
       setLesson(lessonData);
       const parseSlides = lessonData.LessonSlides.map((slide : any) => slide.slide_data);
       setLessonSlides(parseSlides);
