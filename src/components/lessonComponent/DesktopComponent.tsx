@@ -56,11 +56,6 @@ const DesktopComponent: FC<ComponentSlides> = ({ slides , back}) => {
         }
     };
 
-    const continueButtonStyles = {
-        visible: "w-[120px]",
-        hidden: "w-[120px] opacity-0 cursor-default",
-    };
-
     return (
         <>
             <div className="flex justify-between items-center">
@@ -87,14 +82,10 @@ const DesktopComponent: FC<ComponentSlides> = ({ slides , back}) => {
                     </div>
                 </div>
                 <div
-                    className={
-                        canProceed
-                            ? continueButtonStyles.visible
-                            : continueButtonStyles.hidden
-                    }
+                    className={"w-[120px]"}
                     onClick={() => handleContinue()}
                 >
-                    <ContinueBtn title="Continue" />
+                    {canProceed && (<ContinueBtn title="Continue" />)}
                 </div>
             </div>
             <div>
