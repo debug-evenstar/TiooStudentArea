@@ -1,4 +1,3 @@
-import React from "react";
 import DashLayout from "../../components/layouts/DashLayout";
 import ComingUp from "../../components/dashboard/comingUp";
 import MeetClass from "../../components/dashboard/meetClass";
