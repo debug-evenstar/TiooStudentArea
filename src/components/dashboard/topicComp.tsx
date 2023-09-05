@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import LessonItem from "./lessonItem";
 import { LessonSkelLoader } from "../Ui/SkeltonLoader";
