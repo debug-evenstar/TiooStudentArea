@@ -4,7 +4,8 @@ import { useAppSelector } from '../../redux/store';
 
 const PostHeader = () => {
     const user = useAppSelector((state) => state.user.user);
-    console.log(user);
+    const nameRow = user.name?.split(' ')
+    const firstname = nameRow[0]
   return (
     <div className="w-full lg:h-[206px] bg-dash lg:bg-fit lg:rounded-b-[16px] px-2 py-4 lg:py-0  lg:px-7 flex items-center justify-between">
             <div className="">
@@ -23,7 +24,7 @@ const PostHeader = () => {
                   <p className="nue text-[#00000080] fw-700 text-xl lg:text-4xl">
                     Welcome,
                   </p>
-                  <p className="nue fw-700 text-xl lg:text-4xl">{user.name}</p>
+                  <p className="nue fw-700 text-xl lg:text-4xl">{firstname}</p>
                   <img
                     src="https://res.cloudinary.com/dic7regoe/image/upload/v1689195430/praxeum/Emoji_nubac1.png"
                     alt="school"
