@@ -25,11 +25,11 @@ const PostHeader = () => {
                     Welcome,
                   </p>
                   <p className="nue fw-700 text-xl lg:text-4xl">{firstname}</p>
-                  <img
+                  {/* <img
                     src="https://res.cloudinary.com/dic7regoe/image/upload/v1689195430/praxeum/Emoji_nubac1.png"
                     alt="school"
                     className="w-4 lg:w-7"
-                  />
+                  /> */}
                 </div>
               </div>
               {user.school &&  <div className="mt-4 grid grid-cols-2 lg:flex gap-x-4 fw-600">
