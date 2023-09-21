@@ -39,7 +39,7 @@ const LogToken = () => {
                     school: res.data.data.schoolStudent
               }))
               storeLocalToken("token", token) 
-              navigate("/home")
+              navigate("/library")
             }else {
               toast.error(res.error.data.message);
               setIsBusy(false);
