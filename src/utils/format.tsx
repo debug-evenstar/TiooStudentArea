@@ -23,12 +23,16 @@ export const formatAsNgnMoney = (value: number | string) => {
 };
 
 export const formatLessonColor = (name: string, status: string) => {
-  switch (status) {
+  switch (status.toLocaleLowerCase()) {
     case "completed":
       return <p className="text-[#E40FC2] fw-600">{name}</p>;
     case "ongoing":
       return <p className="text-[#E7A70B] fw-600">{name}</p>;
     case "pending":
+      return <p className="text-[#86A94B] fw-600">{name}</p>;
+      case "unlocked":
+      return <p className="text-[#86A94B] fw-600">{name}</p>;
+      case "active":
       return <p className="text-[#86A94B] fw-600">{name}</p>;
     default:
       return name;
