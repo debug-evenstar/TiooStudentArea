@@ -37,3 +37,4 @@ export enum CACHE_LIFETIME {
   // library
   export const FETCH_LIBRARY = 'student/library'
   export const FETCH_NETWORK = 'student/network'
+  export const FETCH_CHAPTER = '/front/material'
