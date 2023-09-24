@@ -1,14 +1,14 @@
 import DashLayout from '../../components/layouts/DashLayout'
-import PostHeader from '../../components/index/PostHeader'
 import SyllabusContainer from '../../components/library/SyllabusCont'
 import MeetNetwork from '../../components/library/meetNetwork'
+import LibraryHeader from '../../components/library/libraryHeader'
 
 const LibraryHome = () => {
   return (
     <>
         <DashLayout>
         <div className="nue bg-[#FAFAFA] h-full pb-16">
-          <PostHeader/>
+          <LibraryHeader/>
           <div className="lg:flex justify-between mt-12 gap-x-8 lg:px-7">
             <div className="lg:w-[72%]">
               <SyllabusContainer/>
