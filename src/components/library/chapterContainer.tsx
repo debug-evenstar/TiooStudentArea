@@ -32,7 +32,7 @@ const ChapterComponent:FC<LessonTopics> = ({lessons, busy}) => {
     <>
       <div className="rounded-[8px] box-shade overflow-hidden">
         <div className="bg-frame3 bg-fit rounded-t-[8px] flex items-center justify-between px-6 py-4">
-          <p className="text-lg lg:text-3xl fw-700 text-[#030036BD]">Chapter</p>
+          <p className="text-lg lg:text-3xl fw-700 text-[#030036BD]">Chapter 1</p>
           <div className="flex gap-x-2">
             {lessons &&
               !!displayLesson.length &&
