@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { MdArrowBack } from "react-icons/md";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import RenderComponent from "./renderComp";
 import { useLazyGetLessonSlidesQuery } from "../../services/api/lessonSlice";
 import { useAppSelector } from "../../redux/store";
 import { LessonPage } from "@Praxeum-ai/LearnBlocks";
