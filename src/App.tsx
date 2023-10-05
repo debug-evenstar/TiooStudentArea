@@ -7,6 +7,7 @@ import LibraryHome from "./pages/Library";
 import LogToken from "./pages/Auth/LogToken";
 import LessonComponent from "./pages/LessonComponent";
 import TextBookChapters from "./pages/Library/textbookDetails";
+import PreviewTemplateDoc from "./pages/Library/previewTemplateDoc";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/library" element={<LibraryHome />} />
         <Route path="/library/subjects/:id" element={<TextBookChapters />} />
         <Route path="/lesson/:id" element={<LessonComponent />} />
+        <Route path="/library/:id" element={<PreviewTemplateDoc />} />
       </Routes>
     </BrowserRouter>
   );
