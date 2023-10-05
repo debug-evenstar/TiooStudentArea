@@ -23,7 +23,7 @@ const Button: React.FC<Props> = ({
 }) => {
   return (
     <div className={disabled? "opacity-75 " : ""}>
-      <button className={altClassName || `py-3 lg:text-lg w-full  ${disabled? 'cursor-not-allowed btn-disabled' : 'btn-primary'}`} onClick={onClick ? onClick : undefined} disabled={disabled}>
+      <button className={altClassName || `py-3 lg:text-xl w-full fw-600  ${disabled? 'cursor-not-allowed btn-disabled' : 'btn-primary'}`} onClick={onClick ? onClick : undefined} disabled={disabled}>
       {isBusy ? (
           "loading"
         ) : capitalizeTitle ? (
