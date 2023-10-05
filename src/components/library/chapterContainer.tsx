@@ -2,6 +2,8 @@ import { FC, useState } from "react";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import { LessonSkelLoader } from "../Ui/SkeltonLoader";
 import ChapterItem from "./chapterItem";
+import useModal from "../../hooks/useModal";
+import ChooseModule from "./chooseModule";
 
 interface LessonTopics {
   lessons : any
@@ -11,6 +13,7 @@ interface LessonTopics {
 const ChapterComponent:FC<LessonTopics> = ({lessons, busy}) => {
   const [isClosed, setClosed] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(true);
+  const {Modal, setShowModal} = useModal()
   const closeContainer = () => {
     setClosed(true);
     setTimeout(() => {
@@ -41,10 +44,11 @@ const ChapterComponent:FC<LessonTopics> = ({lessons, busy}) => {
               ))}
           </div>
         </div>
-        <div className="px-6 py-4 bg-white border-b border-[#E3E2FF]">
-          {/* <p className="text-lg lg:text-2xl text-[#87909E] fw-600">
-            Introduction to Basic Science
-          </p> */}
+        <div className="px-6 py-4 flex justify-between bg-white border-b border-[#E3E2FF]">
+          <p className="text-lg lg:text-2xl text-[#87909E] fw-600">
+            
+          </p>
+          <button className="gradient-btn px-4 py-2" onClick={() => setShowModal(true)}>View PDF</button>
         </div>
         {busy && <LessonSkelLoader/>}
         {open && (
@@ -78,6 +82,9 @@ const ChapterComponent:FC<LessonTopics> = ({lessons, busy}) => {
           )}
         </div>
       </div>
+      <Modal title="Choose Module">
+        <ChooseModule data={displayLesson}/>
+      </Modal>
     </>
   );
 };
