@@ -70,7 +70,7 @@ const PreviewTemplateDoc = () => {
           </div>
         </div>
         <div className="lg:mt-16 mb-16 w-full">
-            <ViewImgDoc data={[]}/>
+            <ViewImgDoc data={[]} id={id}/>
         </div>
       </div>
     </>

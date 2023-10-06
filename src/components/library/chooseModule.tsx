@@ -18,10 +18,11 @@ const ChooseModule:FC<Props> = ({data}) => {
   return (
     <>
         <div className='pt-4'>
+            <div className='h-[250px] oveflow-y-auto'>
             {
                 data && data.map((item:any) => (
                     <div
-                    className="flex gap-x-2 mb-3 px-4 py-3 rounded input-shade"
+                    className="flex gap-x-2 mb-3 px-4 lg:px-5 py-3 rounded input-shade "
                     key={item.id}
                   >
                     <input
@@ -32,11 +33,12 @@ const ChooseModule:FC<Props> = ({data}) => {
                       onChange={handleSelectSubject}
                     />
                     <div>
-                      <label className="block fw-600 mt-[1px] text-[17px] text-[#87909EBD]">{item.week}</label>
+                      <label className="block fw-600 mt-[1px] text-[17px] text-[#87909EBD]">{item.topic}</label>
                     </div>
                   </div>
                 ))
             }
+            </div>
             {
                 data && !!data.length && <div className='mt-10'>
                     <Button title={'View'} disabled={!selectedSubject} onClick={() => openLesson(selectedSubject)}/>

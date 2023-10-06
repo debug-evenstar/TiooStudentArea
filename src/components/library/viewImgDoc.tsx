@@ -11,8 +11,9 @@ import 'swiper/css/effect-cards';
 import { Navigation } from "swiper";
 interface Props {
   data: any;
+  id:string | undefined;
 }
-const ViewImgDoc: FC<Props> = ({ data }) => {
+const ViewImgDoc: FC<Props> = ({ data, id }) => {
   const banner: string[] = [
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXCZ3ybFDWM3BONavxok4XLmoB4W1JVDXv-cSx2EaGf1iAgoLLEanKBUK5gHBiYux6lUU&usqp=CAU",
     "https://img.lovepik.com/background/20211101/small/lovepik-technological-information-mobile-wallpaper-background-image_400492405.jpg",
@@ -23,7 +24,7 @@ const ViewImgDoc: FC<Props> = ({ data }) => {
   const navigate = useNavigate()
   const [currentIndex, setCurrentIndex] = useState<number>(0)
   const navToSlides = () => {
-    navigate(`/lesson/${data.id}`)
+    navigate(`/lesson/${id}`)
   }
   const navigationPrevRef = React.useRef(null)
   const navigationNextRef = React.useRef(null)
