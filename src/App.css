@@ -368,9 +368,9 @@ input[type="checkbox"]:checked {
   }
   .active {
     background-color: white;
-    border-radius: 10px;
+    border-radius: 20px;
     display: block;
-    padding: 10px;
+    padding: 6px 10px;
     color: #4f46e5;
     font-weight: 600;
   }
