@@ -33,3 +33,8 @@ export enum CACHE_LIFETIME {
   export const FETCH_CLASS_PUPIL = 'student/classteachersandmates'
   export const FETCH_CLASSMATE = 'class/students/'
   export const FETCH_COMING_LESSON = 'lesson/read'
+
+  // library
+  export const FETCH_LIBRARY = 'student/library'
+  export const FETCH_NETWORK = 'student/network'
+  export const FETCH_CHAPTER = '/front/material'
