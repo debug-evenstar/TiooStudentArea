@@ -71,7 +71,7 @@ const SyllabusContainer = () => {
   return (
     <>
       <div className="border border rounded-[18px] overflow-hidden rue">
-        <div className="flex items-center p-5 bg-brown justify-between">
+        <div className="flex items-center p-5 bg-brown bg-cover justify-between">
           <div className="flex items-center gap-x-2">
             <p className="fw-600 lg:text-2xl">School Books</p>
             <p className="lg:text-2xl text-[#1E1B1B80]">({syllabus?.length})</p>
@@ -110,7 +110,7 @@ const SyllabusContainer = () => {
         </div>
       </div>
       <div className="border border rounded-[18px] mt-5 lg:mt-12 overflow-hidden rue">
-        <div className="flex items-center p-5 bg-brown justify-between">
+        <div className="flex items-center p-5 bg-brown bg-cover justify-between">
           <div className="flex items-center gap-x-2">
             <p className="fw-600 lg:text-2xl">Extra-Curricula</p>
             <p className="lg:text-2xl text-[#1E1B1B80]">
@@ -140,7 +140,7 @@ const SyllabusContainer = () => {
         </div>
       </div>
       <div className="border border rounded-[18px] mt-5 lg:mt-12 overflow-hidden rue">
-        <div className="flex items-center p-5 bg-brown justify-between">
+        <div className="flex items-center p-5 bg-brown bg-cover justify-between">
           <div className="flex items-center gap-x-2">
             <p className="fw-600 lg:text-2xl">Games</p>
             <p className="lg:text-2xl text-[#1E1B1B80]">({games?.length})</p>
