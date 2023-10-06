@@ -295,8 +295,11 @@ input[type="checkbox"]:checked {
   .circle {
     border-radius: 50%;
   }
-  .bg-brown {
+  .bg-brow {
     background: url('https://res.cloudinary.com/dic7regoe/image/upload/v1696531899/praxeum/Desktop_-_631_k8ei5t.png');
+  }
+  .bg-brown{
+    background: url('https://res.cloudinary.com/dic7regoe/image/upload/v1693301653/praxeum/Frame_1000004193_1_n5eyfh.png');
   }
   .text-primary {
     color: #4f46e5;
