@@ -35,6 +35,10 @@
   width: 0;
   height: 0;
 }
+.graybar::-webkit-scrollbar {
+  width: 5px;
+  height: 0px;
+}
 
 /* Track */
 ::-webkit-scrollbar-track {
@@ -77,42 +81,6 @@ input[type="checkbox"]:checked {
   background-color: rgb(132, 132, 132);
   opacity: 0.6;
   padding: 7px;
-}
-.swiper-button-next {
-  /* width: 30px !important;
-  height: 30px !important;
-  border-radius: 50%;
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-  background-image: linear-gradient(
-      to bottom,
-      rgba(246, 239, 239, 0.4),
-      rgba(225, 225, 225, 0.4)
-    ),
-    url("https://res.cloudinary.com/das90kzig/image/upload/v1678528498/react-frontend/arrow-small-right_ixngcd.png");
-  background-size: contain;
-  background-color: white; */
-  position: absolute;
-  right: 0 !important;
-  /* top: 34% !important; */
-  z-index: 3000;
-}
-.swiper-button-prev {
-  /* width: 30px !important;
-  height: 30px !important; */
-  /* border-radius: 50%; */
-  /* box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-  background-image: linear-gradient(
-      to bottom,
-      rgba(246, 239, 239, 0.4),
-      rgba(225, 225, 225, 0.4)
-    ),
-    url("https://res.cloudinary.com/das90kzig/image/upload/v1678528498/react-frontend/arrow-small-left_qifgzs.png");
-  background-size: contain;
-  background-color: white;
-  position: absolute; */
-  left: -180px !important;
-  /* top: 34% !important; */
-  z-index: 3000;
 }
 @media (max-width: 960px) {
   .swiper-button-prev,
