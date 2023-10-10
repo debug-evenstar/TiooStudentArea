@@ -15,9 +15,17 @@ export const lessonApiSlice = apiSlice.injectEndpoints({
                 },
             }),
             keepUnusedDataFor: ENDPOINT.CACHE_LIFETIME.EXTENDED,
+        }),
+
+        getFreeSlides: builder.query<any | ErrorResult, void>({
+            query: () => ({
+                url: `${ENDPOINT.FETCH_FREE_SLIDE}`,
+                method: ENDPOINT.HTTP_METHODS.GET,
+            }),
+            keepUnusedDataFor: ENDPOINT.CACHE_LIFETIME.EXTENDED,
         })
     }),
     overrideExisting: true,
 });
 
-export const { useLazyGetLessonSlidesQuery } = lessonApiSlice;
+export const { useLazyGetLessonSlidesQuery, useGetFreeSlidesQuery } = lessonApiSlice;
