@@ -28,6 +28,7 @@ export enum CACHE_LIFETIME {
 
   // lesson
   export const FETCH_LESSON_SLIDES = (id : any) => `lesson/${id}/template`;
+  export const FETCH_FREE_SLIDE = `open/lesson/457/template`
 
   // classmates
   export const FETCH_CLASS_PUPIL = 'student/classteachersandmates'

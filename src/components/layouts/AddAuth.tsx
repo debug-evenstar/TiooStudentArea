@@ -8,7 +8,7 @@ const AddAuth = (Component: any) => {
     const { IsAuthenticated } = useAuthCheck();
 
     const gotoLogin = () => {
-        navigate("/");
+        window.location.replace("https://hellotioo.com");
     }
     const checkAuth = () => {
       if (!IsAuthenticated) {
