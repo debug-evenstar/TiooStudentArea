@@ -83,7 +83,7 @@ const LogToken = () => {
                     We're sorry, but it looks like your session token has expired, please login to gain access to your dashboard.
                   </p>
                   <div className="lg:w-10/12 mt-8 mx-auto">
-                    <a href="https://student.hellotioo.com/login" className='btn-like'>Return to Login</a>
+                    <a href={`${process.env.REACT_APP_HOME_URL}/login`} className='btn-like'>Return to Login</a>
                   </div>
                 </div>
               </div>
