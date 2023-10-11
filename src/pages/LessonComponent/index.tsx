@@ -21,7 +21,7 @@ const LessonComponent = () => {
     });
   }
   const returnToLessons = () => {
-    navigate(`/home/subjects/${lesson.Subject.id}`);
+    navigate(-1);
   }
   useEffect(()=>{
     fetchLessonData(id);
