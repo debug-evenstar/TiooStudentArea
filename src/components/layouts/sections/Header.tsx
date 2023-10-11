@@ -39,7 +39,7 @@ const Header = () => {
               <li>
                 <NavLink to="/library">
                   {({ isActive, isPending }) => (
-                    <span className={isActive ? "actives p-5" : "p-[10px]"}>
+                    <span className={isActive ? "actives" : "p-[10px]"}>
                       Library
                     </span>
                   )}
