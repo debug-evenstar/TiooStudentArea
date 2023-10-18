@@ -6,13 +6,11 @@ import ComingUp from "../../components/dashboard/comingUp";
 import MeetClass from "../../components/dashboard/meetClass";
 import TopicComponent from "../../components/dashboard/topicComp";
 import { useLazyGetSubjectQuery, useLazyGetSubjectLessonsQuery } from "../../services/api/subjectSlice";
-import { useAppSelector } from "../../redux/store";
 
 const SubjectDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [isBusy, setIsBusy] = useState(false)
-  const student = useAppSelector((state) => state.user.user);
   const [getSubject] = useLazyGetSubjectQuery();
   const [getSubjectLessons] = useLazyGetSubjectLessonsQuery();
   const [subject, setSubject] = useState<any>();
