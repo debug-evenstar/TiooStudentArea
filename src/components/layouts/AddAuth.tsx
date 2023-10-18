@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import useAuthCheck from "../../hooks/useAuthCheck";
 
 const AddAuth = (Component: any) => {
   const Wrapper = (props: any) => {
-    const navigate = useNavigate();
     const { IsAuthenticated } = useAuthCheck();
 
     const gotoLogin = () => {

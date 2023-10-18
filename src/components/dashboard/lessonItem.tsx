@@ -1,6 +1,6 @@
 import React, {FC, useState} from 'react'
 import { HiOutlineArrowPath } from 'react-icons/hi2'
-import { formatLessonColor, formatLessonStatus, nthNumber } from '../../utils/format'
+import { formatLessonColor, formatLessonStatus } from '../../utils/format'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import dayjs from 'dayjs'
@@ -16,14 +16,6 @@ const LessonItem:FC<Props> = ({item}) => {
     const showTime = (e:any) => {
         e.preventDefault();
         setShowWeek(!showWeek)
-    }
-
-    const getTimeFrame = () => {
-        const start = new Date(item.start_date);
-        const end = new Date(item.end_date);
-        const timeFrameStart = Number.parseInt( start.toLocaleDateString().split("/")[0] );
-        const timeFrameEnd = Number.parseInt( end.toLocaleDateString().split("/")[0] );
-        return `${timeFrameStart}${nthNumber(timeFrameStart)}-${timeFrameEnd}${nthNumber(timeFrameEnd)}`;
     }
 
     const openLesson = (item:any) => {

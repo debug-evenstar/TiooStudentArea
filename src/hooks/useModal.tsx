@@ -1,5 +1,5 @@
 // import { PulseSpinner } from "@/shared/components/Ui/Loading";
-import React, { Fragment, useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FaTimes } from "react-icons/fa";
 
 interface Props {

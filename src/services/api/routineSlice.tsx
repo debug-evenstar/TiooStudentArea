@@ -3,7 +3,6 @@ import { apiSlice } from "../apiSlice";
 
 import * as ENDPOINT from "../constants";
 import { requestAuthorization } from "../helpers";
-import {  StudentLoginResult } from "../../utils/dataTypes/auth";
 import { ErrorResult } from "../../utils/dataTypes";
 
 export const routineApiSlice = apiSlice.injectEndpoints({

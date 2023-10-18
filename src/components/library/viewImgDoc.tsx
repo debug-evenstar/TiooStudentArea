@@ -38,7 +38,7 @@ const ViewImgDoc: FC<Props> = ({ data, id }) => {
             <SwiperSlide key={slideContent} virtualIndex={index}>
               <img
                 src={slideContent}
-                alt={`Image ${index}`}
+                alt={`Imag${index}`}
                 className="lg:w-[300px] lg:h-[550px] xl:w-[350px]"
                 onClick={() => setViewDoc(true)}
               />
@@ -79,7 +79,7 @@ const ViewImgDoc: FC<Props> = ({ data, id }) => {
           >
             <img
               src={data[currentIndex]}
-              alt={`Image ${currentIndex}`}
+              alt={`Imag${currentIndex}`}
               className="w-full"
             />
           </div>

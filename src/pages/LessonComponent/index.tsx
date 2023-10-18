@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
-import { MdArrowBack } from "react-icons/md";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useLazyGetLessonSlidesQuery } from "../../services/api/lessonSlice";
-import { useAppSelector } from "../../redux/store";
 import { LessonPage } from "@Praxeum-ai/LearnBlocks";
 
 const LessonComponent = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const student = useAppSelector((state) => state.user.user);
   const [getLesson] = useLazyGetLessonSlidesQuery();
   const [lesson, setLesson] = useState<any>();
   const [lessonSlides, setLessonSlides] = useState<any>([]);
