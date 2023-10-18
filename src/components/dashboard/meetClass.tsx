@@ -1,7 +1,6 @@
 import React from "react";
-import { useGetClassMatesQuery, useGetClassQuery } from "../../services/api/routineSlice";
-import { useAppSelector } from "../../redux/store";
-import NameAvatar, { DarkNameAvatar } from "../../utils/nameAvatar";
+import { useGetClassQuery } from "../../services/api/routineSlice";
+import { DarkNameAvatar } from "../../utils/nameAvatar";
 
 const MeetClass = () => {
   // const id = useAppSelector((state) => state.user.user.AccountId)
@@ -51,40 +50,3 @@ const MeetClass = () => {
 
 export default MeetClass;
 
-const classes = [
-  {
-    name: "Anita Sampson",
-    img: "https://i.pravatar.cc/48?u=933374",
-    class: "Primary 5",
-  },
-  {
-    name: "Philip Monsfe",
-    img: "https://i.pravatar.cc/48?u=933324",
-    class: "Primary 5",
-  },
-  {
-    name: "Kareem Lateef",
-    img: "https://i.pravatar.cc/48?u=933334",
-    class: "Primary 5",
-  },
-  {
-    name: "Ghost Mobalig",
-    img: "https://i.pravatar.cc/48?u=933309",
-    class: "Primary 5",
-  },
-  {
-    name: "Benita Gamba",
-    img: "https://i.pravatar.cc/48?u=933334",
-    class: "Primary 5",
-  },
-  {
-    name: "Labnas Notreak",
-    img: "https://i.pravatar.cc/48?u=933394",
-    class: "Primary 5",
-  },
-  {
-    name: "Philip Monsfe",
-    img: "https://i.pravatar.cc/48?u=933306",
-    class: "Primary 5",
-  },
-];

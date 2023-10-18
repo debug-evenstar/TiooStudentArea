@@ -27,11 +27,13 @@ const SyllabusContainer = () => {
         className="subject-con hover:scale-105 duration-100 cursor-pointer"
         onClick={() => gotoSubDetail(item.id)}
       >
+        <div className="w-full overflow-hidden h-[100px] lg:h-[130px]">
         <img
-          src={img}
+          src={item.cover? item.cover : img}
           alt={item.naming}
-          className="w-full h-[100px] lg:h-[130px]"
+          className="w-full h-48 object-cover"
         />
+        </div>
         <div className="min-h-[100px] p-3">
           <p className="fw-600 fs-500 lg:fs-600">{item.naming}</p>
           <p className="fs-400">{item.description}</p>
