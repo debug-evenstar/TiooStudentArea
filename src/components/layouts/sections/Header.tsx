@@ -54,20 +54,17 @@ const Header = () => {
                   )}
                 </NavLink>
               </li>
-              <li className="p-[10px] cursor-pointer relative">
+              <li className="p-[10px] mt-1 cursor-pointer relative">
                 <p className="text-[9px] text-[#FAB814] absolute -top-0 px-[4px] rounded-lg border border-[#FAB81429] bg-[#FAB8140D]">
                   Coming soon
                 </p>
                 <p>Network</p>
               </li>
-              <li>
-                <NavLink to="/analytics">
-                  {({ isActive, isPending }) => (
-                    <span className={isActive ? "actives p-5" : "p-[10px]"}>
-                      Analytics
-                    </span>
-                  )}
-                </NavLink>
+              <li className="p-[10px] mt-1 cursor-pointer relative">
+                <p className="text-[9px] text-[#FAB814] absolute -top-0 px-[4px] rounded-lg border border-[#FAB81429] bg-[#FAB8140D]">
+                  Coming soon
+                </p>
+                <p>Analytics</p>
               </li>
             </ul>
           </div>
