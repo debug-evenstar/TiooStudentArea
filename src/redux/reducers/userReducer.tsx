@@ -17,6 +17,7 @@ const initialState = {
     term: "",
     status: "",
     school: false,
+    independent: "",
   } as StudentProfile,
 };
 

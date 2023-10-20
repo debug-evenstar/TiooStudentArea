@@ -12,9 +12,9 @@ const DashboardHomePage = () => {
   return (
     <>
       <DashLayout>
-        <div className={`nue h-full pb-16 ${user.school && 'bg-[#FAFAFA]'}`}>
+        <div className={`nue pb-16 ${user.independent && 'bg-[#FAFAFA] h-[80vh]'}`}>
           <PostHeader />
-          {user.school && (
+          {!user.independent && (
             <div className="lg:flex justify-between mt-6 lg:mt-12 gap-x-8 lg:px-7">
               <div className="lg:w-[72%] mb-8 lg:mb-0">
                 <SubjectContainer />
@@ -30,8 +30,8 @@ const DashboardHomePage = () => {
             </div>
           )}
           {
-            !user.school && (
-              <div className="mt-16 lg:mt-24 fw-600 bg-white text-center text-[#00000080]">
+            user.independent && (
+              <div className="pt-16 lg:pt-24 h-full fw-600 bg-white text-center text-[#00000080]">
                   <p className="lg:text-2xl">Hi {user.name}</p>
                   <p className="lg:text-2xl">You haven&apos;t been added to a school yet</p>
                   <p className="lg:text-2xl">However, you can explore our library, choose a subject and start learning!</p>

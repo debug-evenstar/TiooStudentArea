@@ -36,7 +36,8 @@ const LogToken = () => {
                     subjectsCount: res.data.data.subjectsCount,
                     flag: res.data.data.flag,
                     verification_status: res.data.data.verification_status,
-                    school: res.data.data.schoolStudent
+                    school: res.data.data.schoolStudent,
+                    independent: res.data.data.student_type
               }))
               storeLocalToken("token", token) 
               navigate("/library")
