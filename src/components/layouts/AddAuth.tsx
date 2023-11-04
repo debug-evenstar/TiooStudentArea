@@ -6,7 +6,7 @@ const AddAuth = (Component: any) => {
     const { IsAuthenticated } = useAuthCheck();
 
     const gotoLogin = () => {
-        window.location.replace(`${process.env.REACT_APP_HOME_URL}/login`);
+        window.location.replace(`${import.meta.env.VITE_HOME_KEY}/login`);
     }
     const checkAuth = () => {
       if (!IsAuthenticated) {

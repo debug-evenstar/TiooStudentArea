@@ -4,8 +4,8 @@ import { formatLessonColor, formatLessonStatus } from '../../utils/format'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import dayjs from 'dayjs'
-var advancedFormat = require('dayjs/plugin/advancedFormat')
-dayjs.extend(advancedFormat)
+// var advancedFormat = require('dayjs/plugin/advancedFormat')
+// dayjs.extend(advancedFormat)
 
 interface Props {
     item: any
