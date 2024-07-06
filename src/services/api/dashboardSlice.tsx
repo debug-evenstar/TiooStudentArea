@@ -25,16 +25,6 @@ export const dashboardApiSlice = apiSlice.injectEndpoints({
           Authorization: requestAuthorization(),
         },
       }),
-      providesTags: (result) =>
-        // is result available?
-        result
-          ? // successful query
-            [
-              ...result?.map(({ id }: any) => ({ type: "Books", id } as const)),
-              { type: "Books", id: "LIST" },
-            ]
-          : // an error occurred, but we still want to refetch this query when `{ type: 'Books', id: 'LIST' }` is invalidated
-            [{ type: "Books", id: "LIST" }],
 
       keepUnusedDataFor: ENDPOINT.CACHE_LIFETIME.EXTENDED,
     }),
