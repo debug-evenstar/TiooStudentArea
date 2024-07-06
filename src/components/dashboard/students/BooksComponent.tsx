@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import BookFilter from "../common/Filter";
 import SearchBar from "../common/SearchBar";
 import BookCard, { BookCardProps } from "./BookCard";
@@ -6,11 +6,12 @@ import BookCard, { BookCardProps } from "./BookCard";
 
 
 export interface BooksComponentProps{
-  books: BookCardProps[]
+  books: BookCardProps[];
+  type?: string;
 }
 
 
-const BooksComponent = ({books}: any) => {
+const BooksComponent: FC<BooksComponentProps> = ({books, type}) => {
 
   const [ search, setSearch ] = useState('');
 
@@ -39,7 +40,7 @@ const BooksComponent = ({books}: any) => {
         {/* <h3 className="text-3xl mb-4">Recommended Books</h3> */}
         <div className="grid grid-cols-4 gap-y-10 gap-6">
           {filteredBooks?.map((book: BookCardProps, index: number) => (
-            <BookCard key={index} {...book} />
+            <BookCard type={type} key={index} {...book} />
           ))}
         </div>
       </div>

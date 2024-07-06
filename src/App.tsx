@@ -1,14 +1,26 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
-import DashboardHomePage from "./old-pages/Dashboard/Home";
-import SubjectDetails from "./old-pages/Dashboard/SubjectDetails";
 import ScrollToTop from "./utils/scrollTop";
-import LibraryHome from "./old-pages/Library";
 import LogToken from "./old-pages/Auth/LogToken";
-import LessonComponent from "./old-pages/LessonComponent";
-import TextBookChapters from "./old-pages/Library/textbookDetails";
-import PreviewTemplateDoc from "./old-pages/Library/previewTemplateDoc";
-import PreviewBook from "./old-pages/Preview";
+import StudentDashboard from "./pages/Dashboard/student";
+import DashboardLayout from "./layouts/layout";
+import Library from "./pages/Dashboard/student/books/Library";
+import Shelf from "./pages/Dashboard/student/books/Shelf";
+import { FaClock } from "react-icons/fa";
+import Analytics from "./pages/Dashboard/student/Analytics";
+// import Profiles from "./pages/Dashboard/parent/Profiles";
+// import CreateProfile from "./pages/Dashboard/CreateProfile";
+
+const ComingSoon = () => {
+  return (
+    <div className="flex items-center h-full w-full justify-center">
+      <p className="px-20 py-10 text-gray-500 border rounded-full flex items-center space-x-2">
+        <FaClock />
+        <span>coming soon</span>
+      </p>
+    </div>
+  );
+};
 
 function App() {
   return (
@@ -16,19 +28,22 @@ function App() {
       <ScrollToTop />
       <Routes>
         {/* auth routes */}
-        <Route path="/auth/:token" element={<LogToken />} />
-        {/* dasboard routes */}
-        <Route path="/home" element={<DashboardHomePage />} />
-        <Route path="/home/subjects/:id" element={<SubjectDetails />} />
-        <Route path="/library" element={<LibraryHome />} />
-        <Route path="/library/subjects/:id" element={<TextBookChapters />} />
-        <Route path="/lesson/:id" element={<LessonComponent />} />
-        <Route path="/library/:id" element={<PreviewTemplateDoc />} />
-        {/* preview lesson */}
-        <Route path="/preview" element={<PreviewBook/>}/>
+        <Route element={<DashboardLayout />}>
+          <Route path="/auth/:token" element={<LogToken />} />
+          <Route path="/dashboard/home" element={<StudentDashboard />} />
+          <Route path="/dashboard/books">
+            <Route path="library" index element={<Library />} />
+            <Route path="shelf" element={<Shelf />} />
+            <Route path="school" element={<ComingSoon />} />
+          </Route>
+          <Route path="/dashboard/analytics" element={<Analytics />} />
+          <Route path="/dashboard/network" element={<ComingSoon />} />
+          <Route path="/dashboard/settings" element={<ComingSoon />} />
+        </Route>
+        {/*<Route path="/dashboard/parents/profile/craete" element={<CreateProfile/>} />*/}
       </Routes>
     </BrowserRouter>
   );
 }
 
-export default App;
+export default NewApp;

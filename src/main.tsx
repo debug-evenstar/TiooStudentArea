@@ -11,7 +11,7 @@ import { ThemeProvider } from "@material-tailwind/react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ThreeCirclesLoading } from "./old-components/Ui/Loading";
-import NewApp from "./NewApp";
+import App from "./App";
 
 let persistor = persistStore(store);
 
@@ -43,7 +43,7 @@ root.render(
           className="index-20"
         />
         <ThemeProvider>
-          <NewApp />
+          <App />
         </ThemeProvider>
       </PersistGate>
     </Provider>
