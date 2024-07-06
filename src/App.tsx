@@ -1,14 +1,14 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
-import DashboardHomePage from "./pages/Dashboard/Home";
-import SubjectDetails from "./pages/Dashboard/SubjectDetails";
+import DashboardHomePage from "./old-pages/Dashboard/Home";
+import SubjectDetails from "./old-pages/Dashboard/SubjectDetails";
 import ScrollToTop from "./utils/scrollTop";
-import LibraryHome from "./pages/Library";
-import LogToken from "./pages/Auth/LogToken";
-import LessonComponent from "./pages/LessonComponent";
-import TextBookChapters from "./pages/Library/textbookDetails";
-import PreviewTemplateDoc from "./pages/Library/previewTemplateDoc";
-import PreviewBook from "./pages/Preview";
+import LibraryHome from "./old-pages/Library";
+import LogToken from "./old-pages/Auth/LogToken";
+import LessonComponent from "./old-pages/LessonComponent";
+import TextBookChapters from "./old-pages/Library/textbookDetails";
+import PreviewTemplateDoc from "./old-pages/Library/previewTemplateDoc";
+import PreviewBook from "./old-pages/Preview";
 
 function App() {
   return (
