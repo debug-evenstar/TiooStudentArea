@@ -8,6 +8,7 @@ import Library from "./pages/Dashboard/student/books/Library";
 import Shelf from "./pages/Dashboard/student/books/Shelf";
 import { FaClock } from "react-icons/fa";
 import Analytics from "./pages/Dashboard/student/Analytics";
+import { LessonPage } from "@Praxeum-ai/LearnBlocks";
 // import Profiles from "./pages/Dashboard/parent/Profiles";
 // import CreateProfile from "./pages/Dashboard/CreateProfile";
 
