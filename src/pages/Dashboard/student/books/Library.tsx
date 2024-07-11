@@ -24,7 +24,7 @@ export default function Library() {
   },[data])
 
   return (
-    <div className="w-[90%] mt-7">
+    <div className="w-[100%] mt-7">
       { <BooksComponent books={books} />}
     </div>
   );
