@@ -32,22 +32,24 @@ const BookCard = ({
 
   return (
     <div className="w-full h-full">
-      <div className={`h-[17rem] border border-light overflow-hidden flex items-center justify-center mb-2 ${cover_photo ? "":"bg-gray-50"}`}>
-        {cover_photo ? (
-          <img src={cover_photo} alt="" className="w-full" />
-        ) : (
-          <div className="flex flex-col">
-            <p>
-              <MdImage color="#ddd" size={90} />
-            </p>
-            <p className="text-gray-500 text-center">No cover</p>
-          </div>
-        )}
-      </div>
-      <div className="py-3 quicksand  ">
-        <p className="text-lg font-[600] text-xl">{name}</p>
-        <p>By {author}</p>
-      </div>
+      <a href={"/dashboard/books/"+id+"/study"}>
+        <div className={`h-[17rem] border border-light overflow-hidden flex items-center justify-center mb-2 ${cover_photo ? "":"bg-gray-50"}`}>
+          {cover_photo ? (
+            <img src={cover_photo} alt="" className="w-full" />
+          ) : (
+            <div className="flex flex-col">
+              <p>
+                <MdImage color="#ddd" size={90} />
+              </p>
+              <p className="text-gray-500 text-center">No cover</p>
+            </div>
+          )}
+        </div>
+        <div className="py-3 quicksand  ">
+          <p className="text-lg font-[600] text-xl">{name}</p>
+          <p>By {author}</p>
+        </div>
+      </a>
       {type != "shelf" ? (
         <button
           onClick={handleClick}

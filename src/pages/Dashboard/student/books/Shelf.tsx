@@ -11,7 +11,6 @@ export default function Shelf() {
     if(data){
       setBooks(data?.data);
     }
-    console.log(data?.data);
   },[data])
 
   return (
