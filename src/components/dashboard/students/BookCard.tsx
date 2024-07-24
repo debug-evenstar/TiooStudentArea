@@ -20,19 +20,24 @@ const BookCard = ({
   author = "No author",
 }: any) => {
   const [addToShelf] = dashboardApiSlice.useAddToStudentShelfMutation();
+  const [removeFromShelf] = dashboardApiSlice.useRemoveFromStudentShelfMutation();
 
-  const handleClick: any = () => {
-    addToShelf({
-      textbook_id: id,
-    }).then((response) => {
-      toast.success(response.data.message);
-      // console.log(response.data);
-    });
+  const handleClick: any = async () => {
+    const response =
+      type == "shelf"
+        ? await removeFromShelf({ textbook_id: id })
+        : await addToShelf({ textbook_id: id });
+
+    toast.success(response?.data?.message);
   };
 
   return (
     <div className="w-full h-full">
-      <div className={`h-[17rem] border border-light overflow-hidden flex items-center justify-center mb-2 ${cover_photo ? "":"bg-gray-50"}`}>
+      <div
+        className={`h-[17rem] border border-light overflow-hidden flex items-center justify-center mb-2 ${
+          cover_photo ? "" : "bg-gray-50"
+        }`}
+      >
         {cover_photo ? (
           <img src={cover_photo} alt="" className="w-full" />
         ) : (
@@ -45,7 +50,7 @@ const BookCard = ({
         )}
       </div>
       <div className="py-3 quicksand  ">
-        <p className="text-lg font-[600] text-xl">{name}</p>
+        <p className="font-[600] text-xl">{name}</p>
         <p>By {author}</p>
       </div>
       {type != "shelf" ? (
@@ -53,16 +58,16 @@ const BookCard = ({
           onClick={handleClick}
           className="px-3 py-2 active:ring quicksand font-[600] flex space-x-2 rounded-full border border-primary text-primary "
         >
-          <img src={bookImg} alt="" />  
+          <img src={bookImg} alt="" />
           <span>Add to shelf</span>
         </button>
       ) : (
-        <button className="px-3 py-2 active:ring quicksand font-[600] flex items-center space-x-2 rounded-full border border-red-500 text-red-500">
-          <TfiTrash/>
-          <span>
-            Remove
-          </span>
-          
+        <button
+          onClick={handleClick}
+          className="px-3 py-2 active:ring quicksand font-[600] flex items-center space-x-2 rounded-full border border-red-500 text-red-500"
+        >
+          <TfiTrash />
+          <span>Remove</span>
         </button>
       )}
     </div>

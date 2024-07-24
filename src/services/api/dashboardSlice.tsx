@@ -60,6 +60,7 @@ export const dashboardApiSlice = apiSlice.injectEndpoints({
           Authorization: requestAuthorization(),
         },
       }),
+      invalidatesTags: (result = [], error, arg) => [{ type: 'Books', id: arg.id }]
     }),
   }),
   overrideExisting: true,
