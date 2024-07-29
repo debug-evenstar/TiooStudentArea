@@ -47,7 +47,7 @@ const NotificationDropdown = ({ isOpen }: NotificationDropDownProps) => {
 
   return (
     <div
-      className={`absolute min-h-[10rem] max-h-[33rem] overflow-y-auto w-full md:w-[25%] text-start right-16 z-[100] mt-6 rounded-lg border shadow bg-white p-3 text-center ${
+      className={`absolute min-h-[10rem] max-h-[33rem] overflow-y-auto w-full sm:w-[25%] right-0 sm:right-16 z-[100] mt-6 rounded-lg border shadow bg-white p-3 text-center ${
         isOpen ? "block" : "hidden"
       } `}
     >

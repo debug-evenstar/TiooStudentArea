@@ -26,7 +26,7 @@ const BooksComponent: FC<BooksComponentProps> = ({books, type}) => {
     setFilteredBooks(match);
   },[search,books])
   return (
-    <div className="w-[90%]">
+    <div className="w-full sm:w-[90%]">
       <h2 className="text-dark text-3xl font-[500] quicksand">All Books({books.length})</h2>
       <div className="my-3 flex items-center space-x-3">
         <BookFilter />
@@ -38,7 +38,7 @@ const BooksComponent: FC<BooksComponentProps> = ({books, type}) => {
       </div>
       <div className="w-full mt-5 mb-10">
         {/* <h3 className="text-3xl mb-4">Recommended Books</h3> */}
-        <div className="grid grid-cols-4 gap-y-10 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-y-5 sm:gap-y-10 gap-3 sm:gap-6">
           {filteredBooks?.map((book: BookCardProps, index: number) => (
             <BookCard type={type} key={index} {...book} />
           ))}
