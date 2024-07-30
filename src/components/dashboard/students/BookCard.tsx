@@ -32,7 +32,7 @@ const BookCard = ({
 
   return (
     <div className="w-full h-full">
-      <a href={"/dashboard/books/"+id+"/study"}>
+      <a href={"/books/"+id+"/study"}>
         <div className={`h-[17rem] border border-light overflow-hidden flex items-center justify-center mb-2 ${cover_photo ? "":"bg-gray-50"}`}>
           {cover_photo ? (
             <img src={cover_photo} alt="" className="w-full" />
