@@ -9,6 +9,7 @@ import Shelf from "./pages/Dashboard/student/books/Shelf";
 import { FaClock } from "react-icons/fa";
 import Analytics from "./pages/Dashboard/student/Analytics";
 import { LessonPage } from "@Praxeum-ai/LearnBlocks";
+import Study from "./pages/Dashboard/student/books/Study";
 // import Profiles from "./pages/Dashboard/parent/Profiles";
 // import CreateProfile from "./pages/Dashboard/CreateProfile";
 
@@ -41,6 +42,7 @@ function App() {
           <Route path="/dashboard/network" element={<ComingSoon />} />
           <Route path="/dashboard/settings" element={<ComingSoon />} />
         </Route>
+        <Route path="/books/:bookId/study" element={<Study />} />
         {/*<Route path="/dashboard/parents/profile/craete" element={<CreateProfile/>} />*/}
       </Routes>
     </BrowserRouter>

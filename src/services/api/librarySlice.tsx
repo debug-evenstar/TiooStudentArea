@@ -36,6 +36,16 @@ export const libraryApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: ENDPOINT.CACHE_LIFETIME.EXTENDED,
     }),
+    getLibraryBook: builder.query<any | ErrorResult, string>({
+      query: (param) => ({
+        url: `${ENDPOINT.FETCH_LIBRARY_TEXTBOOK(param)}`,
+        method: ENDPOINT.HTTP_METHODS.GET,
+        headers: {
+          Authorization: requestAuthorization(),
+        },
+      }),
+      keepUnusedDataFor: ENDPOINT.CACHE_LIFETIME.EXTENDED,
+    }),
   }),
   overrideExisting: true,
 });
@@ -44,4 +54,5 @@ export const {
   useGetLibraryQuery,
   useGetNetworkQuery,
   useLazyGetLibraryChapterQuery,
+  useGetLibraryBookQuery
 } = libraryApiSlice;
