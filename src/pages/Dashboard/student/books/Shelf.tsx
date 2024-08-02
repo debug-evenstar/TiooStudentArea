@@ -16,7 +16,7 @@ export default function Shelf() {
     if (data) {
       setBooks(data?.data);
     }
-  }, [data]);
+  },[data])
 
   return (
     <div className="w-full mt-7">
