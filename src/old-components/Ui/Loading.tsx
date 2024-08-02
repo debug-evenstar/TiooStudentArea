@@ -1,12 +1,12 @@
-import React, {FC} from "react";
+import React, { FC } from "react";
 import { ThreeCircles } from "react-loader-spinner";
 import { HashLoader } from "react-spinners";
 
-interface Props{
-    size: number
-    color: string
+interface Props {
+  size: number;
+  color: string;
 }
-export const HashSpinner:FC<Props> = ({ size, color }) => {
+export const HashSpinner: FC<Props> = ({ size, color }) => {
   return (
     <HashLoader
       color={color}

@@ -6,11 +6,13 @@ import StudentDashboard from "./pages/Dashboard/student";
 import DashboardLayout from "./layouts/layout";
 import Library from "./pages/Dashboard/student/books/Library";
 import Shelf from "./pages/Dashboard/student/books/Shelf";
+import Settings from "./pages/Dashboard/student/Settings";
 import { FaClock } from "react-icons/fa";
 import Analytics from "./pages/Dashboard/student/Analytics";
 import { ConfigureLibrary, LessonPage } from "@Praxeum-ai/LearnBlocks";
 import Study from "./pages/Dashboard/student/books/Study";
 import { useEffect } from "react";
+import { LuSettings } from "react-icons/lu";
 const env = import.meta.env;
 // import Profiles from "./pages/Dashboard/parent/Profiles";
 // import CreateProfile from "./pages/Dashboard/CreateProfile";
@@ -55,7 +57,7 @@ function App() {
                     <Route path="/dashboard/network" element={<ComingSoon />} />
                     <Route
                         path="/dashboard/settings"
-                        element={<ComingSoon />}
+                        element={<Settings />}
                     />
                 </Route>
                 <Route path="/books/:bookId/study" element={<Study />} />

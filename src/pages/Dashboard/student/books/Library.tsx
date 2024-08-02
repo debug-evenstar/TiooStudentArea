@@ -3,6 +3,17 @@ import BooksComponent from "../../../../components/dashboard/students/BooksCompo
 import { dashboardApiSlice } from "../../../../services/api/dashboardSlice";
 import { useEffect, useState } from "react";
 
+interface Book {
+  cover_photo: string;
+  name: string;
+  author: string;
+  id: number;
+  type?: string;
+  inShelf?: boolean;
+
+  // other properties of the book
+}
+
 export default function Library() {
   // const books = Array(9)
   //   .fill(null)
@@ -12,20 +23,18 @@ export default function Library() {
   //     author: "Joy Berry",
   //   }));
 
-  const { data } = dashboardApiSlice.useGetLibraryBooksQuery(null);
+  const libraryBooks = dashboardApiSlice.useGetLibraryBooksQuery(null);
 
-  const [books, setBooks] = useState([]);
+  const [books, setBooks] = useState<Book[]>([]);
 
   useEffect(() => {
-    if(data){
-      setBooks(data?.data);
+    if (libraryBooks.data) {
+      setBooks(libraryBooks?.data?.data);
+      // setBooks(libraryBooks?.data?.data?.map((book: Book) => ({ ...book, inShelf: shelfIds?.includes(book?.id)})));
     }
-    console.log(data?.data);
-  },[data])
+  }, [libraryBooks.data]);
 
   return (
-    <div className="w-[100%] mt-7">
-      { <BooksComponent books={books} />}
-    </div>
+    <div className="w-[100%] mt-7">{<BooksComponent books={books} />}</div>
   );
 }

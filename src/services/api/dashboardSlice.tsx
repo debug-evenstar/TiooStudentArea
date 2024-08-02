@@ -24,9 +24,9 @@ export const dashboardApiSlice = apiSlice.injectEndpoints({
         headers: {
           Authorization: requestAuthorization(),
         },
-        // providesTags: () =>  ['Books'],
+        // providesTags: () =>  ['Books'] as any,
       }),
-      providesTags: (result = [], error, arg) => [{ type: 'Books', id: arg }],
+      providesTags: ['Books'] as any,
       keepUnusedDataFor: ENDPOINT.CACHE_LIFETIME.EXTENDED,
     }),
     getLibraryBooks: builder.query<any | ErrorResult, any>({
@@ -37,6 +37,7 @@ export const dashboardApiSlice = apiSlice.injectEndpoints({
           Authorization: requestAuthorization(),
         },
       }),
+      providesTags: ['Books'] as any
     }),
 
     addToStudentShelf: builder.mutation<any | ErrorResult, any>({
@@ -48,7 +49,7 @@ export const dashboardApiSlice = apiSlice.injectEndpoints({
           Authorization: requestAuthorization(),
         },
       }),
-      invalidatesTags: (result = [], error, arg) => [{ type: 'Books', id: arg.id }]
+      invalidatesTags: ['Books'] as any
     }),
 
     removeFromStudentShelf: builder.mutation<any | ErrorResult, any>({
@@ -60,6 +61,7 @@ export const dashboardApiSlice = apiSlice.injectEndpoints({
           Authorization: requestAuthorization(),
         },
       }),
+      invalidatesTags: ['Books'] as any,
     }),
   }),
   overrideExisting: true,

@@ -10,7 +10,7 @@ const ProfileCard = () => {
   const firstName = user?.name?.split(" ")[0];
 
   return (
-    <div className="p-4 rounded-[16px] bg-[#50035E] w-[55%] flex justify-between shrink-0">
+    <div className="p-4 rounded-[16px] bg-[#50035E] w-full  lg:w-[55%] flex justify-between shrink-0">
       <div className="text-white flex flex-col space-y-3 shrink-0">
         <div className="flex items-center space-x-2">
           <img
@@ -22,18 +22,9 @@ const ProfileCard = () => {
             Hi, {firstName} <span className="animate__animated animate__tada inline-block text-2xl animate__infinite">👋</span>
           </p>
         </div>
-        <div className="flex justify-between space-x-4">
-          <p>
-            <span className="font-[500] text-lg mr-1">Class:</span>Primary 3A
-          </p>
-          <p>
-            <span className="font-[500] text-lg mr-1">Subject: </span>4
-          </p>
-          <p>
-            <span className="font-[500] text-lg mr-1">Term: </span>2nd
-          </p>
+        <div className="flex justify-between space-x-4 mb-5">
         </div>
-        <p className="font-[300]">Flowinton Montessori School</p>
+        {/* <p className="font-[300]">Flowinton Montessori School</p> */}
       </div>
       <img src={doodleImg} alt="" className=" shrink-0" />
     </div>
