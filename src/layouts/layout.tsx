@@ -17,9 +17,9 @@ export default function DashboardLayout() {
   return (
     <div className="flex h-screen overflow-hidden outfit-font">
       <Sidebar pages={pages} { ...{  sideOpen, setSideOpen } }/>
-      <main className="grow flex flex-col w-full sm:w-[79.5%]">
+      <main className="grow flex flex-col w-full lg:w-[79.5%]">
         <Nav pages={pages} { ...{  sideOpen, setSideOpen }}/>
-        <div className="px-3 sm:px-6 overflow-hidden grow overflow-y-auto">
+        <div className="px-3 md:px-6 overflow-hidden grow overflow-y-auto">
           <Outlet/>
         </div>
       </main>

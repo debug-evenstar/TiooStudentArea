@@ -3,7 +3,7 @@ const withMT = require("@material-tailwind/react/utils/withMT");
 module.exports = withMT({
   content: [
     "./src/**/*.{html,js,ts,tsx}",
-    // "./node_modules/@Praxeum-ai/**/*.{ts,tsx}"
+    "./node_modules/@Praxeum-ai/**/*.{ts,tsx}"
   ],
   theme: {
     extend: {

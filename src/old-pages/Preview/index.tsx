@@ -1,5 +1,5 @@
 import { useGetFreeSlidesQuery } from "../../services/api/lessonSlice";
-import { ThreeCirclesLoading } from "../../old-components/Ui/Loading";
+// import { ScaleLoaderLoading } from "../../old-components/Ui/Loading";
 // import { LessonPage } from '@Praxeum-ai/LearnBlocks';
 
 const PreviewBook = () => {
@@ -9,7 +9,7 @@ const PreviewBook = () => {
     <>
       {isLoading && (
         <div className="w-full h-screen grid place-content-center">
-          <ThreeCirclesLoading size="200" color="#4f46e5" />
+          {/* <ScaleLoaderLoading size="200" color="#4f46e5" /> */}
         </div>
       )}
       {

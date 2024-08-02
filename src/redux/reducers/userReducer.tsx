@@ -19,6 +19,8 @@ const initialState = {
     school: false,
     independent: "",
   } as StudentProfile,
+  shelf: [] as number[],
+
 };
 
 export const userSlice = createSlice({
@@ -31,11 +33,16 @@ export const userSlice = createSlice({
     resetUser: (state) => {
       state.user = initialState.user;
     },
+
+    updateShelf: (state, action: PayloadAction<number[]>) => {
+      state.shelf = action.payload;
+    }
   },
 });
 
-export const { saveUser, resetUser } = userSlice.actions;
+export const { saveUser, resetUser, updateShelf } = userSlice.actions;
 
 export const selectUser = (state: RootState) => state.user;
+export const selectShelf = (state: RootState) => state.user.shelf;
 
 export default userSlice.reducer;

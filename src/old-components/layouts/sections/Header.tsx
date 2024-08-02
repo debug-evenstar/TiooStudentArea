@@ -78,7 +78,7 @@ const Header = () => {
           <div className="w-12 h-12">
             <NameAvatar name={user.name} />
           </div>
-          <div className="hidden lg:block">
+          {/* <div className="hidden lg:block">
             <Menu placement="bottom-start">
               <MenuHandler>
                 <Button className="border-none px-0 bg-transparent shadow-none hover:shadow-none">
@@ -104,7 +104,7 @@ const Header = () => {
                 </MenuItem>
               </MenuList>
             </Menu>
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="pb-5 bg-[#FAFAFA] lg:hidden">

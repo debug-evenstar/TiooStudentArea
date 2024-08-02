@@ -10,7 +10,7 @@ const ProfileCard = () => {
   const firstName = user?.name?.split(" ")[0];
 
   return (
-    <div className="p-4 rounded-[16px] bg-[#50035E] w-full  sm:w-[55%] flex justify-between shrink-0">
+    <div className="p-4 rounded-[16px] bg-[#50035E] w-full  lg:w-[55%] flex justify-between shrink-0">
       <div className="text-white flex flex-col space-y-3 shrink-0">
         <div className="flex items-center space-x-2">
           <img

@@ -9,7 +9,7 @@ const initialState = {
 };
 
 export const booksSlice = createSlice({
-  name: "user",
+  name: "book",
   initialState,
   reducers: {
     saveUserShelf: (state, action: PayloadAction<any>) => {
@@ -25,4 +25,4 @@ export const { saveUserShelf, resetUser } = booksSlice.actions;
 
 export const selectUser = (state: RootState) => state.user;
 
-export default userSlice.reducer;
+export default booksSlice.reducer;

@@ -6,16 +6,16 @@ import Notifications from "./notification";
 import { FaBars } from "react-icons/fa";
 import SearchBar from "../dashboard/common/SearchBar";
 import { useState } from "react";
+import { logoutUser } from "../../utils/logout";
 
 const Profile = ({ user }: { user: any }) => {
 
   return (
     <div className="flex items-center space-x-3">
       <img src={profilePic} alt="" className="w-[38px] h-[38px] rounded-full" />
-
       <div className="text-sm hidden sm:block">
         <p className="font-[500] capitalize">{user?.name}</p>
-        <button className="font-[300]">logout</button>
+        <button onClick={logoutUser} className="font-[300]">logout</button>
       </div>
     </div>
   );
