@@ -7,6 +7,12 @@ module.exports = withMT({
   ],
   theme: {
     extend: {
+      colors: {
+        primary: '#9C29B2', 
+        light: '#fbf4fd',
+        dark: '#1F3D4F',
+      },
+
       backgroundImage: {
         'home': "linear-gradient(to right, rgba(105, 76, 87, 1),rgba(0, 0, 0, 0.2))",
         'dash': "url('https://res.cloudinary.com/dic7regoe/image/upload/v1689193391/praxeum/Frame_1000004421_aysm37.png')",

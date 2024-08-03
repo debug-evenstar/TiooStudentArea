@@ -3,7 +3,7 @@ import { BaseResult } from ".";
 export interface StudentLoginInput {
     email: string;
     password: string;
-  }
+}
 export interface StudentLoginResult extends BaseResult{
     profile: StudentProfile
     token: string
