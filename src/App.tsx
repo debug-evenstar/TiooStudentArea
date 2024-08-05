@@ -13,6 +13,8 @@ import { ConfigureLibrary, LessonPage } from "@Praxeum-ai/LearnBlocks";
 import Study from "./pages/Dashboard/student/books/Study";
 import { useEffect } from "react";
 import { LuSettings } from "react-icons/lu";
+import ParentDashboardLayout from "./layouts/parentLayout";
+import CreateProfile from "./pages/Dashboard/CreateProfile";
 const env = import.meta.env;
 // import Profiles from "./pages/Dashboard/parent/Profiles";
 // import CreateProfile from "./pages/Dashboard/CreateProfile";
@@ -60,8 +62,17 @@ function App() {
                         element={<Settings />}
                     />
                 </Route>
+                <Route path="/dashboard/books/:bookId/study" element={<Study />} />
                 <Route path="/books/:bookId/study" element={<Study />} />
-                {/*<Route path="/dashboard/parents/profile/craete" element={<CreateProfile/>} />*/}
+
+
+                <Route element={<ParentDashboardLayout/>} path="/dashboard/parents">
+                    
+                    <Route path="profile/create" element={<CreateProfile/>} />
+
+                </Route>
+
+
             </Routes>
         </BrowserRouter>
     );
