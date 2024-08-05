@@ -117,7 +117,9 @@ const BookCard = ({
               <BsThreeDots className="text-xl" />
             </button>
           </MenuHandler>
+          {/* @ts-ignore */}
           <MenuList>
+            {/* @ts-ignore */}
             <MenuItem
               id={"1"}
               title="Remove from shelf"
