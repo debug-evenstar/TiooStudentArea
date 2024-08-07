@@ -35,7 +35,7 @@ interface DeleteModalProps {
   onCancel: MouseEventHandler<HTMLButtonElement>;
   onDelete: MouseEventHandler<HTMLButtonElement>;
 }
-
+// Rename to removeFromShelf
 const DeleteModal: FC<DeleteModalProps> = ({ title, content, onCancel, onDelete }) => {
   return (
     <div className="bg-[#00000022] inset-0 fixed w-full h-screen z-[200] flex justify-center ">
@@ -64,7 +64,7 @@ const BookCard = ({
   id,
   inShelf,
   author = "No author",
-  BookCategory,
+  is_premium,
 }: any) => {
 
 
@@ -108,7 +108,6 @@ const BookCard = ({
         />
       }
 
-
       {type == "shelf" ?
 
         <Menu placement="bottom-end">
@@ -134,11 +133,11 @@ const BookCard = ({
 
         :
         (
-          BookCategory && BookCategory.category == "Premium" &&
+          is_premium &&
           <div className="absolute px-3 py-1 rounded-r-lg mt-2  bg-primary">
             <LuCrown color="gold" />
           </div>
-        )
+        ) 
       }
       <div
         className={`h-[17rem]  border border-gray-200 overflow-hidden flex items-center justify-center mb-2 ${cover_photo ? "" : "bg-gray-50"
@@ -155,10 +154,12 @@ const BookCard = ({
           </div>
         )}
       </div>
+
       <div className="py-3 quicksand  ">
         <p className="font-[600] text-xl">{name}</p>
         {/* <p>By {author}</p> */}
       </div>
+
       {type != "shelf" ? (
         <button
           onClick={handleClick}
