@@ -29,14 +29,14 @@ export interface BookCardProps {
   inShelf?: boolean;
 }
 
-interface DeleteModalProps {
+interface RemoveFromShelfModalProps {
   title?: string;
   content?: string;
   onCancel: MouseEventHandler<HTMLButtonElement>;
   onDelete: MouseEventHandler<HTMLButtonElement>;
 }
 // Rename to removeFromShelf
-const DeleteModal: FC<DeleteModalProps> = ({ title, content, onCancel, onDelete }) => {
+const RemoveFromShelfModal: FC<RemoveFromShelfModalProps> = ({ title, content, onCancel, onDelete }) => {
   return (
     <div className="bg-[#00000022] inset-0 fixed w-full h-screen z-[200] flex justify-center ">
       <div className="w-full shadow sm:-[18rem] lg:w-[23rem] bg-white p-8 py-6 rounded-lg mt-20 h-fit">
@@ -50,7 +50,7 @@ const DeleteModal: FC<DeleteModalProps> = ({ title, content, onCancel, onDelete 
         </div>
         <div className="flex items-center justify-end space-x-3">
           <button onClick={onCancel} className="text-gray-600 px-4 shadow py-2 rounded">Cancel</button>
-          <button onClick={onDelete} className="text-white px-4 shadow bg-red-600 py-2 rounded">Delete</button>
+          <button onClick={onDelete} className="text-white px-4 shadow bg-red-600 py-2 rounded">Remove</button>
         </div>
       </div>
     </div>
@@ -80,13 +80,13 @@ const BookCard = ({
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
 
-  const deleteFromShelf = async () => {
+  const handleDeleteFromShelf = async () => {
     await removeFromShelf({ textbook_id: id })
     setShowDelete(false);
   }
 
 
-  const handleClick: any = async () => {
+  const handleClick = async () => {
     setDeleteLoading(true);
     const response =
       type == "shelf"
@@ -100,11 +100,11 @@ const BookCard = ({
     <div className="w-full h-full group relative">
       {
         showDelete &&
-        <DeleteModal
+        <RemoveFromShelfModal
           title="Delete Book"
           content="Are you sure you want to delete this book?"
           onCancel={() => setShowDelete(false)}
-          onDelete={deleteFromShelf}
+          onDelete={handleDeleteFromShelf}
         />
       }
 

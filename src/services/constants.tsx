@@ -20,6 +20,7 @@ export enum CACHE_LIFETIME {
 
   export const STUDENT_LOGIN = 'account/signin'
   export const VERIFY_TOKEN = 'account/read'
+  export const LEGACY_PASSWORD_RESET = `account/legacy-resetpassword`;
 
   // subjects
   export const FETCH_SUBJECTS = 'student/subjects'
