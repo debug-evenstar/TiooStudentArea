@@ -7,20 +7,19 @@ import { useState } from "react";
 import pages from "../constants/sidelinks";
 
 
-
 export default function DashboardLayout() {
 
-  const [ sideOpen, setSideOpen ] = useState(false);
+  const [sideOpen, setSideOpen] = useState(false);
 
 
 
   return (
     <div className="flex h-screen overflow-hidden outfit-font">
-      <Sidebar pages={pages} { ...{  sideOpen, setSideOpen } }/>
+      <Sidebar pages={pages} {...{ sideOpen, setSideOpen }} />
       <main className="grow flex flex-col w-full lg:w-[79.5%]">
-        <Nav pages={pages} { ...{  sideOpen, setSideOpen }}/>
+        <Nav pages={pages} {...{ sideOpen, setSideOpen }} />
         <div className="px-3 md:px-6 overflow-hidden grow overflow-y-auto">
-          <Outlet/>
+          <Outlet />
         </div>
       </main>
     </div>
