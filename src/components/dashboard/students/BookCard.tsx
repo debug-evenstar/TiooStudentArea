@@ -19,6 +19,7 @@ import {
 import { BsThreeDots } from "react-icons/bs";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { LuCrown } from "react-icons/lu";
+import { truncateString } from "../../../utils/format";
 
 export interface BookCardProps {
   cover_photo: string;
@@ -74,7 +75,7 @@ const BookCard = ({
   const [removeFromShelf] = dashboardApiSlice.useRemoveFromStudentShelfMutation();
 
   const openLesson = () => {
-    navigate("/dashboard/books/" + id + "/study")
+    navigate(`/books/${id}/study`);
   };
 
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -91,7 +92,10 @@ const BookCard = ({
     const response =
       type == "shelf"
         ? setShowDelete(true)
-        : await addToShelf({ textbook_id: id });
+        : inShelf ?
+          openLesson()
+          :
+          await addToShelf({ textbook_id: id });
     setDeleteLoading(false);
     toast.success(response?.data?.message);
   };
@@ -137,10 +141,10 @@ const BookCard = ({
           <div className="absolute px-3 py-1 rounded-r-lg mt-2  bg-primary">
             <LuCrown color="gold" />
           </div>
-        ) 
+        )
       }
       <div
-        className={`h-[17rem]  border border-gray-200 overflow-hidden flex items-center justify-center mb-2 ${cover_photo ? "" : "bg-gray-50"
+        className={`h-[17rem]  border border-gray-200 overflow-hidden rounded-lg flex items-center justify-center mb-2 ${cover_photo ? "" : "bg-gray-50"
           }`}
       >
         {cover_photo ? (
@@ -155,22 +159,26 @@ const BookCard = ({
         )}
       </div>
 
-      <div className="py-3 quicksand  ">
-        <p className="font-[600] text-xl">{name}</p>
+      <div className="py-3 quicksand">
+        <p className="font-[600] text-lg " title={name}>{truncateString(name, 20)}</p>
         {/* <p>By {author}</p> */}
       </div>
 
       {type != "shelf" ? (
         <button
           onClick={handleClick}
-          disabled={inShelf}
-          className={`px-3 py-2 active:ring quicksand font-[600] flex space-x-2 rounded-full border ${inShelf
-            ? "text-gray-500 border-gray-400"
-            : "border-primary text-primary"
-            }`}
+          // disabled={inShelf}
+          className={`px-3 py-2 active:ring quicksand font-[600] w-full justify-center flex space-x-2 items-center rounded-full border border-primary text-primary ${
+            inShelf? "" : ""
+          }`}
         >
-          <img src={bookImg} alt="" />
-          <span>{inShelf ? "Added" : "Add to shelf"}</span>
+          {
+            inShelf ?
+              <FiExternalLink />
+              :
+              <img src={bookImg} alt="" />
+          }
+          <span>{inShelf ? "Open" : "Add to shelf"}</span>
         </button>
       ) : (
         <div className="flex items-center justify-between">
@@ -181,16 +189,7 @@ const BookCard = ({
             <FiExternalLink />
             <span>Open</span>
           </button>
-          {/* <button
-            onClick={handleClick}
-            className="flex items-center p-2 rounded border space-x-2 text-sm text-red-500"
-          >
-            {deleteLoading ? (
-              <PulseLoader size={4} color="#616161" />
-            ) : (
-              <TfiTrash />
-            )}
-          </button> */}
+
         </div>
       )}
     </div>
