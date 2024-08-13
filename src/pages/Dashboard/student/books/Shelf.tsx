@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 
 export default function Shelf() {
-  const { data } = dashboardApiSlice.useGetStudentShelfQuery();
+  const { data, isLoading } = dashboardApiSlice.useGetStudentShelfQuery();
 
   const [books, setBooks] = useState([]);
 
@@ -20,7 +20,7 @@ export default function Shelf() {
 
   return (
     <div className="w-full mt-7">
-      {<BooksComponent type="shelf" books={books} />}
+      {<BooksComponent type="shelf" isLoading={isLoading} books={books} />}
     </div>
   );
 }

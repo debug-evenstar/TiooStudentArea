@@ -15,6 +15,10 @@ export const classNames = (...classes: string[]) => {
   return classes.filter(Boolean).join(" ");
 };
 
+export const truncateString = (str: string, maxLength: number) => {
+  return str.length <= maxLength ? str : str.slice(0, maxLength) + "...";
+};
+
 export const formatAsNgnMoney = (value: number | string) => {
   if (!value) return "";
   return `₦${value

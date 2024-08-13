@@ -35,6 +35,6 @@ export default function Library() {
   }, [libraryBooks.data]);
 
   return (
-    <div className="w-[100%] mt-7">{<BooksComponent books={books} />}</div>
+    <div className="w-[100%] mt-7">{<BooksComponent books={books} isLoading={libraryBooks.isLoading} />}</div>
   );
 }

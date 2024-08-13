@@ -9,17 +9,15 @@ import Shelf from "./pages/Dashboard/student/books/Shelf";
 import Settings from "./pages/Dashboard/student/Settings";
 import { FaClock } from "react-icons/fa";
 import Analytics from "./pages/Dashboard/student/Analytics";
-import { ConfigureLibrary, LessonPage } from "@Praxeum-ai/LearnBlocks";
+import { ConfigureLibrary } from "@Praxeum-ai/LearnBlocks";
 import Study from "./pages/Dashboard/student/books/Study";
 import { useEffect } from "react";
-import { LuSettings } from "react-icons/lu";
 import ParentDashboardLayout from "./layouts/parentLayout";
 import CreateProfile from "./pages/Dashboard/CreateProfile";
-import { logoutUser } from "./utils/logout";
+
 import ProtectedRoutes from "./components/Auth/ProtectedRoutes";
+
 const env = import.meta.env;
-// import Profiles from "./pages/Dashboard/parent/Profiles";
-// import CreateProfile from "./pages/Dashboard/CreateProfile";
 
 const ComingSoon = () => {
     return (
@@ -37,7 +35,6 @@ function App() {
         ConfigureLibrary.save({
             baseUrl: env.VITE_APP_API_BASE_URL
         })
-
     }, []);
     return (
         <BrowserRouter>
@@ -66,7 +63,6 @@ function App() {
                             element={<Settings />}
                         />
                     </Route>
-                    <Route path="/dashboard/books/:bookId/study" element={<Study />} />
                     <Route path="/books/:bookId/study" element={<Study />} />
                     {/* TODO: make sure  books are from  */}
 
