@@ -40,11 +40,11 @@ const BooksComponent: FC<BooksComponentProps> = ({ books, type ,isLoading }) => 
         />
       </div>
       <div className="w-full mt-5 mb-10">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 w-full">
+      <div className={`${filteredBooks?.length ? "grid-cols-2 md:grid-cols-4": ""} grid  gap-3 sm:gap-6 w-full`}>
         {
           !isLoading ?
-            (books?.length ?
-              books?.map((book: any, index: number) => (
+            (filteredBooks?.length ?
+              filteredBooks?.map((book: any, index: number) => (
                 <BookCard type={type} key={index} {...book} />
               ))
 

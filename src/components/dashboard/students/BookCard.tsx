@@ -64,7 +64,7 @@ const BookCard = ({
   name,
   id,
   inShelf,
-  author = "No author",
+  author = "--",
   is_premium,
 }: any) => {
 
@@ -161,7 +161,7 @@ const BookCard = ({
 
       <div className="py-3 quicksand">
         <p className="font-[600] text-lg " title={name}>{truncateString(name, 20)}</p>
-        {/* <p>By {author}</p> */}
+        <p className="text-sm">By {author}</p>
       </div>
 
       {type != "shelf" ? (
