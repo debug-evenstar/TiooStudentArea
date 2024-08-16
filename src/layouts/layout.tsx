@@ -1,23 +1,18 @@
 import { Outlet } from "react-router-dom";
-
 import Nav from "../components/layouts/nav";
 import Sidebar from "../components/layouts/sidebar";
-
 import { useState } from "react";
-import pages from "../constants/sidelinks";
-
+import { studentPages, parentPages } from "../constants/sidelinks";
 
 export default function DashboardLayout() {
 
   const [sideOpen, setSideOpen] = useState(false);
 
-
-
   return (
     <div className="flex h-screen overflow-hidden outfit-font">
-      <Sidebar pages={pages} {...{ sideOpen, setSideOpen }} />
+      <Sidebar pages={studentPages} {...{ sideOpen, setSideOpen }} />
       <main className="grow flex flex-col w-full lg:w-[79.5%]">
-        <Nav pages={pages} {...{ sideOpen, setSideOpen }} />
+        <Nav pages={parentPages} {...{ sideOpen, setSideOpen }} />
         <div className="px-3 md:px-6 overflow-hidden grow overflow-y-auto">
           <Outlet />
         </div>
