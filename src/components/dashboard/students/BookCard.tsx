@@ -46,7 +46,7 @@ const RemoveFromShelfModal: FC<RemoveFromShelfModalProps> = ({ title, content, o
   </div>
 );
 
-const BookCard: FC<BookCardProps> = ({ type, cover_photo, name, id, inShelf, author = "--", is_premium }) => {
+const BookCard: FC<BookCardProps> = ({ type, cover_photo, name, id, inShelf, author, is_premium }) => {
   const navigate = useNavigate();
   const [addToShelf] = dashboardApiSlice.useAddToStudentShelfMutation();
   const [removeFromShelf] = dashboardApiSlice.useRemoveFromStudentShelfMutation();
@@ -132,7 +132,7 @@ const BookCard: FC<BookCardProps> = ({ type, cover_photo, name, id, inShelf, aut
 
       <div className="py-3 quicksand">
         <p className="font-[600] text-lg text-nowrap" title={name}>{truncateString(name, 20)}</p>
-        <p className="text-sm">By {author}</p>
+        <p className="text-sm">By {author || "Tioo"}</p>
       </div>
 
       {type !== "shelf" ? (

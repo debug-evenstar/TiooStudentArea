@@ -6,7 +6,7 @@ import EmptyCollection from "../common/EmptyCollection";
 import { BookCardSkeleton } from "./BookCardSkeleton";
 
 export interface BooksComponentProps {
-  books: BookCardProps[];
+  books: any;
   type?: string;
   isLoading: boolean;
 }
