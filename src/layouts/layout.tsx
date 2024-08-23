@@ -4,13 +4,13 @@ import Sidebar from "../components/layouts/sidebar";
 import { useState } from "react";
 import { studentPages, parentPages } from "../constants/sidelinks";
 
-export default function DashboardLayout() {
+export default function DashboardLayout({pages}) {
 
   const [sideOpen, setSideOpen] = useState(false);
 
   return (
     <div className="flex h-screen overflow-hidden outfit-font">
-      <Sidebar pages={studentPages} {...{ sideOpen, setSideOpen }} />
+      <Sidebar pages={pages} {...{ sideOpen, setSideOpen }} />
       <main className="grow flex flex-col w-full lg:w-[79.5%]">
         <Nav pages={parentPages} {...{ sideOpen, setSideOpen }} />
         <div className="px-3 md:px-6 overflow-hidden grow overflow-y-auto">

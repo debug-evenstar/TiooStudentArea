@@ -1,0 +1,8 @@
+.bookcard-overlay {
+  opacity: 0 !important;
+  background-color: orange !important;
+}
+
+.bookcard-overlay :hover {
+  opacity: 1 !important;
+}

@@ -1,6 +1,5 @@
 import { AnalyticsIcon, BooksIcon, DashboardIcon, NetworkIcon, SettingsIcon } from "../components/Icons";
 
-
 export const studentPages: any[] = [
   {name: "Dashboard",Icon: DashboardIcon ,route: '/student/dashboard/home',submenu: []},
   {name: "Books",Icon: BooksIcon,route: '/student/dashboard/books', submenu: [
@@ -14,13 +13,8 @@ export const studentPages: any[] = [
 ];
 
 export const parentPages: any[] = [
-  {name: "Dashboard",Icon: DashboardIcon ,route: '/dashboard/home',submenu: []},
-  {name: "Books",Icon: BooksIcon,route: '/dashboard/books', submenu: [
-    {name: "Library", route: '/dashboard/books/library'},
-    {name: "My shelf", route: '/dashboard/books/shelf'},
-    {name: "School books", route: '/dashboard/books/school'},
-  ]},
-  {name: "Analytics",Icon: AnalyticsIcon,route: '/dashboard/analytics',submenu: []},
-  {name: "Network",Icon: NetworkIcon,route: '/dashboard/network',submenu: []},
-  {name: "Settings",Icon: SettingsIcon,route: '/dashboard/settings',submenu: []},
+  {name: "Profiles",Icon: DashboardIcon ,route: '/parent/dashboard/profiles',submenu: []},
+  {name: "Blog",Icon: AnalyticsIcon,route: '/parent/dashboard/blog',submenu: []},
+  {name: "Payment",Icon: NetworkIcon,route: '/parent/dashboard/payment',submenu: []},
+  {name: "Settings",Icon: SettingsIcon,route: '/parent/dashboard/settings',submenu: []},
 ];

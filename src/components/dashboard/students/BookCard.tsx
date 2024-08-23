@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { Menu, MenuHandler, MenuList, MenuItem, Button } from "@material-tailwind/react";
 import { truncateString } from "../../../utils/format";
 
+
 export interface BookCardProps {
   cover_photo: string;
   name: string;
@@ -19,53 +20,23 @@ export interface BookCardProps {
   is_premium: boolean;
   id: number;
   type?: string;
+  removeModalHandler: Function;
   inShelf?: boolean;
 }
 
-interface RemoveFromShelfModalProps {
-  title?: string;
-  content?: string;
-  onCancel: MouseEventHandler<HTMLButtonElement>;
-  onDelete: MouseEventHandler<HTMLButtonElement>;
-}
-
-const RemoveFromShelfModal: FC<RemoveFromShelfModalProps> = ({ title, content, onCancel, onDelete }) => (
-  <div className="bg-[#00000022] inset-0 fixed w-full h-screen z-[200] flex justify-center ">
-    <div className="w-full shadow sm:-[18rem] lg:w-[23rem] bg-white p-8 py-6 rounded-lg mt-20 h-fit">
-      <div className="text-lg py-2 font-[600] text-gray-800">
-        <p>{title}</p>
-      </div>
-      <div className="text-gray-700 py-2 mb-3">
-        <p>{content}</p>
-      </div>
-      <div className="flex items-center justify-end space-x-3">
-        <button onClick={onCancel} className="text-gray-600 px-4 shadow py-2 rounded">Cancel</button>
-        <button onClick={onDelete} className="text-white px-4 shadow bg-red-600 py-2 rounded">Remove</button>
-      </div>
-    </div>
-  </div>
-);
-
-const BookCard: FC<BookCardProps> = ({ type, cover_photo, name, id, inShelf, author, is_premium }) => {
+const BookCard: FC<BookCardProps> = ({ removeModalHandler, type, cover_photo, name, id, inShelf, author, is_premium }) => {
   const navigate = useNavigate();
   const [addToShelf] = dashboardApiSlice.useAddToStudentShelfMutation();
-  const [removeFromShelf] = dashboardApiSlice.useRemoveFromStudentShelfMutation();
   const [deleteLoading, setDeleteLoading] = useState(false);
-  const [showDelete, setShowDelete] = useState(false);
 
   const handleOpenLesson = useCallback(() => {
     navigate(`/books/${id}/study`);
   }, [navigate, id]);
 
-  const handleRemoveFromShelf = async () => {
-    await removeFromShelf({ textbook_id: id });
-    setShowDelete(false);
-  };
-
   const handleClick = useCallback(async () => {
     setDeleteLoading(true);
     if (type === "shelf") {
-      setShowDelete(true);
+      // setShowDelete(true);
     } else if (inShelf) {
       handleOpenLesson();
     } else {
@@ -76,34 +47,44 @@ const BookCard: FC<BookCardProps> = ({ type, cover_photo, name, id, inShelf, aut
   }, [type, inShelf, id, addToShelf, handleOpenLesson]);
 
   return (
-    <div className="w-full h-full group relative">
-      {showDelete && (
-        <RemoveFromShelfModal
-          title="Remove Book"
-          content="Are you sure you want to remove this book?"
-          onCancel={() => setShowDelete(false)}
-          onDelete={handleRemoveFromShelf}
-        />
-      )}
+    <div className="w-full h-full duration-1000 hover: hover:scale-[1.09] border ease-in-out border-gray-50 overflow-hidden px-3 py-2 relative rounded-2xl hover:shadow-[rgba(0,0,0,0.2)_0px_0px_45px_0px] group">
+
+      <div className="absolute z-[40] inset-0 bg-gray-800/50 ease-in-out duration-1000 transition opacity-0 hover:opacity-100 flex items-center jusity-center">
+        {type !== "shelf" ? (
+          <button
+            onClick={handleClick}
+            className={`px-3 py-2 h-fit active:ring bg-white text-gray-900 quicksand font-[600] w-[80%] mx-auto justify-center flex space-x-2 items-center rounded-full border border-white ${inShelf ? "" : ""}`}
+          >
+            {inShelf ? <FiExternalLink /> : <img src={bookImg} alt="" />}
+            <span>{inShelf ? "Open" : "Add to shelf"}</span>
+          </button>
+        ) : (
+          <button
+            onClick={handleOpenLesson}
+            className="px-3 py-2 w-[80%] mx-auto bg-white text-gray-900 active:ring justify-center quicksand font-[600] flex items-center space-x-2 border-white rounded-full border"
+          >
+            <FiExternalLink />
+            <span>Open</span>
+          </button>
+
+        )}
+
+      </div>
+
 
       {type === "shelf" ? (
-        <Menu placement="bottom-end">
+        <Menu placement="bottom-start">
           <MenuHandler>
-            <button className="absolute px-3 py-1 text-transparent flex group-hover:bg-[#ffffffaa] group-hover:text-dark right-0 bg-transparent hover:shadow-none items-center font-normal text-black capitalize">
+            <button className="absolute z-[40] w-[30px] h-[30px] justify-center  rounded-full text-transparent flex group-hover:bg-white group-hover:shadow-[rgba(0,0,0,0.15)_0px_0px_25px_0px] group-hover:text-dark bg-transparent items-center font-normal text-black capitalize">
               <BsThreeDots className="text-xl" />
             </button>
           </MenuHandler>
-          <MenuList
-            placeholder="stuff"
-            onPointerEnterCapture={() => null}
-            onPointerLeaveCapture={() => null}
-          >
+          {/* @ts-ignore */}
+          <MenuList>
+            {/* @ts-ignore */}
             <MenuItem
-              placeholder="stuff"
-              onPointerEnterCapture={() => null}
-              onPointerLeaveCapture={() => null}
               title="Remove from shelf"
-              onClick={() => setShowDelete(true)}
+              onClick={() => removeModalHandler(id)}
               className="flex gap-x-2 items-center"
             >
               <RiDeleteBin5Line />
@@ -119,9 +100,9 @@ const BookCard: FC<BookCardProps> = ({ type, cover_photo, name, id, inShelf, aut
         )
       )}
 
-      <div className={`h-[17rem] border border-gray-200 overflow-hidden rounded-lg flex items-center justify-center mb-2 ${cover_photo ? "" : "bg-gray-50"}`}>
+      <div className={`h-[17rem] overflow-hidden rounded-lg flex items-center justify-center mb-2 ${cover_photo ? "" : "bg-gray-50"}`}>
         {cover_photo ? (
-          <img src={cover_photo} alt="" className="w-full" />
+          <img src={cover_photo} alt="" className="w-[80%] shadow-lg" />
         ) : (
           <div className="flex flex-col">
             <MdImage color="#ddd" size={90} />
@@ -135,25 +116,7 @@ const BookCard: FC<BookCardProps> = ({ type, cover_photo, name, id, inShelf, aut
         <p className="text-sm">By {author || "Tioo"}</p>
       </div>
 
-      {type !== "shelf" ? (
-        <button
-          onClick={handleClick}
-          className={`px-3 py-2 active:ring quicksand font-[600] w-full justify-center flex space-x-2 items-center rounded-full border border-primary text-primary ${inShelf ? "" : ""}`}
-        >
-          {inShelf ? <FiExternalLink /> : <img src={bookImg} alt="" />}
-          <span>{inShelf ? "Open" : "Add to shelf"}</span>
-        </button>
-      ) : (
-        <div className="flex items-center justify-between">
-          <button
-            onClick={handleOpenLesson}
-            className="px-3 py-2 w-full active:ring justify-center quicksand font-[600] flex items-center space-x-2 border-primary text-primary rounded-full border"
-          >
-            <FiExternalLink />
-            <span>Open</span>
-          </button>
-        </div>
-      )}
+
     </div>
   );
 };

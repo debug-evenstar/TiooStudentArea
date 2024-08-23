@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 import ScrollToTop from "./utils/scrollTop";
-import LogToken from "./old-pages/Auth/LogToken";
+import LogToken from "./pages/Auth/LogToken";
 import { FaClock } from "react-icons/fa";
 import { ConfigureLibrary } from "@Praxeum-ai/LearnBlocks";
 import Study from "./pages/Dashboard/student/books/Study";
@@ -11,6 +11,7 @@ import ProtectedRoutes from "./components/Auth/ProtectedRoutes";
 import StudentRoutes from "./routes/student";
 import ParentRoutes from "./routes/parent";
 import DashboardLayout from "./layouts/layout";
+import { parentPages, studentPages } from "./constants/sidelinks";
 
 const env = import.meta.env;
 
@@ -27,12 +28,10 @@ function App() {
                 {/* auth routes */}
                 <Route path="/auth/:token" element={<LogToken />} />
                 <Route element={<ProtectedRoutes />} >
-                    <Route path="/student" element={<DashboardLayout />}>
-                        {StudentRoutes()}
-                    </Route>
-                    <Route path="/parent" element={<DashboardLayout />}>
-                        {ParentRoutes()}
-                    </Route>
+
+                    {StudentRoutes()}
+
+                    {ParentRoutes()}
                     <Route path="/books/:bookId/study" element={<Study />} />
                 </Route>
             </Routes>

@@ -25,7 +25,7 @@ function App() {
         <Route path="/lesson/:id" element={<LessonComponent />} />
         <Route path="/library/:id" element={<PreviewTemplateDoc />} />
         {/* preview lesson */}
-        <Route path="/preview" element={<PreviewBook/>}/>
+        <Route path="/preview" element={<PreviewBook />} />
       </Routes>
     </BrowserRouter>
   );
