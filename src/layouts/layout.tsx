@@ -4,7 +4,7 @@ import Sidebar from "../components/layouts/sidebar";
 import { useState } from "react";
 import { studentPages, parentPages } from "../constants/sidelinks";
 
-export default function DashboardLayout({pages: any}) {
+export default function DashboardLayout({pages}: any) {
 
   const [sideOpen, setSideOpen] = useState(false);
 
