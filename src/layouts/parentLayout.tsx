@@ -4,7 +4,7 @@ import Nav from "../components/layouts/nav";
 import Sidebar from "../components/layouts/sidebar";
 
 import { useState } from "react";
-import pages from "../constants/sidelinks";
+import { parentPages as pages }from "../constants/sidelinks";
 
 
 
