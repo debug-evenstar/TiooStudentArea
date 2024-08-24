@@ -16,7 +16,7 @@ export default function Study() {
       setBookData(data.data);
     }
   }, [data]);
-  
+
   return (
     <>
       {!bookData &&
