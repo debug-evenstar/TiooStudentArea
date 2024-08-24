@@ -24,9 +24,9 @@ root.render(
     <Provider store={store}>
       <PersistGate
         loading={
-          <div className="w-full h-screen grid place-content-center">
+          <div className="w-full h-screen inset-0 absolute flex items-center justify-center">
             <span>
-              <ScaleLoader height={30} speedMultiplier={1.3} color=" #9c29b2" />
+              <ScaleLoader height={30} speedMultiplier={1.3} color="#9c29b2" />
             </span>
           </div>
         }
