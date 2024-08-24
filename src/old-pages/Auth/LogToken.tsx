@@ -63,7 +63,7 @@ const LogToken = () => {
   return (
     <>
       <>
-        <div className="h-screen bg-[#E3E2FF] flex justify-center items-center">
+        <div className="h-screen flex justify-center items-center">
           <div className="">
             <div className="">
               {isBusy && (
@@ -98,9 +98,6 @@ const LogToken = () => {
                 </div>
               )}
             </div>
-          </div>
-          <div className="fixed top-3 left-4">
-            <img src="logo.png" alt="logo" className="w-12 lg:w-24" />
           </div>
         </div>
       </>

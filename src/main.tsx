@@ -12,6 +12,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ThreeCirclesLoading } from "./old-components/Ui/Loading";
 import App from "./App";
+import { ScaleLoader } from "react-spinners";
 
 let persistor = persistStore(store);
 
@@ -24,7 +25,9 @@ root.render(
       <PersistGate
         loading={
           <div className="w-full h-screen grid place-content-center">
-            <ThreeCirclesLoading size="200" color="#4f46e5" />
+            <span>
+              <ScaleLoader height={30} speedMultiplier={1.3} color=" #9c29b2" />
+            </span>
           </div>
         }
         persistor={persistor}

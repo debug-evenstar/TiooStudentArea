@@ -10,18 +10,9 @@ interface Book {
   id: number;
   type?: string;
   inShelf?: boolean;
-
-  // other properties of the book
 }
 
 export default function Library() {
-  // const books = Array(9)
-  //   .fill(null)
-  //   .map(() => ({
-  //     image: bookCoverImg,
-  //     title: "A Children Book Ab...",
-  //     author: "Joy Berry",
-  //   }));
 
   const libraryBooks = dashboardApiSlice.useGetLibraryBooksQuery(null);
 
@@ -35,6 +26,6 @@ export default function Library() {
   }, [libraryBooks.data]);
 
   return (
-    <div className="w-[100%] mt-7">{<BooksComponent books={books} />}</div>
+    <div className="w-[100%] mt-7">{<BooksComponent books={books} isLoading={libraryBooks.isLoading} />}</div>
   );
 }
