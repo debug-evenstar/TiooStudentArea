@@ -12,7 +12,7 @@ export default function DashboardLayout({pages}: any) {
     <div className="flex h-screen overflow-hidden outfit-font">
       <Sidebar pages={pages} {...{ sideOpen, setSideOpen }} />
       <main className="grow flex flex-col w-full lg:w-[79.5%]">
-        <Nav pages={parentPages} {...{ sideOpen, setSideOpen }} />
+        <Nav pages={pages} {...{ sideOpen, setSideOpen }} />
         <div className="px-3 md:px-6 overflow-hidden grow overflow-y-auto">
           <Outlet />
         </div>
