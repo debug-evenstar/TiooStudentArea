@@ -47,7 +47,7 @@ const BookCard: FC<BookCardProps> = ({ removeModalHandler, type, cover_photo, na
   }, [type, inShelf, id, addToShelf, handleOpenLesson]);
 
   return (
-    <div className="w-full h-full duration-1000 hover: hover:scale-[1.09] border ease-in-out border-gray-50 overflow-hidden px-3 py-2 relative rounded-2xl hover:shadow-[rgba(0,0,0,0.2)_0px_0px_45px_0px] group">
+    <div className="w-full sm:w-[90%] h-full duration-1000 hover: hover:scale-[1.05] border ease-in-out border-gray-50 overflow-hidden px-3 py-2 relative rounded-2xl hover:shadow-[rgba(0,0,0,0.2)_0px_0px_45px_0px] group">
 
       <div className="absolute z-[40] inset-0 bg-gray-800/50 ease-in-out duration-1000 transition opacity-0 hover:opacity-100 flex items-center jusity-center">
         {type !== "shelf" ? (
@@ -100,9 +100,9 @@ const BookCard: FC<BookCardProps> = ({ removeModalHandler, type, cover_photo, na
         )
       )}
 
-      <div className={`h-[17rem] overflow-hidden rounded-lg flex items-center justify-center mb-2 ${cover_photo ? "" : "bg-gray-50"}`}>
+      <div className={`overflow-hidden rounded-lg flex items-center justify-center mb-2 ${cover_photo ? "" : "bg-gray-50"}`}>
         {cover_photo ? (
-          <img src={cover_photo} alt="" className="w-[80%] shadow-lg" />
+          <img src={cover_photo} alt="" className="w-full mb-1 shadow-lg h-[17rem] mx-auto" />
         ) : (
           <div className="flex flex-col">
             <MdImage color="#ddd" size={90} />
@@ -111,7 +111,7 @@ const BookCard: FC<BookCardProps> = ({ removeModalHandler, type, cover_photo, na
         )}
       </div>
 
-      <div className="py-3 quicksand">
+      <div className="mb quicksand">
         <p className="font-[600] text-lg text-nowrap" title={name}>{truncateString(name, 20)}</p>
         <p className="text-sm">By {author || "Tioo"}</p>
       </div>
