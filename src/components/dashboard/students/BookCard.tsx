@@ -61,7 +61,7 @@ const BookCard: FC<BookCardProps> = ({ removeModalHandler, type, cover_photo, na
         ) : (
           <button
             onClick={handleOpenLesson}
-            className="px-3 py-2 w-[80%] mx-auto bg-white text-gray-900 active:ring justify-center quicksand font-[600] flex items-center space-x-2 border-white rounded-full border"
+            className="px-3 py-2 w-[80%] mx-auto bg-white  text-gray-900 active:ring justify-center quicksand font-[600] flex items-center space-x-2 border-white rounded-full border"
           >
             <FiExternalLink />
             <span>Open</span>
@@ -100,11 +100,11 @@ const BookCard: FC<BookCardProps> = ({ removeModalHandler, type, cover_photo, na
         )
       )}
 
-      <div className={`overflow-hidden rounded-lg flex items-center justify-center mb-2 ${cover_photo ? "" : "bg-gray-50"}`}>
+      <div className={`overflow-hidden rounded-lg flex h-[15rem]  justify-center mb-2 ${cover_photo ? "" : "bg-gray-50"}`}>
         {cover_photo ? (
-          <img src={cover_photo} alt="" className="w-full mb-1 shadow-lg h-[17rem] mx-auto" />
+          <img src={cover_photo} alt="" className="w-full mb-1 shadow-lg  mx-auto" />
         ) : (
-          <div className="flex flex-col">
+          <div className="flex flex-col h-[15rem] items-center justify-center">
             <MdImage color="#ddd" size={90} />
             <p className="text-gray-500 text-center">No cover</p>
           </div>
