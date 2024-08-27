@@ -2102,9 +2102,9 @@
   resolved "https://registry.npmjs.org/@popperjs/core/-/core-2.11.8.tgz"
   integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
 
-"@Praxeum-ai/LearnBlocks@github:Praxeum-ai/LearnBlocks#dev-test":
+"@Praxeum-ai/LearnBlocks@github:Praxeum-ai/LearnBlocks#v1.0.3-beta":
   version "0.1.0"
-  resolved "git+ssh://git@github.com/Praxeum-ai/LearnBlocks.git#bc9f5c1e01e5be11298243390378d4cf52490b6e"
+  resolved "git+ssh://git@github.com/Praxeum-ai/LearnBlocks.git#783640ef8ffbacc94c06a3edcf570a8c28686694"
   dependencies:
     "@emotion/react" "^11.11.3"
     "@emotion/styled" "^11.11.0"
