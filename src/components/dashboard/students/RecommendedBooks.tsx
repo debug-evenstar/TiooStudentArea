@@ -20,8 +20,8 @@ export default function RecommendedBooks() {
 
   return (
     <div className="border rounded-[16px] w-full p-6 mt-5 mb-10">
-      <h3 className="text-3xl mb-4">Recommended Books</h3>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 w-full">
+      <h3 className="text-3xl mb-8">Recommended Books</h3>
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 w-full">
         {
           !isLoading ?
             (books.length ?
