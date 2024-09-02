@@ -2,126 +2,89 @@ import { MdImage } from "react-icons/md";
 import bookImg from "@/assets/icons/book-icon.svg";
 import { dashboardApiSlice } from "../../../services/api/dashboardSlice";
 import { toast } from "react-toastify";
-import { TfiTrash } from "react-icons/tfi";
-
 import { FiExternalLink } from "react-icons/fi";
-import { FC, MouseEventHandler, useState } from "react";
-import { PulseLoader } from "react-spinners";
-import { useNavigate } from "react-router-dom";
-
-import {
-  Menu,
-  MenuHandler,
-  MenuList,
-  MenuItem,
-  Button,
-} from "@material-tailwind/react";
 import { BsThreeDots } from "react-icons/bs";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { LuCrown } from "react-icons/lu";
+import { FC, useState, useCallback, MouseEventHandler } from "react";
+import { PulseLoader } from "react-spinners";
+import { useNavigate } from "react-router-dom";
+import { Menu, MenuHandler, MenuList, MenuItem, Button } from "@material-tailwind/react";
+import { truncateString } from "../../../utils/format";
+
 
 export interface BookCardProps {
   cover_photo: string;
   name: string;
   author: string;
+  is_premium: boolean;
   id: number;
   type?: string;
+  removeModalHandler: Function;
   inShelf?: boolean;
 }
 
-interface DeleteModalProps {
-  title?: string;
-  content?: string;
-  onCancel: MouseEventHandler<HTMLButtonElement>;
-  onDelete: MouseEventHandler<HTMLButtonElement>;
-}
-
-const DeleteModal: FC<DeleteModalProps> = ({ title, content, onCancel, onDelete }) => {
-  return (
-    <div className="bg-[#00000022] inset-0 fixed w-full h-screen z-[200] flex justify-center ">
-      <div className="w-full shadow sm:-[18rem] lg:w-[23rem] bg-white p-8 py-6 rounded-lg mt-20 h-fit">
-        <div className="text-lg py-2 font-[600] text-gray-800 ">
-          <p>
-            {title}
-          </p>
-        </div>
-        <div className="text-gray-700 py-2 mb-3">
-          <p>{content} </p>
-        </div>
-        <div className="flex items-center justify-end space-x-3">
-          <button onClick={onCancel} className="text-gray-600 px-4 shadow py-2 rounded">Cancel</button>
-          <button onClick={onDelete} className="text-white px-4 shadow bg-red-600 py-2 rounded">Delete</button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-const BookCard = ({
-  type,
-  cover_photo,
-  name,
-  id,
-  inShelf,
-  author = "No author",
-  BookCategory,
-}: any) => {
-
-
+const BookCard: FC<BookCardProps> = ({ removeModalHandler, type, cover_photo, name, id, inShelf, author, is_premium }) => {
   const navigate = useNavigate();
-
   const [addToShelf] = dashboardApiSlice.useAddToStudentShelfMutation();
-  const [removeFromShelf] = dashboardApiSlice.useRemoveFromStudentShelfMutation();
-
-  const openLesson = () => {
-    navigate("/dashboard/books/" + id + "/study")
-  };
-
   const [deleteLoading, setDeleteLoading] = useState(false);
-  const [showDelete, setShowDelete] = useState(false);
 
-  const deleteFromShelf = async () => {
-    await removeFromShelf({ textbook_id: id })
-    setShowDelete(false);
-  }
+  const handleOpenLesson = useCallback(() => {
+    navigate(`/books/${id}/study`);
+  }, [navigate, id]);
 
-
-  const handleClick: any = async () => {
+  const handleClick = useCallback(async () => {
     setDeleteLoading(true);
-    const response =
-      type == "shelf"
-        ? setShowDelete(true)
-        : await addToShelf({ textbook_id: id });
+    if (type === "shelf") {
+      // setShowDelete(true);
+    } else if (inShelf) {
+      handleOpenLesson();
+    } else {
+      const response = await addToShelf({ textbook_id: id });
+      toast.success(response?.data?.message);
+    }
     setDeleteLoading(false);
-    toast.success(response?.data?.message);
-  };
+  }, [type, inShelf, id, addToShelf, handleOpenLesson]);
 
   return (
-    <div className="w-full h-full group relative">
-      {
-        showDelete &&
-        <DeleteModal
-          title="Delete Book"
-          content="Are you sure you want to delete this book?"
-          onCancel={() => setShowDelete(false)}
-          onDelete={deleteFromShelf}
-        />
-      }
+    <div className="w-full sm:w-[90%] h-full duration-1000 hover: hover:scale-[1.05] border ease-in-out border-gray-50 overflow-hidden px-3 py-2 relative rounded-2xl hover:shadow-[rgba(0,0,0,0.2)_0px_0px_45px_0px] group">
+
+      <div className="absolute z-[40] inset-0 bg-gray-800/50 ease-in-out duration-1000 transition opacity-0 hover:opacity-100 flex items-center jusity-center">
+        {type !== "shelf" ? (
+          <button
+            onClick={handleClick}
+            className={`px-3 py-2 h-fit active:ring bg-white text-gray-900 quicksand font-[600] w-[80%] mx-auto justify-center flex space-x-2 items-center rounded-full border border-white ${inShelf ? "" : ""}`}
+          >
+            {inShelf ? <FiExternalLink /> : <img src={bookImg} alt="" />}
+            <span>{inShelf ? "Open" : "Add to shelf"}</span>
+          </button>
+        ) : (
+          <button
+            onClick={handleOpenLesson}
+            className="px-3 py-2 w-[80%] mx-auto bg-white  text-gray-900 active:ring justify-center quicksand font-[600] flex items-center space-x-2 border-white rounded-full border"
+          >
+            <FiExternalLink />
+            <span>Open</span>
+          </button>
+
+        )}
+
+      </div>
 
 
-      {type == "shelf" ?
-
-        <Menu placement="bottom-end">
+      {type === "shelf" ? (
+        <Menu placement="bottom-start">
           <MenuHandler>
-            <button className="absolute px-3 py-1 text-transparent flex group-hover:bg-[#ffffffaa] group-hover:text-dark right-0 bg-transparent mx-0 hover:shadow-none text-md items-center font-normal shadow-none text-black capitalize">
+            <button className="absolute z-[40] w-[30px] h-[30px] justify-center  rounded-full text-transparent flex group-hover:bg-white group-hover:shadow-[rgba(0,0,0,0.15)_0px_0px_25px_0px] group-hover:text-dark bg-transparent items-center font-normal text-black capitalize">
               <BsThreeDots className="text-xl" />
             </button>
           </MenuHandler>
+          {/* @ts-ignore */}
           <MenuList>
+            {/* @ts-ignore */}
             <MenuItem
-              id={"1"}
               title="Remove from shelf"
-              onClick={() => setShowDelete(true)}
+              onClick={() => removeModalHandler(id)}
               className="flex gap-x-2 items-center"
             >
               <RiDeleteBin5Line />
@@ -129,67 +92,31 @@ const BookCard = ({
             </MenuItem>
           </MenuList>
         </Menu>
-
-        :
-        (
-          BookCategory && BookCategory.category == "Premium" &&
-          <div className="absolute px-3 py-1 rounded-r-lg mt-2  bg-primary">
+      ) : (
+        is_premium && (
+          <div className="absolute px-3 py-1 rounded-r-lg mt-2 bg-primary">
             <LuCrown color="gold" />
           </div>
         )
-      }
-      <div
-        className={`h-[17rem]  border border-gray-200 overflow-hidden flex items-center justify-center mb-2 ${cover_photo ? "" : "bg-gray-50"
-          }`}
-      >
+      )}
+
+      <div className={`overflow-hidden rounded-lg flex h-[15rem]  justify-center mb-2 ${cover_photo ? "" : "bg-gray-50"}`}>
         {cover_photo ? (
-          <img src={cover_photo} alt="" className="w-full h-full" />
+          <img src={cover_photo} alt="" className="w-full mb-1 shadow-lg  mx-auto" />
         ) : (
-          <div className="flex flex-col">
-            <p>
-              <MdImage color="#ddd" size={90} />
-            </p>
+          <div className="flex flex-col h-[15rem] items-center justify-center">
+            <MdImage color="#ddd" size={90} />
             <p className="text-gray-500 text-center">No cover</p>
           </div>
         )}
       </div>
-      <div className="py-3 quicksand  ">
-        <p className="font-[600] text-xl">{name}</p>
-        {/* <p>By {author}</p> */}
+
+      <div className="mb quicksand">
+        <p className="font-[600] text-lg text-nowrap" title={name}>{truncateString(name, 20)}</p>
+        <p className="text-sm">By {author || "Tioo"}</p>
       </div>
-      {type != "shelf" ? (
-        <button
-          onClick={handleClick}
-          disabled={inShelf}
-          className={`px-3 py-2 active:ring quicksand font-[600] flex space-x-2 rounded-full border ${inShelf
-            ? "text-gray-500 border-gray-400"
-            : "border-primary text-primary"
-            }`}
-        >
-          <img src={bookImg} alt="" />
-          <span>{inShelf ? "Added" : "Add to shelf"}</span>
-        </button>
-      ) : (
-        <div className="flex items-center justify-between">
-          <button
-            onClick={openLesson}
-            className="px-3 py-2  w-full active:ring justify-center quicksand font-[600] flex items-center space-x-2 border-primary text-primary rounded-full border "
-          >
-            <FiExternalLink />
-            <span>Open</span>
-          </button>
-          {/* <button
-            onClick={handleClick}
-            className="flex items-center p-2 rounded border space-x-2 text-sm text-red-500"
-          >
-            {deleteLoading ? (
-              <PulseLoader size={4} color="#616161" />
-            ) : (
-              <TfiTrash />
-            )}
-          </button> */}
-        </div>
-      )}
+
+
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { apiSlice } from "../apiSlice";
 import * as ENDPOINT from "../constants";
 import { StudentLoginInput, StudentLoginResult } from "../../utils/dataTypes/auth";
 import { ErrorResult } from "../../utils/dataTypes";
+import { requestAuthorization } from "../helpers";
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -26,11 +27,22 @@ export const authApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: ENDPOINT.CACHE_LIFETIME.EXTENDED,
     }),
+    legacyResetPassword: builder.mutation<any, any>({
+      query: (payload) => ({
+        url: `${ENDPOINT.LEGACY_PASSWORD_RESET}`,
+        method: ENDPOINT.HTTP_METHODS.POST,
+        headers: {
+          Authorization: requestAuthorization(),
+        },
+        body: payload,
+      })
+    })
   }),
   overrideExisting: true,
 });
 
 export const {
   useLazyLoginQuery,
-  useLazyVerifyTokenQuery
+  useLazyVerifyTokenQuery,
+  useLegacyResetPasswordMutation,
 } = authApiSlice;
