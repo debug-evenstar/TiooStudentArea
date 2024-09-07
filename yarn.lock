@@ -2104,7 +2104,7 @@
 
 "@Praxeum-ai/LearnBlocks@github:Praxeum-ai/LearnBlocks#dev-test":
   version "0.1.0"
-  resolved "git+ssh://git@github.com/Praxeum-ai/LearnBlocks.git#b032dcac82e308a3f868fb7515189f1f11a46e22"
+  resolved "git+ssh://git@github.com/Praxeum-ai/LearnBlocks.git#0a4876dbd05160314c8a21c61272e246c0658d96"
   dependencies:
     "@emotion/react" "^11.11.3"
     "@emotion/styled" "^11.11.0"
