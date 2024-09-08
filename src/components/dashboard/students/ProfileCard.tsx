@@ -7,7 +7,11 @@ import "animate.css";
 const ProfileCard = () => {
   const { user } = useSelector(selectUser);
 
-  const firstName = user?.name?.split(" ")[0];
+  const name = user?.name?.split(" ");
+  let firstName;
+
+  if (name.length == 2) firstName = name[0];
+  else firstName = name.slice(0, 2).join(" ");
 
   return (
     <div className="p-4 rounded-[16px] bg-[#50035E] w-full  lg:w-[55%] flex justify-between shrink-0">
@@ -19,11 +23,13 @@ const ProfileCard = () => {
             className="w-[40px] h-[40px] rounded-full"
           />
           <p className="text-3xl font-[500]">
-            Hi, {firstName} <span className="animate__animated animate__tada inline-block text-2xl animate__infinite">👋</span>
+            Hi, {firstName}{" "}
+            <span className="animate__animated animate__tada inline-block text-2xl animate__infinite">
+              👋
+            </span>
           </p>
         </div>
-        <div className="flex justify-between space-x-4 mb-5">
-        </div>
+        <div className="flex justify-between space-x-4 mb-5"></div>
         {/* <p className="font-[300]">Flowinton Montessori School</p> */}
       </div>
       <img src={doodleImg} alt="" className=" shrink-0" />
