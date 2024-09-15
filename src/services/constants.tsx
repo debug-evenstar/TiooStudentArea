@@ -41,3 +41,6 @@ export enum CACHE_LIFETIME {
   export const FETCH_NETWORK = 'student/network'
   export const FETCH_CHAPTER = '/front/material'
   export const FETCH_LIBRARY_TEXTBOOK = (id : any) => `/front/student/textbook/${id}`
+
+  // Network
+  export const FETCH_USER_REFERRALS = 'account/referrals'

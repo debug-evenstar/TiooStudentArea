@@ -9,6 +9,7 @@ export const studentPages: any[] = [
   ]},
   {name: "Analytics",Icon: AnalyticsIcon,route: '/student/dashboard/analytics',submenu: []},
   {name: "Network",Icon: NetworkIcon,route: '/student/dashboard/network',submenu: []},
+  // {name: "Referrals",Icon: NetworkIcon,route: '/student/dashboard/referals',submenu: []},
   {name: "Settings",Icon: SettingsIcon,route: '/student/dashboard/settings',submenu: []},
 ];
 

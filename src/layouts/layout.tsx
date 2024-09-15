@@ -9,7 +9,7 @@ export default function DashboardLayout({pages}: any) {
   const [sideOpen, setSideOpen] = useState(false);
 
   return (
-    <div className="flex h-screen overflow-hidden outfit-font">
+    <div className="flex h-screen overflow-hidden outfit-font bg-[#f9f7f3]">
       <Sidebar pages={pages} {...{ sideOpen, setSideOpen }} />
       <main className="grow flex flex-col w-full lg:w-[79.5%]">
         <Nav pages={pages} {...{ sideOpen, setSideOpen }} />
