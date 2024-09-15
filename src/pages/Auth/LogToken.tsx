@@ -17,7 +17,6 @@ const LogToken = () => {
   const navigate = useNavigate();
   const { token } = useParams();
 
-  console.log(token);
   const verifyToken = async (data: any) => {
     setIsBusy(true);
     await verify(data)
@@ -37,6 +36,7 @@ const LogToken = () => {
                 status: res.data.data.status,
                 term: res.data.data.term,
                 subjectsCount: res.data.data.subjectsCount,
+                referral_code: res.data.data.referral_code,
                 flag: res.data.data.flag,
                 verification_status: res.data.data.verification_status,
                 school: res.data.data.schoolStudent,
