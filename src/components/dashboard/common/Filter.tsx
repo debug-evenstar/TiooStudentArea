@@ -2,7 +2,7 @@ import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
 const BookFilter = () => {
   return (
-    <button className="border shadow cursor-pointer rounded-[8px] sm:rounded-[22px] font-[500] px-3 py-4 border-light flex items-center sm:space-x-2 w-fit">
+    <button className="border bg-white shadow cursor-pointer rounded-[8px] sm:rounded-[22px] font-[500] px-3 py-4 border-light flex items-center sm:space-x-2 w-fit">
       <span>
         <svg
           width="20"

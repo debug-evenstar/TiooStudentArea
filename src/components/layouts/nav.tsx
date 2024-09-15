@@ -39,7 +39,7 @@ export default function Nav({ pages, sideOpen ,setSideOpen }: any) {
   };
 
   return (
-    <div className="flex items-center border-b w-full justify-between px-6 py-6">
+    <div className="flex items-center border-b w-full justify-between px-6 py-6 bg-white">
       <p className="font-[500] text-2xl">{currentPage?.name ?? "Title"}</p>
 
       <SearchBar

@@ -125,7 +125,7 @@ const MobileContainer = ({ children, sideOpen, setSideOpen }: any) => {
 const DesktopContainer = ({ children }: any) => {
   return (
     <div
-      className={`hidden lg:block w-[20%] lg:relative ease-in-out relative duration-1000 transition-all py-4 overflow-y-auto border-r h-screen`}
+      className={`hidden bg-white lg:block w-[20%] lg:relative ease-in-out relative duration-1000 transition-all py-4 overflow-y-auto hideScroll border-r h-screen`}
     >
       {children}
     </div>

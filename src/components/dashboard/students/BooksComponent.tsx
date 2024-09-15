@@ -87,7 +87,7 @@ const BooksComponent: FC<BooksComponentProps> = ({ books, type, isLoading }) => 
         />
       </div>
       <div className="w-full mt-5 mb-10">
-        <div className={`${filteredBooks?.length ? "grid-cols-2 md:grid-cols-4" : ""} grid  gap-3 sm:gap-6 w-full`}>
+        <div className={`${filteredBooks?.length ? "grid-cols-2 md:grid-cols-4" : ""} grid  gap-3 w-full`}>
           {
             !isLoading ?
               (filteredBooks?.length ?
