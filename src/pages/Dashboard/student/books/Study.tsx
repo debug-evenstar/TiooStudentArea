@@ -11,6 +11,9 @@ export default function Study() {
   const { bookId } = useParams();
   const { data } = libraryApiSlice.useGetLibraryBookQuery(bookId as string);
 
+
+
+
   useEffect(() => {
     if (data) {
       setBookData(data.data);

@@ -8,7 +8,7 @@ import { store } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 import { ThemeProvider } from "@material-tailwind/react";
-import { ToastContainer } from "react-toastify";
+import { Flip, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ThreeCirclesLoading } from "./old-components/Ui/Loading";
 import App from "./App";
@@ -40,6 +40,7 @@ root.render(
           closeOnClick
           rtl={false}
           pauseOnFocusLoss
+          transition={Flip}
           draggable
           pauseOnHover
           theme="light"

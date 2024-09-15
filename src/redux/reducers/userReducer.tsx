@@ -11,6 +11,7 @@ const initialState = {
     account_type: "",
     verification_status: 0,
     flag: "",
+    referral_code: "",
     schoolName: "",
     studentClass: "",
     subjectsCount: 0,
