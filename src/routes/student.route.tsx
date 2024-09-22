@@ -9,6 +9,7 @@ import Analytics from "../pages/Dashboard/student/Analytics";
 import ComingSoon from "../components/Common/ComingSoon";
 import { studentPages } from "../constants/sidelinks";
 import Network from "../pages/Dashboard/student/Network";
+import Curator from "../pages/Dashboard/student/books/Curator";
 
 
 function StudentRoutes() {
@@ -24,12 +25,13 @@ function StudentRoutes() {
           <Route path="library" index element={<Library />} />
           <Route path="shelf" element={<Shelf />} />
           <Route path="school" element={<ComingSoon />} />
+          <Route path="curator" element={<Curator />} />
         </Route>
         <Route
           path="dashboard/analytics"
           element={<Analytics />}
         />
-        <Route path="dashboard/network" element={<Network/>} />
+        <Route path="dashboard/network" element={<ComingSoon/>} />
         <Route
           path="dashboard/settings"
           element={<Settings />}

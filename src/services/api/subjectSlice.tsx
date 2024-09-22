@@ -37,8 +37,18 @@ export const subjectApiSlice = apiSlice.injectEndpoints({
             }),
             keepUnusedDataFor: ENDPOINT.CACHE_LIFETIME.EXTENDED,
         }),
+        getSubjectsWithTopics: builder.query<any | ErrorResult, void>({
+            query: () => ({
+                url: `/open/subjects/topics`,
+                method: ENDPOINT.HTTP_METHODS.GET,
+                headers: {
+                    Authorization: requestAuthorization(),
+                },
+            }),
+            keepUnusedDataFor: ENDPOINT.CACHE_LIFETIME.EXTENDED,
+        }),
     }),
     overrideExisting: true,
 });
 
-export const { useGetSubjectsQuery, useLazyGetSubjectQuery, useLazyGetSubjectLessonsQuery } = subjectApiSlice;
+export const { useGetSubjectsQuery, useLazyGetSubjectsWithTopicsQuery, useLazyGetSubjectQuery, useLazyGetSubjectLessonsQuery } = subjectApiSlice;

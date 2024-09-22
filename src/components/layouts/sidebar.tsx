@@ -43,7 +43,7 @@ any) => {
     (sub: any) => sub.route == location.pathname
   );
   return (
-    <li className="mb-5 ">
+    <li className="mb-5">
       {!hasMenu ? (
         <NavLink
           className={`w-full  py-2 px-3 flex duration-1000 items-center space-x-5 rounded-[8px] outline-none ${
@@ -82,7 +82,7 @@ any) => {
               ${isOpen ? "max-h-[20rem]" : "h-0"}
             `}
           >
-            <ul className="w-[80%] border-l-2  rounded-[10px] -top-4 relative">
+            <ul className="border-l-2 w-full  rounded-[10px] -top-4 relative">
               {submenu.map(({ name, route }: any, index: number) => (
                 <SubMenuItem name={name} route={route} key={index} />
               ))}
