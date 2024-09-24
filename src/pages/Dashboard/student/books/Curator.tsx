@@ -31,7 +31,7 @@ export default function Curator() {
 
   
   return (
-    <div className="py-3 w-fit">
+    <div className="pt-5 w-fit">
       <h1 className="font-[500] text-[30px] quicksand text-[#1F3D4F]">
         Curate Past Questions
       </h1>
@@ -39,9 +39,9 @@ export default function Curator() {
         This feature allows you curate past questions from different years under
         different topics
       </p>
-      <div className=" w-full sm:w-fit mt-4">
+      <div className=" w-full p-5 sm:w-fit mt-4 bg-white rounded-lg shadow">
         <div className=" flex flex-col sm:flex-row gap-x-12 gap-y-3">
-          <div className="px-5 py-3 bg-white rounded-lg">
+          <div className="py-3" >
             <label className="text-sm font-[400] urbanist mb-2 inline-block">
               Select Subject
             </label>
@@ -53,7 +53,7 @@ export default function Curator() {
               options={subjects ?? []}
             />
           </div>
-          <div className="px-5 py-3 bg-white rounded-lg">
+          <div className="py-3" >
             <label className="text-sm font-[400] urbanist mb-2 inline-block">
               Select Topic
             </label>
