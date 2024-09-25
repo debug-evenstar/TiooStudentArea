@@ -42,5 +42,16 @@ export enum CACHE_LIFETIME {
   export const FETCH_CHAPTER = '/front/material'
   export const FETCH_LIBRARY_TEXTBOOK = (id : any) => `/front/student/textbook/${id}`
 
+  /* -------------------------------------------------------------------------- */
+  /*                               PAST QUESTIONS  ROUTES                       */
+  /* -------------------------------------------------------------------------- */
+
+  export const FETCH_PAST_QUESTION  = (id : any) => `/lesson/questions/${id}`
+  export const POST_PAST_QUESTION  = (id : any) => `/lesson/questions/curate`
+
+  /* -------------------------------------------------------------------------- */
+  /*                               PAST QUESTIONS  ROUTES                       */
+  /* -------------------------------------------------------------------------- */
+
   // Network
   export const FETCH_USER_REFERRALS = 'account/referrals'

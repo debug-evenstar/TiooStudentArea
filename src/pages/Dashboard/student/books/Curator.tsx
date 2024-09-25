@@ -2,33 +2,60 @@ import React, { useEffect, useState } from "react";
 import SelectDropdown from "../../../../components/dashboard/common/SelectDropdown";
 import { subjectApiSlice } from "../../../../services/api/subjectSlice";
 
+import { booksApiSlice } from "../../../../services/api/bookSlice";
+
 export default function Curator() {
   const [canCurate, setCanCurate] = useState(false);
   const [subject, setSubject] = useState<any>(null);
   const [subjects, setSubjects] = useState<any>([]);
   const [topic, setTopic] = useState<any>(null);
   const [books, setBooks] = useState<any[] | null>(null);
+  /* -------------------------------------------------------------------------- */
+  /*                             PAST QUESTIONS DATA                            */
+  /* -------------------------------------------------------------------------- */
+  const [pastQuestions, setPastQuestions] = useState<any[]>([]);
+
+
   useEffect(() => {
-    setCanCurate(!!(subject && topic));
-  }, [subject, topic]);
+    setCanCurate(!!(subject && topic && pastQuestions));
+  }, [subject, topic,pastQuestions]);
 
   const handleSubjectSelect = (subject: any) => {
+ 
     setTopic(null)
+   
     setSubject(subject);
     console.log(subject);
   };
+ 
+
+/* -------------------------------------------------------------------------- */
+/*                        GET THE PAST QUESTIONS CONTENT                        */
+/* -------------------------------------------------------------------------- */
+const [getQuestionsByTopic] = booksApiSlice.useLazyGetQuestionsByTopicQuery();
+  /* -------------------------------------------------------------------------- */
+/*                        GET THE PAST QUESTIONS CONTENT                        */
+/* -------------------------------------------------------------------------- */
+
 
   const handleTopicSelect = (topic: any) => {
     setTopic(topic);
+    getQuestionsByTopic(topic.id).then((res) => {
+      // setPastQuestions(res.data)
+      console.log(res.data);
+    })
   };
 
+/* -------------------------------------------------------------------------- */
   const { data } = subjectApiSlice.useGetSubjectsWithTopicsQuery();
+
 
   useEffect(() =>{
     setSubjects(data?.data);
   },[data]);
 
 
+  
   
   return (
     <div className="py-3 w-fit">
