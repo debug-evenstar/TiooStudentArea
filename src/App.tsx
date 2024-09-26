@@ -32,6 +32,7 @@ function App() {
           {StudentRoutes()}
           {ParentRoutes()}
           <Route path="/books/:bookId/study" element={<Study />} />
+          <Route path="/books/study-area/:bookId" element={<Study />} />
         </Route>
         <Route path="*" element={<Navigate to="/student/dashboard/home" />} />
       </Routes>
