@@ -37,7 +37,7 @@ export const libraryApiSlice = apiSlice.injectEndpoints({
       keepUnusedDataFor: ENDPOINT.CACHE_LIFETIME.EXTENDED,
     }),
     getLibraryBook: builder.query<any | ErrorResult, string>({
-      query: (param) => ({
+      query: (param: any) => ({
         url: `${ENDPOINT.FETCH_LIBRARY_TEXTBOOK(param)}`,
         method: ENDPOINT.HTTP_METHODS.GET,
         headers: {

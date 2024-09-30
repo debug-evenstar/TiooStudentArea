@@ -108,13 +108,13 @@ const MobileContainer = ({ children, sideOpen, setSideOpen }: any) => {
     <div
       className={`${
         !sideOpen ? "-translate-x-full" : ""
-      } w-full sm:hidden bg-transparent z-[90] fixed inset-0 h-screen ease-in-out duration-1000 transition-all `}
+      } w-full lg:placeholder:hidden bg-transparent z-[90] fixed inset-0 h-screen ease-in-out duration-1000 transition-all `}
       onClick={close}
     >
       <div
         className={`${
           !sideOpen ? "-translate-x-full" : ""
-        } w-[80%] z-[100] shadow-2xl fixed sm:hidden ease-in-out duration-1000 bg-white transition-all py-4 overflow-y-auto overflow-x-hidden h-screen`}
+        } w-[80%] z-[100] shadow-2xl fixed lg:hidden ease-in-out duration-1000 bg-white transition-all py-4 overflow-y-auto overflow-x-hidden h-screen`}
       >
         {children}
       </div>
@@ -136,10 +136,10 @@ const Content = ({ pages }: any) => {
 
 
   return (
-    <div className="sm:w-auto w-screen">
+    <div className="lg:w-auto w-screen">
       <div className="px-10 mx-auto flex items-center justify-between">
         <img src={logoImg} alt="" className="w-[70px] mx-auto" />
-        <button className="sm:hidden">
+        <button className="lg:hidden">
           <FaX />
         </button>
       </div>
@@ -148,7 +148,7 @@ const Content = ({ pages }: any) => {
           {pages.map((item: any, index: number) => (
             <ListMenuItem key={index} index={index} {...item} activeIndex={0} />
           ))}
-          <li className="mb-5 sm:hidden">
+          <li className="mb-5 lg:hidden">
             <button
               className={`w-full  py-2 px-3 flex duration-1000 text-gray items-center space-x-5 rounded-[8px] outline-none "bg-primary text-white"
               `}
