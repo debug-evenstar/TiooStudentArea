@@ -7,8 +7,8 @@ import Study from "./pages/Dashboard/student/books/Study";
 import { useEffect } from "react";
 
 import ProtectedRoutes from "./components/Auth/ProtectedRoutes";
-import StudentRoutes from "./routes/student";
-import ParentRoutes from "./routes/parent";
+import StudentRoutes from "./routes/student.route";
+import ParentRoutes from "./routes/parent.route";
 import { useToken } from "./hooks/useToken";
 
 const env = import.meta.env;

@@ -85,7 +85,7 @@ export default function Network() {
         ) : referrals?.length ? (
           <UserTable users={referrals} />
         ) : (
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center py-10">
             <FaTableList size={100} color="#e3e3e3" />
             <p className="text-gray-800 text-2xl">
               Your referals will appear here
