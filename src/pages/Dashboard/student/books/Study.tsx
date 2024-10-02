@@ -11,7 +11,12 @@ export default function Study() {
 
   const location = useLocation();
 
-  const { lesson } = location.state;
+  const { lesson, tag } = location.state;
+
+
+  const resume = tag == "resume";
+  const retake = tag == "retake";
+
 
   useEffect(() => {
     if (data) 
@@ -33,6 +38,7 @@ export default function Study() {
             <LessonPage
               textbook={bookData}
               chapters={bookData.chapters}
+              retake={retake}
               lesson={lesson}
             />
           )}

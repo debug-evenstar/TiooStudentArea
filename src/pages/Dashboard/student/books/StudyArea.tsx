@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import StudyResourceCard from "../../../../components/dashboard/common/StudyResourceCard";
 import StudyHighlightCard from "../../../../components/dashboard/common/StudyHighlightsCard";
 import { BiChevronDown } from "react-icons/bi";
@@ -39,19 +39,39 @@ const SaveButton = () => {
   );
 };
 
-const CurrentLessonBar = ({ current, next , data }: any) => {
+const CurrentLessonBar = ({ current, data, next, lesson_progress }: any) => {
   const navigate = useNavigate();
   const bookId = current?.textbook_id;
+  const [lesson, setLesson] = useState<any>(null);
+
+  const getLessonById = (id: any) => {
+    let lesson = null;
+    data?.chapters?.forEach((chapter: any) => {
+      chapter?.lessons?.forEach((less: any) => {
+        if (less.id == id) lesson = less;
+      });
+    });
+    return lesson;
+  };
+
+  useEffect(() => {
+    if (lesson_progress && lesson_progress.length) {
+      let last_lesson_record = lesson_progress[lesson_progress.length - 1];
+      const lesson = getLessonById(last_lesson_record.lesson_id);
+      setLesson(lesson);
+    }
+  }, [lesson]);
+
   const handleOpenLesson = useCallback(() => {
-    navigate(`/books/${bookId}/study`);
-  },[navigate, bookId])
+    navigate(`/books/${bookId}/study`, { state: { lesson, tag: "resume" } });
+  }, [navigate, bookId,lesson]);
 
   return (
     <div className="mb-6 mx-auto quicksand  text-primary bg-white items-center shadow-md rounded-md flex justify-between px-4 py-3">
       <div className="flex flex-col gap-3">
         <div className="text-gray-600 text-sm font-semibold">
-          <span className="uppercase">CHAPTER</span> | {current?.name} |{" "}
-          {current?.description}
+          <span className="uppercase">Lesson </span> | {lesson?.topic} | &nbsp;
+          {lesson?.duration}
         </div>
         <div className="flex items-center space-x-4">
           <div className="text-primary font-semibold">
@@ -62,7 +82,10 @@ const CurrentLessonBar = ({ current, next , data }: any) => {
           </div>
         </div>
       </div>
-      <button onClick={handleOpenLesson} className="bg-primary text-[16px] urbanist active:scale-95 text-white h-10 font-bold py-2 px-8 rounded-md transition duration-300">
+      <button
+        onClick={handleOpenLesson}
+        className="bg-primary text-[16px] urbanist active:scale-95 text-white h-10 font-bold py-2 px-8 rounded-md transition duration-300"
+      >
         RESUME
       </button>
     </div>
@@ -178,6 +201,8 @@ export default function StudyArea() {
     bookId ?? "0"
   );
 
+  const lesson_progress = data?.lesson_progress;
+
   return (
     <div className="h-screen w-full flex justify-between px-4 lg:px-12 pt-12 pb-20">
       <div className="h-full w-[68%]">
@@ -214,7 +239,12 @@ export default function StudyArea() {
         </div>
 
         {data?.data?.lesson_progress?.length && (
-          <CurrentLessonBar data={0} next={data?.data?.chapters[1]} current={data?.data?.chapters[0]} />
+          <CurrentLessonBar
+            lesson_progress={data?.data?.lesson_progress}
+            data={data?.data}
+            next={data?.data?.chapters[1]}
+            current={data?.data?.chapters[0]}
+          />
         )}
         {data?.data &&
           data?.data.chapters?.map((chapter: any, index: number) => (

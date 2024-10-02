@@ -66,8 +66,10 @@ const SmartCase = ({ lesson, bookId }: any) => {
 const LessonItem = ({ lesson, bookId, open }: any) => {
   const navigate = useNavigate();
 
-  const handleOpenLesson = useCallback(() => {
-    navigate(`/books/${bookId}/study`,{ state: { lesson} });
+  const handleOpenLesson = useCallback((tag: string | null) => {
+    
+    navigate(`/books/${bookId}/study`,{ state: { lesson , tag: tag} });
+
   }, [navigate, bookId]);
 
   return (
@@ -113,7 +115,7 @@ const LessonItem = ({ lesson, bookId, open }: any) => {
           </div>
           {lesson.has_started && !lesson.is_completed && (
             <button
-              onClick={handleOpenLesson}
+              onClick={() => handleOpenLesson("resume")}
               className="h-12 w-full bg-primary text-white"
             >
               RESUME
@@ -121,7 +123,7 @@ const LessonItem = ({ lesson, bookId, open }: any) => {
           )}
           {lesson.is_completed && (
             <button
-              onClick={handleOpenLesson}
+              onClick={() => handleOpenLesson("retake")}
               className="h-12 w-full bg-red-500 text-white"
             >
               RETAKE
@@ -129,7 +131,7 @@ const LessonItem = ({ lesson, bookId, open }: any) => {
           )}
           {!lesson.has_started && (
             <button
-              onClick={handleOpenLesson}
+              onClick={() => handleOpenLesson("start")}
               className="h-12 w-full bg-[#18D741] text-white"
             >
               START
