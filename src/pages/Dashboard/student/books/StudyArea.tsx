@@ -39,7 +39,7 @@ const SaveButton = () => {
   );
 };
 
-const CurrentLessonBar = ({ current, next }: any) => {
+const CurrentLessonBar = ({ current, next , data }: any) => {
   const navigate = useNavigate();
   const bookId = current?.textbook_id;
   const handleOpenLesson = useCallback(() => {
@@ -178,7 +178,6 @@ export default function StudyArea() {
     bookId ?? "0"
   );
 
-  console.log(data);
   return (
     <div className="h-screen w-full flex justify-between px-4 lg:px-12 pt-12 pb-20">
       <div className="h-full w-[68%]">
@@ -214,9 +213,9 @@ export default function StudyArea() {
           />
         </div>
 
-        {/* {data?.data?.lesson_progress?.length && (
-          <CurrentLessonBar next={data?.data?.chapters[1]} current={data?.data?.chapters[0]} />
-        )} */}
+        {data?.data?.lesson_progress?.length && (
+          <CurrentLessonBar data={0} next={data?.data?.chapters[1]} current={data?.data?.chapters[0]} />
+        )}
         {data?.data &&
           data?.data.chapters?.map((chapter: any, index: number) => (
             <StudyLessonAccordion
