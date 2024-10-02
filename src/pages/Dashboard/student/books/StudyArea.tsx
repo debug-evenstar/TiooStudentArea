@@ -214,13 +214,9 @@ export default function StudyArea() {
           />
         </div>
 
-        {data?.data?.chapters.length ? (
+        {/* {data?.data?.lesson_progress?.length && (
           <CurrentLessonBar next={data?.data?.chapters[1]} current={data?.data?.chapters[0]} />
-        ) : (
-          <div className="py-20 flex items-center justify-center text-gray-600 font-[600] ">
-            <p className="text-2xl quicksand">No Chapters yet</p>
-          </div>
-        )}
+        )} */}
         {data?.data &&
           data?.data.chapters?.map((chapter: any, index: number) => (
             <StudyLessonAccordion

@@ -22,7 +22,7 @@ const StudyRelationsCard: React.FC<StudyRelationsProps> = ({ items }) => {
         />
       </div>
       <div className="py-20 flex items-center justify-center">
-            <p>Coming soon</p>
+            {/* <p>Coming soon</p> */}
           </div>
 
       {/* {items?.map((item: any, i: number) => (

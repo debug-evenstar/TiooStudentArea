@@ -17,7 +17,7 @@ const StudyResourceCard: React.FC<StudyResourceProps> = ({ sections }) => {
       </div>
 
       <div className="py-20 flex items-center justify-center">
-            <p>Coming soon</p>
+            {/* <p>Coming soon</p> */}
           </div>
       {/* Sections */}
       {/* {sections?.map((section, index) => (

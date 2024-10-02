@@ -67,7 +67,7 @@ const LessonItem = ({ lesson, bookId, open }: any) => {
   const navigate = useNavigate();
 
   const handleOpenLesson = useCallback(() => {
-    navigate(`/books/${bookId}/study`);
+    navigate(`/books/${bookId}/study`,{ state: { lesson} });
   }, [navigate, bookId]);
 
   return (
