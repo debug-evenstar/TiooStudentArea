@@ -13,12 +13,16 @@ import Curator from "../pages/Dashboard/student/books/Curator";
 import Referral from "../pages/Dashboard/student/Referral";
 import StudyArea from "../pages/Dashboard/student/books/StudyArea";
 import StudyLayout from "../layouts/studyLayout";
+import Onboarding from "../pages/Dashboard/student/Onboarding";
+import JambOnboarding from "../pages/Dashboard/student/jamb/JambOnboarding";
 
 function StudentRoutes() {
   return (
     <>
       <Route path="/student" element={<DashboardLayout pages={studentPages} />}>
         <Route path="dashboard/home" element={<StudentDashboard />} />
+        <Route path="dashboard/onboarding" element={<Onboarding />} />
+        <Route path="dashboard/onboarding/jamb" element={<JambOnboarding />} />
         <Route path="dashboard/books">
           <Route path="library" index element={<Library />} />
           <Route path="shelf" element={<Shelf />} />
