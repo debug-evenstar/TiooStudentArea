@@ -1,0 +1,75 @@
+import React, { FC } from "react";
+import { BiArrowToRight } from "react-icons/bi";
+import { FaArrowRight } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+
+interface ExamCardProps {
+  title: string;
+  color: string;
+  image: any;
+  link: string;
+}
+
+const ExamCard: FC<ExamCardProps> = ({ title, color, image, link }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(link);
+  };
+
+  return (
+    <div
+      onClick={handleClick}
+      className="rounded-[20px] px-2 py-3 cursor-pointer flex gap-3 w-fit"
+      style={{ backgroundColor: color }}
+    >
+      <div className="w-[7rem] p-2 rounded-[20px] bg-white">
+        <img src={image} alt="" className="w-full" />
+      </div>
+      <div className="flex flex-col py-4 justify-between">
+        <p className="font-bold text-white">{title}</p>
+        <div className="flex items-center gap-x-10 mr-10 justify-between">
+          <Link to={link} className=" text-white">
+            Examination
+          </Link>
+          <Link to={link}>
+            <FaArrowRight color="white" />
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default function Onboarding() {
+  const exams: ExamCardProps[] = [
+    {
+      title: "JAMB/UTME",
+      image: "/images/exams/jamb.png",
+      color: "#17C880",
+      link: "/student/dashboard/onboarding/jamb",
+    },
+    {
+      title: "WAEC",
+      image: "/images/exams/waec.png",
+      color: "#F1BB87",
+      link: "/dashboard/onboarding/jamb",
+    },
+    {
+      title: "NECO",
+      image: "/images/exams/neco.png",
+      color: "#A288A6",
+      link: "/dashboard/onboarding/jamb",
+    },
+  ];
+  return (
+    <div className="mt-7">
+      <p className="mb-4 text-2xl">Popular Examinations</p>
+      <div className="flex gap-5">
+        {exams.map((exam: ExamCardProps) => (
+          <ExamCard {...exam} />
+        ))}
+      </div>
+    </div>
+  );
+}
