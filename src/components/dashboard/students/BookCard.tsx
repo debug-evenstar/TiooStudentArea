@@ -44,7 +44,7 @@ const BookCard: FC<BookCardProps> = ({
   const [loading, setLoading] = useState(false);
 
   const handleOpenLesson = useCallback(() => {
-    navigate(`/books/${id}/study`);
+    navigate(`/book/study-area/${id}`);
   }, [navigate, id]);
 
   const handleClick = useCallback(async () => {
@@ -59,6 +59,7 @@ const BookCard: FC<BookCardProps> = ({
       toast.success(response?.data?.message);
     }
   }, [type, inShelf, id, addToShelf, handleOpenLesson]);
+  
   const isShelf = type === "shelf";
   return (
     <div className="w-full border h-full bg-white duration-1000 hover: hover:scale-[1.05] ease-in-out border-gray-300 overflow-hidden px-3 py-2 relative rounded-2xl hover:shadow-[rgba(0,0,0,0.2)_0px_0px_45px_0px] group">
