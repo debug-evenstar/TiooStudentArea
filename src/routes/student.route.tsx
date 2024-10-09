@@ -29,18 +29,11 @@ function StudentRoutes() {
           <Route path="school" element={<ComingSoon />} />
           <Route path="curator" element={<Curator />} />
         </Route>
-        <Route
-          path="dashboard/analytics"
-          element={<Analytics />}
-        />
-        <Route path="dashboard/network" element={<ComingSoon/>} />
-        <Route
-          path="dashboard/settings"
-          element={<Settings />}
-        />
+        <Route path="dashboard/analytics" element={<Analytics />} />
+        <Route path="dashboard/network" element={<ComingSoon />} />
+        <Route path="dashboard/settings" element={<Settings />} />
         <Route path="*" element={<Navigate to="dashboard/home" />} />
       </Route>
-
     </>
   );
 }
