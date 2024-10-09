@@ -6,6 +6,32 @@ import { ErrorResult } from "../../utils/dataTypes";
 
 export const dashboardApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+
+    getMetaData: builder.query<any | ErrorResult, void>({
+      query: () => ({
+        url: '/onboarding/metadata',
+        method: ENDPOINT.HTTP_METHODS.GET,
+        headers: {
+          Authorization: requestAuthorization(),
+        }
+      }),
+      keepUnusedDataFor: ENDPOINT.CACHE_LIFETIME.EXTENDED,
+
+    }),
+
+    saveExamMetaData: builder.mutation<any | ErrorResult, any>({
+      query: (payload: any) => ({
+        url: `/onboarding/save-exam-metadata`,
+        method: ENDPOINT.HTTP_METHODS.POST,
+        body: payload,
+        headers: {
+          Authorization: requestAuthorization(),
+        },
+      }),
+      // invalidatesTags: [''] as any
+    }),
+
+
     getNotifications: builder.query<any | ErrorResult, void>({
       query: () => ({
         url: `fsfs`,
