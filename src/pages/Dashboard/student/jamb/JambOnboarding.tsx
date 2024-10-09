@@ -26,17 +26,21 @@ const ExamCard = () => {
   );
 };
 
-const SearchBar = ({ value, setValue , placeholder="Search your course"}: any) => {
+const SearchBar = ({ value, setValue, placeholder = "Search your course" }: any) => {
   const handleChange = (e: any) => {
     const value = e.currentTarget.value;
     setValue(value);
   };
   return (
-    
-    <div className="rounded-full py-2 flex w-fit items-center gap-3 px-6 mt-5  border border-gray-300">
-      <input placeholder={placeholder} onChange={handleChange} value={value} className="w-[21rem] text-gray-700 outline-none" />
+    <div className="rounded-full py-2 flex w-fit items-center gap-3 px-6 mt-5 border border-gray-300">
+      <input
+        placeholder={placeholder}
+        onChange={handleChange}
+        value={value}
+        className="w-[21rem] text-gray-700 outline-none"
+      />
       <span>
-        <FaMagnifyingGlass/>
+        <FaMagnifyingGlass />
       </span>
     </div>
   );
@@ -59,13 +63,17 @@ export default function JambOnboarding() {
   ];
 
   const [canProceed, setCanProceed] = useState(false);
-
   const [subjects, setSubjects] = useState([]);
-  const [ search, setSearch ] = useState("");
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
-    setCanProceed(subjects.length == 4);
+    setCanProceed(subjects.length === 4);
   }, [subjects]);
+
+  // Filter options based on search input
+  const filteredOptions = options.filter((subject) =>
+    subject.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <div className="mt-7">
@@ -78,7 +86,7 @@ export default function JambOnboarding() {
         <div className="mt-8">
           <MultiSelectGroup
             max={4}
-            options={options}
+            options={filteredOptions}
             setAnswer={(value: any) => setSubjects(value)}
           />
         </div>

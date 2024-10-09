@@ -9,7 +9,7 @@ const SmartCase = ({ lesson, bookId }: any) => {
   const navigate = useNavigate();
 
   const handleOpenLesson = useCallback(() => {
-    navigate(`/books/${bookId}/study`);
+    // navigate(`/books/${bookId}/study`);
   }, [navigate, bookId]);
 
   return (
@@ -65,7 +65,6 @@ const SmartCase = ({ lesson, bookId }: any) => {
 
 const LessonItem = ({ lesson, bookId, open }: any) => {
   const navigate = useNavigate();
-
   const handleOpenLesson = useCallback((tag: string | null) => {
     
     navigate(`/books/${bookId}/study`,{ state: { lesson , tag: tag} });

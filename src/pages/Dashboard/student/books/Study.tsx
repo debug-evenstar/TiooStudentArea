@@ -38,7 +38,7 @@ export default function Study() {
             <LessonPage
               textbook={bookData}
               chapters={bookData.chapters}
-              retake={retake}
+              retake={false}
               lesson={lesson}
             />
           )}
