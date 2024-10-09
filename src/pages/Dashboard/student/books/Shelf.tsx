@@ -11,7 +11,7 @@ export default function Shelf() {
 
   const booksSelect = useSelector((state: RootState) => state.user.shelf);
 
-  console.log(booksSelect);
+
   useEffect(() => {
     if (data) {
       setBooks(data?.data);

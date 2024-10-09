@@ -6,9 +6,11 @@ export const studentPages: any[] = [
     {name: "Library", route: '/student/dashboard/books/library'},
     {name: "My shelf", route: '/student/dashboard/books/shelf'},
     {name: "School books", route: '/student/dashboard/books/school'},
+    {name: "Past questions filter", route: '/student/dashboard/books/curator'},
   ]},
   {name: "Analytics",Icon: AnalyticsIcon,route: '/student/dashboard/analytics',submenu: []},
   {name: "Network",Icon: NetworkIcon,route: '/student/dashboard/network',submenu: []},
+  {name: "Referrals",Icon: NetworkIcon,route: '/student/dashboard/referral',submenu: []},
   {name: "Settings",Icon: SettingsIcon,route: '/student/dashboard/settings',submenu: []},
 ];
 
