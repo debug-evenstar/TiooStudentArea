@@ -238,7 +238,7 @@ export default function StudyArea() {
           />
         </div>
 
-        {data?.data?.lesson_progress?.length && (
+        {data?.data?.lesson_progress?.length && data?.data?.chapters?.length && (
           <CurrentLessonBar
             lesson_progress={data?.data?.lesson_progress}
             data={data?.data}
