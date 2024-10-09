@@ -64,7 +64,7 @@ const CurrentLessonBar = ({ current, data, next, lesson_progress }: any) => {
 
   const handleOpenLesson = useCallback(() => {
     navigate(`/books/${bookId}/study`, { state: { lesson, tag: "resume" } });
-  }, [navigate, bookId,lesson]);
+  }, [navigate, bookId, lesson]);
 
   return (
     <div className="mb-6 mx-auto quicksand  text-primary bg-white items-center shadow-md rounded-md flex justify-between px-4 py-3">
@@ -238,14 +238,14 @@ export default function StudyArea() {
           />
         </div>
 
-        {data?.data?.lesson_progress?.length && (
+        {data?.data?.lesson_progress?.length && data?.data?.chapters?.length ? (
           <CurrentLessonBar
             lesson_progress={data?.data?.lesson_progress}
             data={data?.data}
             next={data?.data?.chapters[1]}
             current={data?.data?.chapters[0]}
           />
-        )}
+        ) : null}
         {data?.data &&
           data?.data.chapters?.map((chapter: any, index: number) => (
             <StudyLessonAccordion
