@@ -22,8 +22,8 @@ const StudyRelationsCard: React.FC<StudyRelationsProps> = ({ items }) => {
         />
       </div>
       <div className="py-20 flex items-center justify-center">
-            {/* <p>Coming soon</p> */}
-          </div>
+        <p className="text-primary">Coming soon</p>
+      </div>
 
       {/* {items?.map((item: any, i: number) => (
         <div key={i} className="mb-3">
@@ -36,7 +36,6 @@ const StudyRelationsCard: React.FC<StudyRelationsProps> = ({ items }) => {
           </a>
         </div>
       ))} */}
-
     </div>
   );
 };
