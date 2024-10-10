@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from "react";
+import { BiChevronDown } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 const chapter = {
   name: "New chapter",
@@ -34,7 +35,7 @@ const SmartCase = ({ lesson, bookId }: any) => {
           ))}
         </ul> */}
       </div>
-      <div className="w-[13rem] bg-[#f3f3f3] h-[12rem] flex justify-between flex-col">
+      <div className="w-[13rem] bg-[#f3f3f3] min-h-[8rem] flex justify-between flex-col">
         <div className="grow flex items-center justify-center">
           <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center">
             <svg
@@ -65,11 +66,12 @@ const SmartCase = ({ lesson, bookId }: any) => {
 
 const LessonItem = ({ lesson, bookId, open }: any) => {
   const navigate = useNavigate();
-  const handleOpenLesson = useCallback((tag: string | null) => {
-    
-    navigate(`/books/${bookId}/study`,{ state: { lesson , tag: tag} });
-
-  }, [navigate, bookId]);
+  const handleOpenLesson = useCallback(
+    (tag: string | null) => {
+      navigate(`/books/${bookId}/study`, { state: { lesson, tag: tag } });
+    },
+    [navigate, bookId]
+  );
 
   return (
     <div className="bg-white flex justify-between items-center border-b relative border-gray-400">
@@ -94,7 +96,7 @@ const LessonItem = ({ lesson, bookId, open }: any) => {
         </ul> */}
       </div>
       {open && (
-        <div className="w-[13rem] bg-[#f3f3f3] h-[12rem] flex justify-between flex-col">
+        <div className="w-[13rem] bg-[#f3f3f3] min-h-[8rem] flex justify-between flex-col">
           <div className="grow flex items-center justify-center">
             <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center">
               <svg
@@ -143,7 +145,7 @@ const LessonItem = ({ lesson, bookId, open }: any) => {
 };
 
 export default function StudyLessonAccordion({ chapter, bookId }: any) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const firstLesson = chapter?.lessons[0];
   const lessonCount = chapter?.lessons.length;
   return (
@@ -155,7 +157,9 @@ export default function StudyLessonAccordion({ chapter, bookId }: any) {
         {chapter?.name ?? "Lesson Name"}
       </button>
       <div>
-        { firstLesson && <LessonItem open={open} bookId={bookId} lesson={firstLesson} /> }
+        {firstLesson && (
+          <LessonItem open={open} bookId={bookId} lesson={firstLesson} />
+        )}
       </div>
       <div className={!open ? "hidden" : ""}>
         {chapter?.lessons
@@ -171,7 +175,14 @@ export default function StudyLessonAccordion({ chapter, bookId }: any) {
         <SmartCase />
       </div>
       <div className="rounded-b-lg h-[50px] border-t justify-between bg-white flex items-center font-semibold text-gray-700 urbanist px-5 text-base">
-        { lessonCount > 1 &&  <button onClick={() => setOpen(!open)}>See {open ? "less": "more"} lessons</button> }
+        {lessonCount > 1 ? (
+          <button className="outline-none flex gap-1 items-center" onClick={() => setOpen(!open)}>
+            See {open ? "less" : "more"} lessons
+            <BiChevronDown className={open ? "rotate-180": ""}/>
+          </button>
+        ) : (
+          <p></p>
+        )}
         <span>{lessonCount ?? 0} lessons</span>
       </div>
     </div>

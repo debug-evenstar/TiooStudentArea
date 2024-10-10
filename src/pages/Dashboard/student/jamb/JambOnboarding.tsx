@@ -5,6 +5,8 @@ import { dashboardApiSlice } from "../../../../services/api/dashboardSlice";
 import { DotLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setExamFlag } from "../../../../redux/reducers/sidebarReducer";
 
 const ExamCard = () => {
   return (
@@ -58,16 +60,16 @@ const SearchBar = ({
 export default function JambOnboarding() {
   const options = [
     "English",
+    "Mathematics",
+    "Biology",
+    "Chemistry",
+    "Physics",
+    "Geography",
+    "Agricultural Science",
     "Music",
     "Arts",
-    "Biology",
-    "Mathematics",
-    "Agricultural Science",
-    "Chemistry",
-    "Geography",
     "Literature",
     "Civic Education",
-    "Physics",
     "Economics",
   ];
 
@@ -75,6 +77,9 @@ export default function JambOnboarding() {
   const [subjects, setSubjects] = useState([]);
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
 
   const [saveExamMetaData, { isLoading }] =
     dashboardApiSlice.useSaveExamMetaDataMutation();
@@ -97,6 +102,9 @@ export default function JambOnboarding() {
     saveExamMetaData(exam_data).then((response: any) => {
       if(response.data && response.data.error == false){
         toast.success("Saved");
+        setTimeout(() => {
+          dispatch(setExamFlag(true));
+        },1000);
         navigate('/student/dashboard/home');
       }
     });
