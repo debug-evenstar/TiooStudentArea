@@ -4,46 +4,48 @@ import { useLocation, useParams } from "react-router-dom";
 import { libraryApiSlice } from "../../../../services/api/librarySlice";
 import { ScaleLoader } from "react-spinners";
 
+const Loader = () => (
+  <div className="z-[9999999999] w-full h-screen bg-white flex items-center justify-center fixed inset-0">
+    <ScaleLoader height={30} speedMultiplier={1.3} color="#9c29b2" />
+  </div>
+);
+
 export default function Study() {
-  const [bookData, setBookData] = useState<any>(null);
   const { bookId } = useParams();
-  const { data } = libraryApiSlice.useGetLibraryBookQuery(bookId as string);
-
+  const { data, isLoading } = libraryApiSlice.useGetLibraryBookQuery(
+    bookId as string
+  );
   const location = useLocation();
+  const { lesson, tag } = location.state || {};
+  const retake = tag === "retake";
 
-  const { lesson, tag } = location.state;
+  const [loaderOpen, setLoaderOpen] = useState(true);
 
-
-  const resume = tag == "resume";
-  const retake = tag == "retake";
-
+  const bookData = data?.data;
 
   useEffect(() => {
-    if (data) 
-      setBookData(data.data);
-  }, [data]);
+    setTimeout(() => setLoaderOpen(false), 2000);
+  }, []);
+
+  if (isLoading || !bookData) return <Loader />;
 
   return (
-    <>
-      {!bookData && (
-        <div className="w-full h-screen inset-0 absolute flex items-center justify-center">
-          <span>
-            <ScaleLoader height={30} speedMultiplier={1.3} color="#9c29b2" />
-          </span>
-        </div>
+    <div className="w-screen h-screen relative">
+      <div
+        className={`z-[9999999999] w-full h-screen transition-opacity duration-700 bg-white flex items-center justify-center fixed inset-0
+        ${loaderOpen ? "opacity-100" : "opacity-0 pointer-events-none"}
+        `}
+      >
+        <ScaleLoader height={30} speedMultiplier={1.3} color="#9c29b2" />
+      </div>
+      {lesson && (
+        <LessonPage
+          textbook={bookData}
+          chapters={bookData.chapters}
+          retake={retake}
+          lesson={lesson}
+        />
       )}
-      {bookData && (
-        <div className="w-screen h-screen relative">
-          {lesson && (
-            <LessonPage
-              textbook={bookData}
-              chapters={bookData.chapters}
-              retake={false}
-              lesson={lesson}
-            />
-          )}
-        </div>
-      )}
-    </>
+    </div>
   );
 }
