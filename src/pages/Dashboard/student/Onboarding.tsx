@@ -71,7 +71,7 @@ export default function Onboarding() {
       </div>
       <div>
         <p className="mb-4 text-2xl">University Admission Exam</p>
-        <div className="flex gap-5">
+        <div className="flex gap-5 flex-col lg:flex-row">
           {exams.map((exam: ExamCardProps) => (
             <ExamCard {...exam} />
           ))}

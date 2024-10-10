@@ -28,7 +28,7 @@ const reducers = {
 const persistConfig = {
     key: "rootpal",
     storage: storage,
-    whitelist: ["user"],
+    whitelist: ["user","sidebar"],
   };
   const combinedReducer = combineReducers<typeof reducers>(reducers);
 

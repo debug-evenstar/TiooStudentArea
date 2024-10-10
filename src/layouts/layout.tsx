@@ -13,10 +13,11 @@ export default function DashboardLayout({pages}: any) {
   
 
   useEffect(() => {
+    // check if the student has gone through exam onboarding
     if(isSuccess && !isLoading){
       console.log(data);
       if(!data.data.exam_data){
-        navigate('/student/dashboard/onboarding');
+        navigate('/student/dashboard');
       }
     }
   },[data,isLoading, isSuccess]);

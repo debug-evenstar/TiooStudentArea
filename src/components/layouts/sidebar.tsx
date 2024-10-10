@@ -45,6 +45,15 @@ any) => {
   const isSubActive = !!submenu.find(
     (sub: any) => sub.route == location.pathname
   );
+
+
+  useEffect(() => {
+    if(!isOpen){
+      setIsOpen(true);
+    }
+  },[isSubActive]);
+
+
   return (
     <li className="mb-5">
       {!hasMenu ? (
