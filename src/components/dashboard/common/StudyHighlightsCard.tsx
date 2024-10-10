@@ -24,7 +24,7 @@ const StudyHighlightCard: React.FC<StudyHighlightProps> = ({ items }) => {
       </div>
 
       <div className="py-20 flex items-center justify-center">
-        {/* <p>Coming soon</p> */}
+        <p className="text-primary">Coming soon</p>
       </div>
 
     </div>
