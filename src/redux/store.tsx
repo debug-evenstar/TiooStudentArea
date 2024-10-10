@@ -17,10 +17,12 @@ import storage from "redux-persist/lib/storage";
 import { RESET_APP_STATE_ACTION_TYPE } from "./actions/resetState";
 import userReducer from "./reducers/userReducer";
 import { apiSlice } from "../services/apiSlice";
+import sidebarReducer from "./reducers/sidebarReducer";
 
 const reducers = {
     [apiSlice.reducerPath]: apiSlice.reducer,
     user: userReducer,
+    sidebar: sidebarReducer
 }
 
 const persistConfig = {

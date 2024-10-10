@@ -23,7 +23,7 @@ const ExamCard: FC<ExamCardProps> = ({ title, color, image, link }) => {
       className="rounded-[20px] px-2 py-3 cursor-pointer flex gap-3 w-fit"
       style={{ backgroundColor: color }}
     >
-      <div className="w-[7rem] p-2 rounded-[20px] bg-white">
+      <div className="w-[6rem] p-2 rounded-[20px] bg-white">
         <img src={image} alt="" className="w-full" />
       </div>
       <div className="flex flex-col py-4 justify-between">
@@ -53,22 +53,29 @@ export default function Onboarding() {
       title: "WAEC",
       image: "/images/exams/waec.png",
       color: "#F1BB87",
-      link: "/dashboard/onboarding/jamb",
+      link: "/student/dashboard/onboarding/jamb",
     },
     {
       title: "NECO",
       image: "/images/exams/neco.png",
       color: "#A288A6",
-      link: "/dashboard/onboarding/jamb",
+      link: "/student/dashboard/onboarding/jamb",
     },
   ];
   return (
     <div className="mt-7">
-      <p className="mb-4 text-2xl">Popular Examinations</p>
-      <div className="flex gap-5">
-        {exams.map((exam: ExamCardProps) => (
-          <ExamCard {...exam} />
-        ))}
+      <div className=" mb-12">
+        {/* <div className="border-b relative w-full border-gray-800">
+        </div>
+        <h1 className="text-center text-lg font-[500] px-2 bottom-3 w-fit mx-auto relative bg-[#f9f7f3] urbanist">Select your </h1> */}
+      </div>
+      <div>
+        <p className="mb-4 text-2xl">University Admission Exam</p>
+        <div className="flex gap-5">
+          {exams.map((exam: ExamCardProps) => (
+            <ExamCard {...exam} />
+          ))}
+        </div>
       </div>
     </div>
   );

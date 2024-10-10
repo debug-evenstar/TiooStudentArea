@@ -22,7 +22,7 @@ export default function DashboardLayout({pages}: any) {
   },[data,isLoading, isSuccess]);
 
   return (
-    <div className="flex h-screen overflow-hidden outfit-font bg-[#f9f7f3]s bg-[#fbfbfb]">
+    <div className="flex h-screen overflow-hidden outfit-font bg-[#f9f7f3]s bg-[#f9f7f3]">
       <Sidebar pages={pages} {...{ sideOpen, setSideOpen }} />
       <main className="grow flex flex-col w-full lg:w-[79.5%]">
         <Nav pages={pages} {...{ sideOpen, setSideOpen }} />
