@@ -4,13 +4,15 @@ import Sidebar from "../components/layouts/sidebar";
 import { useEffect, useState } from "react";
 import { studentPages, parentPages } from "../constants/sidelinks";
 import { dashboardApiSlice } from "../services/api/dashboardSlice";
+import { useDispatch } from "react-redux";
+import { setExamFlag } from "../redux/reducers/sidebarReducer";
 
 export default function DashboardLayout({pages}: any) {
 
   const [sideOpen, setSideOpen] = useState(false);
   const { data, isLoading,isSuccess } = dashboardApiSlice.useGetMetaDataQuery();
   const navigate = useNavigate();
-  
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // check if the student has gone through exam onboarding
@@ -18,6 +20,8 @@ export default function DashboardLayout({pages}: any) {
       console.log(data);
       if(!data.data.exam_data){
         navigate('/student/dashboard');
+      }else{
+        dispatch(setExamFlag(true));
       }
     }
   },[data,isLoading, isSuccess]);
