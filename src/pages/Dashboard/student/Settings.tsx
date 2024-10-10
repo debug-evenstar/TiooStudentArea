@@ -40,7 +40,7 @@ export default function Settings() {
 
   return (
     <div className="mt-7 quicksand">
-      <div className="border rounded-lg w-full p-6 sm:w-1/2">
+      <div className="border rounded-lg w-full bg-white p-6 sm:w-1/2">
         <h3 className="text-2xl font-[600] ">Change Password</h3>
         <form onSubmit={handleSubmit} className="mt-4 ">
           <div className="mb-4">

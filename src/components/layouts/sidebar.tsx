@@ -1,10 +1,13 @@
 import logoImg from "@/assets/logo.png";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { FaSignOutAlt } from "react-icons/fa";
 import { FaX } from "react-icons/fa6";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { logoutUser } from "../../utils/logout";
+import { ExamIcon } from "../Icons";
+import { useSelector } from "react-redux";
+import { selectSidebar } from "../../redux/reducers/sidebarReducer";
 
 const SubMenuItem = ({ name, route }: any) => {
   const location = useLocation();
@@ -42,6 +45,15 @@ any) => {
   const isSubActive = !!submenu.find(
     (sub: any) => sub.route == location.pathname
   );
+
+
+  useEffect(() => {
+    if(!isOpen){
+      setIsOpen(true);
+    }
+  },[isSubActive]);
+
+
   return (
     <li className="mb-5">
       {!hasMenu ? (
@@ -74,7 +86,7 @@ any) => {
               </div>
               <p className="font-[500] ">{name}</p>
             </div>
-            <MdOutlineKeyboardArrowDown className="text-2xl" />
+            <MdOutlineKeyboardArrowDown className={`text-2xl duration-300 ${isOpen ? "rotate-180":""}`} />
           </div>
           <div
             className={`
@@ -133,8 +145,6 @@ const DesktopContainer = ({ children }: any) => {
 };
 
 const Content = ({ pages }: any) => {
-
-
   return (
     <div className="lg:w-auto w-screen">
       <div className="px-10 mx-auto flex items-center justify-between">
@@ -156,7 +166,7 @@ const Content = ({ pages }: any) => {
             >
               <div className="w-[30px] h-[30px] rounded-full border flex items-center justify-center">
                 {/* <img src={icon} className="w-[16px]" alt="" /> */}
-                <FaSignOutAlt color={"red"}/>
+                <FaSignOutAlt color={"red"} />
               </div>
               <p className="font-[500] text-gray-600">Logout</p>
             </button>
@@ -168,7 +178,35 @@ const Content = ({ pages }: any) => {
 };
 
 const Sidebar: FC<any> = ({ pages, sideOpen, setSideOpen }: any) => {
-  const content = <Content pages={pages} />;
+  const [links, setLinks] = useState(pages);
+  const sidebar = useSelector(selectSidebar);
+
+  const examLink = {
+    name: "Exam prep",
+    Icon: ExamIcon,
+    route: "/student/dashboard",
+    submenu: [
+      {
+        name: "Jamb",
+        route: "/student/dashboard/home",
+      },
+    ],
+  };
+
+  useEffect(() => {
+    setLinks(pages);
+  }, [pages]);
+
+  useEffect(() => {
+    if (sidebar.examFlag) {
+      const copied = [...pages];
+      copied.splice(1, 0, examLink);
+      setLinks(copied);
+    }
+  }, [sidebar.examFlag]);
+
+  const content = <Content pages={links} />;
+
   return (
     <>
       <MobileContainer children={content} {...{ sideOpen, setSideOpen }} />

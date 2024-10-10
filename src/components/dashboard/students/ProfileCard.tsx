@@ -32,7 +32,7 @@ const ProfileCard = () => {
         <p className="w-full relative leading-[1.2rem] text-[15px]">
           Welcome to JAMB Tioo!<br/>
           <span className="inline-block mb-1">
-          I'm Timothy Icon, your JAMB coach. Join our WhatsApp study group to achieve a score of 280+ in your JAMB exam.
+          I'm Timothy Icon, your JAMB coach. Join our WhatsApp study group to achieve a score of 300+ in your JAMB exam.
           Ask questions, share feedback, and make friends.
           </span>
           <a href="https://chat.whatsapp.com/LXuTq372Pfy1M13uh0FZjG" target="_blank" className="mt-2 px-2 py-1 text-sm rounded bg-white text-gray-800 inline-block">

@@ -20,8 +20,8 @@ function StudentRoutes() {
   return (
     <>
       <Route path="/student" element={<DashboardLayout pages={studentPages} />}>
+        <Route path="dashboard" element={<Onboarding />} />
         <Route path="dashboard/home" element={<StudentDashboard />} />
-        <Route path="dashboard/onboarding" element={<Onboarding />} />
         <Route path="dashboard/onboarding/jamb" element={<JambOnboarding />} />
         <Route path="dashboard/books">
           <Route path="library" index element={<Library />} />

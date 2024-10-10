@@ -1,3 +1,7 @@
+import { BiBookAlt } from "react-icons/bi";
+import { GiGraduateCap } from "react-icons/gi";
+import { PiExamThin } from "react-icons/pi";
+
 export function NetworkIcon({ fill = "#8E92BC" }: { fill: string }) {
   return (
     <svg
@@ -33,6 +37,15 @@ export function SettingsIcon({ fill = "#8E92BC" }: { fill: string }) {
     </svg>
   );
 }
+
+
+export function ExamIcon({ fill = "#8E92BC" }: { fill: string }) {
+  return (
+    <GiGraduateCap fill={fill} size={20}/>
+  );
+}
+
+
 
 export function DashboardIcon({ fill = "#8E92BC" }: { fill: string }) {
   return (
