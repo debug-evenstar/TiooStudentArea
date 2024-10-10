@@ -75,10 +75,10 @@ const CurrentLessonBar = ({ current, data, next, lesson_progress }: any) => {
         </div>
         <div className="flex items-center space-x-4">
           <div className="text-primary font-semibold">
-            NEXT UP:{" "}
+            {/* NEXT UP:{" "}
             <span className="">
               {next?.name} | {next?.description}
-            </span>
+            </span> */}
           </div>
         </div>
       </div>

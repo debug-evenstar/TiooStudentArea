@@ -13,12 +13,16 @@ const StudyResourceCard: React.FC<StudyResourceProps> = ({ sections }) => {
       <h2 className="text-center text-lg font-semibold mb-4">RESOURCES</h2>
       <div className=" border-t border-black">
         {/* Icon and Divider */}
-        <img src={robot} alt="" className="w-8 relative -top-4 mx-auto bg-white" />
+        <img
+          src={robot}
+          alt=""
+          className="w-8 relative -top-4 mx-auto bg-white"
+        />
       </div>
 
       <div className="py-20 flex items-center justify-center">
-            {/* <p>Coming soon</p> */}
-          </div>
+        <p className="text-primary">Coming soon</p>
+      </div>
       {/* Sections */}
       {/* {sections?.map((section, index) => (
         <div key={index} className="mb-6">

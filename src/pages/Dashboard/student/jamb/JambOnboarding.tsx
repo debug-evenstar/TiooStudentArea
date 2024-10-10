@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import MultiSelectGroup from "../../../../components/Common/MultiItemSelect";
 import { FaMagnifyingGlass } from "react-icons/fa6";
+import { dashboardApiSlice } from "../../../../services/api/dashboardSlice";
+import { DotLoader } from "react-spinners";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setExamFlag } from "../../../../redux/reducers/sidebarReducer";
 
 const ExamCard = () => {
   return (
@@ -26,11 +32,16 @@ const ExamCard = () => {
   );
 };
 
-const SearchBar = ({ value, setValue, placeholder = "Search your course" }: any) => {
+const SearchBar = ({
+  value,
+  setValue,
+  placeholder = "Search your course",
+}: any) => {
   const handleChange = (e: any) => {
     const value = e.currentTarget.value;
     setValue(value);
   };
+
   return (
     <div className="rounded-full py-2 flex w-fit items-center gap-3 px-6 mt-5 border border-gray-300">
       <input
@@ -49,22 +60,29 @@ const SearchBar = ({ value, setValue, placeholder = "Search your course" }: any)
 export default function JambOnboarding() {
   const options = [
     "English",
+    "Mathematics",
+    "Biology",
+    "Chemistry",
+    "Physics",
+    "Geography",
+    "Agricultural Science",
     "Music",
     "Arts",
-    "Biology",
-    "Mathematics",
-    "Agricultural Science",
-    "Chemistry",
-    "Geography",
     "Literature",
     "Civic Education",
-    "Physics",
     "Economics",
   ];
 
   const [canProceed, setCanProceed] = useState(false);
   const [subjects, setSubjects] = useState([]);
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+
+  const [saveExamMetaData, { isLoading }] =
+    dashboardApiSlice.useSaveExamMetaDataMutation();
 
   useEffect(() => {
     setCanProceed(subjects.length === 4);
@@ -74,6 +92,23 @@ export default function JambOnboarding() {
   const filteredOptions = options.filter((subject) =>
     subject.toLowerCase().includes(search.toLowerCase())
   );
+
+  const handleContinue = () => {
+    const exam_data = {
+      exam_type: "JAMB",
+      exam_subjects: subjects,
+    };
+
+    saveExamMetaData(exam_data).then((response: any) => {
+      if(response.data && response.data.error == false){
+        toast.success("Saved");
+        setTimeout(() => {
+          dispatch(setExamFlag(true));
+        },1000);
+        navigate('/student/dashboard/home');
+      }
+    });
+  };
 
   return (
     <div className="mt-7">
@@ -92,11 +127,16 @@ export default function JambOnboarding() {
         </div>
         <div className="mt-8 flex justify-end">
           <button
-            className={`px-5 py-2 rounded-full font-bold text-base ${
+            disabled={!canProceed}
+            onClick={handleContinue}
+            className={`px-5 py-2 rounded-full flex gap-2 items-center font-bold text-base ${
               canProceed ? "bg-primary text-white" : "bg-gray-300 text-gray-800"
             }`}
           >
-            continue
+            <span>continue</span>
+            {isLoading && (
+              <DotLoader color="white" size={12} className="w-[1.2rem] ml-2" />
+            )}
           </button>
         </div>
       </div>

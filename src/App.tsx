@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import "./App.css";
 import ScrollToTop from "./utils/scrollTop";
 import LogToken from "./pages/Auth/LogToken";
@@ -13,7 +13,10 @@ import { useToken } from "./hooks/useToken";
 
 const env = import.meta.env;
 
+
 function App() {
+
+
   useEffect(() => {
     const token = useToken();
     ConfigureLibrary.save({
@@ -21,7 +24,11 @@ function App() {
       authType: "student",
       token: token ? JSON.parse(token) : "",
     });
+
   }, []);
+
+
+
   return (
     <BrowserRouter>
       <ScrollToTop />
