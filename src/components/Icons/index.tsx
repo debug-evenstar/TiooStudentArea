@@ -1,6 +1,11 @@
 import { BiBookAlt } from "react-icons/bi";
+import { FaUsers } from "react-icons/fa";
 import { GiGraduateCap } from "react-icons/gi";
 import { PiExamThin } from "react-icons/pi";
+
+export function ReferralsIcon({ fill = "#8E92BC" }: { fill: string }) {
+  return <FaUsers color={fill} size={20} />;
+}
 
 export function NetworkIcon({ fill = "#8E92BC" }: { fill: string }) {
   return (
@@ -38,14 +43,9 @@ export function SettingsIcon({ fill = "#8E92BC" }: { fill: string }) {
   );
 }
 
-
 export function ExamIcon({ fill = "#8E92BC" }: { fill: string }) {
-  return (
-    <GiGraduateCap fill={fill} size={20}/>
-  );
+  return <GiGraduateCap fill={fill} size={20} />;
 }
-
-
 
 export function DashboardIcon({ fill = "#8E92BC" }: { fill: string }) {
   return (

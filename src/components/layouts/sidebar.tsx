@@ -16,7 +16,7 @@ const SubMenuItem = ({ name, route }: any) => {
     <li className=" mt-3 border-l -left-[1px] relative border-b-2 rounded-[10px] overflow w-[90%]">
       <Link className="text-gray-600" to={route}>
         <div
-          className={`relative py-2 px-4 left-3 top-4  rounded-[5px]  ${
+          className={`relative py-2 px-4 left-3 top-4 capitalize rounded-[5px]  ${
             isActive
               ? "bg-[#f4cffd] font-[500]"
               : "bg-white font-[300] hover:bg-light"
@@ -187,7 +187,7 @@ const Sidebar: FC<any> = ({ pages, sideOpen, setSideOpen }: any) => {
     route: "/student/dashboard",
     submenu: [
       {
-        name: "Jamb",
+        name: "JAMB",
         route: "/student/dashboard/home",
       },
     ],
