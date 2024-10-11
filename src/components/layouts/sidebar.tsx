@@ -46,13 +46,11 @@ any) => {
     (sub: any) => sub.route == location.pathname
   );
 
-
   useEffect(() => {
-    if(!isOpen){
+    if (!isOpen && isSubActive) {
       setIsOpen(true);
     }
-  },[isSubActive]);
-
+  }, [isSubActive]);
 
   return (
     <li className="mb-5">
@@ -86,7 +84,9 @@ any) => {
               </div>
               <p className="font-[500] ">{name}</p>
             </div>
-            <MdOutlineKeyboardArrowDown className={`text-2xl duration-300 ${isOpen ? "rotate-180":""}`} />
+            <MdOutlineKeyboardArrowDown
+              className={`text-2xl duration-300 ${isOpen ? "rotate-180" : ""}`}
+            />
           </div>
           <div
             className={`
@@ -198,11 +198,13 @@ const Sidebar: FC<any> = ({ pages, sideOpen, setSideOpen }: any) => {
   }, [pages]);
 
   useEffect(() => {
-    if (sidebar.examFlag) {
-      const copied = [...pages];
-      copied.splice(1, 0, examLink);
-      setLinks(copied);
-    }
+    setTimeout(() => {
+      if (sidebar.examFlag) {
+        const copied = [...pages];
+        copied.splice(1, 0, examLink);
+        setLinks(copied);
+      }
+    }, 2000);
   }, [sidebar.examFlag]);
 
   const content = <Content pages={links} />;
