@@ -32,7 +32,7 @@ export default function Study() {
   return (
     <div className="w-screen h-screen relative">
       <div
-        className={`z-[9999999999] w-full h-screen transition-opacity duration-700 bg-white flex items-center justify-center fixed inset-0
+        className={`z-[9999999999] w-full h-screen transition-opacity duration-1000 bg-white flex items-center justify-center fixed inset-0
         ${loaderOpen ? "opacity-100" : "opacity-0 pointer-events-none"}
         `}
       >
