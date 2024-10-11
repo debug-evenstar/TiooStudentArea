@@ -40,10 +40,10 @@ const LogToken = () => {
                 flag: res.data.data.flag,
                 verification_status: res.data.data.verification_status,
                 school: res.data.data.schoolStudent,
-                independent: res.data.data.student_type
+                independent: res.data.data.student_type,
           }))
           storeLocalToken("token", token);
-          navigate("/student/dashboard/home");
+          navigate("/student/dashboard");
         } else {
           toast.error(res.error.data.message);
           setIsBusy(false);
@@ -70,7 +70,7 @@ const LogToken = () => {
               {isBusy && (
                 <div className="">
                   <div className="flex justify-center">
-                  <ScaleLoader height={30} speedMultiplier={1.3} color=" #9c29b2" />
+                  <ScaleLoader height={30} speedMultiplier={1.3} color="#9c29b2" />
                   </div>
                 </div>
               )}
