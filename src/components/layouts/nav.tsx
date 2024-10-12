@@ -53,7 +53,7 @@ export default function Nav({ pages, hasBack, sideOpen, setSideOpen }: any) {
           <FaArrowLeft /> <span className="text-xl">Back</span>
         </button>
       ) : (
-        <p className="font-[500] text-2xl">{currentPage?.name ?? "Title"}</p>
+        <p className="font-[500] text-2xl">{currentPage?.name ?? "Dashboard"}</p>
       )}
       <SearchBar
         value={search}

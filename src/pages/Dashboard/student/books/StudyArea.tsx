@@ -64,7 +64,7 @@ const CurrentLessonBar = ({ current, data, next, lesson_progress }: any) => {
 
   const handleOpenLesson = useCallback(() => {
     navigate(`/books/${bookId}/study`, { state: { lesson, tag: "resume" } });
-  }, [navigate, bookId,lesson]);
+  }, [navigate, bookId, lesson]);
 
   return (
     <div className="mb-6 mx-auto quicksand  text-primary bg-white items-center shadow-md rounded-md flex justify-between px-4 py-3">
@@ -75,10 +75,10 @@ const CurrentLessonBar = ({ current, data, next, lesson_progress }: any) => {
         </div>
         <div className="flex items-center space-x-4">
           <div className="text-primary font-semibold">
-            NEXT UP:{" "}
+            {/* NEXT UP:{" "}
             <span className="">
               {next?.name} | {next?.description}
-            </span>
+            </span> */}
           </div>
         </div>
       </div>
@@ -201,8 +201,6 @@ export default function StudyArea() {
     bookId ?? "0"
   );
 
-  const lesson_progress = data?.lesson_progress;
-
   return (
     <div className="h-screen w-full flex justify-between px-4 lg:px-12 pt-12 pb-20">
       <div className="h-full w-[68%]">
@@ -227,7 +225,7 @@ export default function StudyArea() {
           </div>
         </div>
         <p className="text-base mb-16 urbanist font-[400] text-[#470454]">
-          {data?.data?.description}
+          {data?.data?.description || <Skeleton width={500} />}
         </p>
         <div className=" border-t border-black">
           {/* Icon and Divider */}
@@ -238,27 +236,36 @@ export default function StudyArea() {
           />
         </div>
 
-        {data?.data?.lesson_progress?.length && (
+        {data?.data?.lesson_progress?.length && data?.data?.chapters?.length ? (
           <CurrentLessonBar
             lesson_progress={data?.data?.lesson_progress}
             data={data?.data}
             next={data?.data?.chapters[1]}
             current={data?.data?.chapters[0]}
           />
-        )}
-        {data?.data &&
+        ) : null}
+
+        {data?.data ?
           data?.data.chapters?.map((chapter: any, index: number) => (
             <StudyLessonAccordion
               key={index}
               bookId={bookId}
               chapter={chapter}
             />
-          ))}
+          ))
+
+          : (
+            <div className="min-h-[10rem]">
+              <Skeleton className="w-full h-full mb-6" borderRadius={16} height={240}/>
+              <Skeleton className="w-full h-full" borderRadius={16} height={240}/>
+            </div>
+          )
+        }
 
         {/* <SectionAccordion /> */}
       </div>
       <div className="h-full w-[27%] flex-col flex gap-y-5">
-        <SaveButton />
+        { data?.data ? <SaveButton /> : <Skeleton height={60} /> } 
         <div className="flex flex-col gap-y-6 ">
           <StudyResourceCard sections={resourcesData} />
           <StudyHighlightCard items={highlights} />
