@@ -177,35 +177,7 @@ const Content = ({ pages }: any) => {
   );
 };
 
-const Sidebar: FC<any> = ({ pages, sideOpen, setSideOpen }: any) => {
-  const [links, setLinks] = useState(pages);
-  const sidebar = useSelector(selectSidebar);
-
-  const examLink = {
-    name: "Exam prep",
-    Icon: ExamIcon,
-    route: "/student/dashboard",
-    submenu: [
-      {
-        name: "JAMB",
-        route: "/student/dashboard/home",
-      },
-    ],
-  };
-
-  useEffect(() => {
-    setLinks(pages);
-  }, [pages]);
-
-  useEffect(() => {
-    setTimeout(() => {
-      if (sidebar.examFlag) {
-        const copied = [...pages];
-        copied.splice(1, 0, examLink);
-        setLinks(copied);
-      }
-    }, 2000);
-  }, [sidebar.examFlag]);
+const Sidebar: FC<any> = ({ links, sideOpen, setSideOpen }: any) => {
 
   const content = <Content pages={links} />;
 
