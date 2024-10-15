@@ -48,7 +48,7 @@ const SearchBar = ({
         placeholder={placeholder}
         onChange={handleChange}
         value={value}
-        className="w-[21rem] text-gray-700 outline-none"
+        className="lg:w-[21rem] text-gray-700 outline-none"
       />
       <span>
         <FaMagnifyingGlass />
@@ -115,8 +115,8 @@ export default function JambOnboarding() {
       <div className="">
         <ExamCard />
       </div>
-      <div className="bg-white quicksand rounded-[20px] px-16 py-6 mt-10">
-        <p className="text-2xl font-semibold">Select your course combination</p>
+      <div className="bg-white quicksand rounded-[20px] px-3 lg:px-16 py-6 mt-10">
+        <p className="text-xl lg:text-2xl font-semibold">Select your course combination</p>
         <SearchBar value={search} setValue={setSearch} />
         <div className="mt-8">
           <MultiSelectGroup

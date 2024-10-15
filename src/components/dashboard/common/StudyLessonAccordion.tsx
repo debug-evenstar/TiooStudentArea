@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
 import { FaLock, FaLockOpen, FaPause, FaPlay, FaRedo } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -16,27 +16,13 @@ const SmartCase = ({ lesson, bookId }: any) => {
 
   return (
     <div className="bg-white flex justify-between border-b relative border-gray-400">
-      <div className="grow px-5 py-4">
+      <div className="lg:px-5 px-2 py-4 flex justify-between">
         <p className="urbanist text-[23px] urbanist mb-1 font-[500] text-[#30B0C7]">
           {"Smart Case"}
         </p>
-        <p className="flex font-[300] capitalize text-gray-600 items-center gap-x-2">
-          {/* <span className="text-xl">+</span>
-          <span>{lesson?.description}</span> */}
-        </p>
-        {/* <ul>
-          {lesson?.topics?.map((topic: string, index: number) => (
-            <li
-              key={index}
-              className="flex font-[300] capitalize text-gray-600 items-center gap-x-2"
-            >
-              <span className="text-xl">+</span>
-              <span>{topic}</span>
-            </li>
-          ))}
-        </ul> */}
+        <p className="flex font-[300] capitalize text-gray-600 items-center gap-x-2"></p>
       </div>
-      <div className="w-[13rem] bg-[#f3f3f3] min-h-[8rem] flex justify-between flex-col">
+      <div className="w-[8rem] lg:w-[13rem] bg-[#f3f3f3] min-h-[8rem] flex justify-between flex-col">
         <div className="grow flex items-center justify-center">
           <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center">
             <svg
@@ -80,19 +66,19 @@ const LessonItem = ({ lesson, bookId, open }: any) => {
     <div
       className={`bg-white flex justify-between border-b relative border-gray-400 `}
     >
-      <div className="grow px-5 py-4 flex justify-between">
+      <div className="lg:px-5 px-2 py-4 flex justify-between">
         <div>
           <p className="urbanist text-[20px] mb-1 font-[500] text-primary">
             {lesson?.topic ?? "Chapter Name"}
           </p>
           <p className="flex font-[300] capitalize text-gray-600 items-center gap-x-2">
-            <span>This is a sample lesson description</span>
+            {/* <span>This is a sample lesson description</span> */}
           </p>
         </div>
         {/* <div>{isLocked ? <FaLock /> : null}</div> */}
       </div>
       {open && (
-        <div className="w-[13rem] relative bg-[#f3f3f3] min-h-[8rem] flex justify-between flex-col">
+        <div className="w-[8rem] lg:w-[13rem] relative bg-[#f3f3f3] min-h-[8rem] flex justify-between flex-col">
           <div className="grow flex items-center justify-center">
             <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center">
               {lesson.is_completed && (
@@ -113,7 +99,7 @@ const LessonItem = ({ lesson, bookId, open }: any) => {
               disabled
               className="h-12 w-full bg-[#18D741] flex justify-center cursor-not-allowed items-center text-white"
             >
-              <FaLock color="white" size={23}/>
+              <FaLock color="white" size={23} />
             </button>
           ) : (
             <div className={``}>
@@ -151,23 +137,32 @@ const LessonItem = ({ lesson, bookId, open }: any) => {
 
 export default function StudyLessonAccordion({ chapter, bookId }: any) {
   const [open, setOpen] = useState(true);
-  const firstLesson = chapter?.lessons[0];
+  const [lessons, setLessons] = useState<any>([]);
+
+  const firstLesson = lessons[0];
   const lessonCount = chapter?.lessons.length;
+
+  useEffect(() => {
+    if (chapter && chapter.lessons && chapter.lessons.length) {
+      setLessons([ ...chapter.lessons ].reverse())
+    }
+  }, [chapter]);
+
   return (
-    <div className="rounded-lg  shadow mb-3 transition-[height] duration-300">
-      <button
+    <div className="rounded-lg  shadow mb-8 lg:mb-3 relative transition-[height] duration-300">
+      <div
         onClick={() => setOpen(true)}
         className="bg-[#30B0C7] outline-none w-full h-[58px] flex items-center font-bold text-white urbanist px-5 rounded-t-lg text-[20px]"
       >
         {chapter?.name ?? "Lesson Name"}
-      </button>
+      </div>
       <div>
         {firstLesson && (
           <LessonItem open={open} bookId={bookId} lesson={firstLesson} />
         )}
       </div>
-      <div className={!open ? "hidden" : ""}>
-        {chapter?.lessons
+      <div className={`${!open ? "hidden" : ""} relative flex flex-col`}>
+        {lessons
           ?.slice(1, lessonCount)
           .map((lesson: any, index: number) => (
             <LessonItem
