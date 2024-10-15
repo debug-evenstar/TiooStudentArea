@@ -6,9 +6,10 @@ import EmptyCollection from "../common/EmptyCollection";
 import { BookCardSkeleton } from "./BookCardSkeleton";
 
 export default function BooksList({ type, title }: { type: string, title: string}) {
-  const { data, isLoading } = dashboardApiSlice.useGetLibraryBooksQuery(null);
+  const { data, isLoading, refetch } = dashboardApiSlice.useGetLibraryBooksQuery(null);
   const [books, setBooks] = useState([]);
   const [ falseLoader, setFalseLoader ] = useState(true);
+
   useEffect(() => {
     if (data) {
       setBooks(data?.data?.filter((book: any) => book.book_type?.toLowerCase() == type.toLowerCase()));
@@ -17,6 +18,7 @@ export default function BooksList({ type, title }: { type: string, title: string
 
 
   useEffect(() => {
+    refetch();
     setTimeout(() => setFalseLoader(false),2000);
   },[]);
   

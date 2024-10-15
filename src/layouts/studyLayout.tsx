@@ -9,10 +9,10 @@ export default function StudyLayout({pages}: any) {
   const [sideOpen, setSideOpen] = useState(false);
 
   return (
-    <div className="flex h-screen overflow-hidden outfit-font bg-[#f9f7f3]">
-      <main className="grow flex flex-col w-full lg:w-[79.5%]">
+    <div className="flex min-h-screen outfit-font bg-[#f9f7f3]">
+      <main className="flex flex-col w-full">
         <Nav hasBack pages={pages} {...{ sideOpen, setSideOpen }} />
-        <div className="px-3 md:px-6 overflow-hidden grow overflow-y-auto">
+        <div className="px-0 lg:px-6 relative w-full">
           <Outlet />
         </div>
       </main>
