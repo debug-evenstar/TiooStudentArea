@@ -1,7 +1,9 @@
 import React, { FC } from "react";
 import { BiArrowToRight } from "react-icons/bi";
 import { FaArrowRight } from "react-icons/fa";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { selectSidebar } from "../../../redux/reducers/sidebarReducer";
 
 interface ExamCardProps {
   title: string;
@@ -15,15 +17,24 @@ const ExamCard: FC<ExamCardProps> = ({ title, color, image, link }) => {
 
   const isDisabled = link == "#";
 
+  const sidebar = useSelector(selectSidebar);
+
   const handleClick = () => {
+    if (sidebar.examFlag) {
+      return navigate("/student/dashboard/home");
+    }
+
     if (link !== "#") navigate(link);
   };
 
   return (
     <div
       onClick={handleClick}
-      className="rounded-[20px] px-2 py-3 flex gap-3 w-fit"
-      style={{ backgroundColor: color, cursor: isDisabled? "not-allowed": "pointer" }}
+      className="rounded-[20px] px-2 py-3 flex gap-3 w-full lg:w-fit"
+      style={{
+        backgroundColor: color,
+        cursor: isDisabled ? "not-allowed" : "pointer",
+      }}
     >
       <div className="w-[6rem] p-2 rounded-[20px] bg-white">
         <img src={image} alt="" className="w-full" />
@@ -31,8 +42,8 @@ const ExamCard: FC<ExamCardProps> = ({ title, color, image, link }) => {
       <div className="flex flex-col py-4 justify-between">
         <p className="font-bold text-white">{title}</p>
         <div className="flex items-center gap-x-10 mr-10 text-white justify-between">
-          <span>{ isDisabled ? "Coming soon" : "Examination" }</span>
-          <FaArrowRight color={isDisabled? color : "white"} />
+          <span>{isDisabled ? "Coming soon" : "Examination"}</span>
+          <FaArrowRight color={isDisabled ? color : "white"} />
         </div>
       </div>
     </div>
@@ -72,7 +83,7 @@ export default function Onboarding() {
         <p className="mb-4 text-2xl">University Admission Exams</p>
         <div className="flex gap-5 flex-col lg:flex-row">
           {exams.map((exam: ExamCardProps) => (
-            <ExamCard {...exam} />
+            <ExamCard key={exam.title} {...exam} />
           ))}
         </div>
       </div>

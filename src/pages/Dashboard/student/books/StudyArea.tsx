@@ -39,49 +39,82 @@ const SaveButton = () => {
   );
 };
 
-const CurrentLessonBar = ({ current, data, next, lesson_progress }: any) => {
+const CurrentLessonBar = ({ data }: any) => {
   const navigate = useNavigate();
-  const bookId = current?.textbook_id;
-  const [lesson, setLesson] = useState<any>(null);
+  const bookId = data?.id;
+  const [currentLesson, setCurrentLesson] = useState<any>(null);
+  const [currentChapter, setCurrentChapter] = useState<any>(null);
+  const [nextLesson, setNextLesson] = useState<any>(null);
+  const lesson_progress = data?.lesson_progress;
 
-  const getLessonById = (id: any) => {
-    let lesson = null;
-    data?.chapters?.forEach((chapter: any) => {
+  const processLessonData = (id: any) => {
+    let res = { lesson: null, chapter: null, next_lesson: null };
+    let found = false;
+    data?.chapters?.forEach((chapter: any, index: number) => {
       chapter?.lessons?.forEach((less: any) => {
-        if (less.id == id) lesson = less;
+        if (less.id == id) {
+          res.chapter = { chapter_number: index + 1, ...chapter };
+          res.lesson = less;
+          // the commented out section is responsible for setting 
+          // the actual next lesson. but i'm not too sure of the next up is 
+          // the lesson to resume to or literally the next lesson after the current lesson
+          // res.next_lesson = less;
+          if (!found) {
+            res.next_lesson = less;
+          }
+          found = true;
+        }
       });
     });
-    return lesson;
+    return res;
   };
+
+  const latest_record = lesson_progress?.reduce((latest: any, current: any) => {
+    return new Date(current.updated_at) > new Date(latest.updated_at)
+      ? current
+      : latest;
+  });
+
 
   useEffect(() => {
     if (lesson_progress && lesson_progress.length) {
-      let last_lesson_record = lesson_progress[lesson_progress.length - 1];
-      const lesson = getLessonById(last_lesson_record.lesson_id);
-      setLesson(lesson);
+
+      const { lesson, chapter, next_lesson } = processLessonData(
+        latest_record?.lesson_id
+      );
+      setCurrentLesson(lesson);
+      setCurrentChapter(chapter);
+      setNextLesson(next_lesson);
+    } else {
+      // setCurrentLesson(data?.chapters[0]?.lessons[0]);
     }
-  }, [lesson]);
+  }, [lesson_progress, latest_record]);
 
   const handleOpenLesson = useCallback(() => {
-    navigate(`/books/${bookId}/study`, { state: { lesson, tag: "resume" } });
-  }, [navigate, bookId, lesson]);
+    navigate(`/books/${bookId}/study`, {
+      state: { currentLesson, tag: "resume" },
+    });
+  }, [navigate, bookId, currentLesson]);
 
   return (
     <div className="mb-6 mx-auto quicksand  text-primary bg-white items-center shadow-md rounded-md flex justify-between px-4 py-3">
       <div className="flex flex-col gap-3">
         <div className="text-gray-600 text-sm font-semibold">
-          <span className="uppercase">Lesson </span> | {lesson?.topic} | &nbsp;
-          {lesson?.duration}
+          <span className="uppercase">
+            Chapter {currentChapter?.chapter_number}
+          </span>
+          &nbsp; | {currentChapter?.name}
         </div>
         <div className="flex items-center space-x-4">
           <div className="text-primary font-semibold">
-            {/* NEXT UP:{" "}
+            NEXT UP:{" "}
             <span className="">
-              {next?.name} | {next?.description}
-            </span> */}
+              {nextLesson?.topic} 
+            </span>
           </div>
         </div>
       </div>
+
       <button
         onClick={handleOpenLesson}
         className="bg-primary text-[16px] urbanist active:scale-95 text-white h-10 font-bold py-2 px-8 rounded-md transition duration-300"
@@ -91,47 +124,6 @@ const CurrentLessonBar = ({ current, data, next, lesson_progress }: any) => {
     </div>
   );
 };
-
-// const AccordionItem = ({ title }: any) => {
-//   const [isOpen, setIsOpen] = useState(false);
-
-//   return (
-//     <div className="border-b border-gray-200">
-//       <button
-//         className="w-full py-4 px-6 flex justify-between items-center text-left"
-//         onClick={() => setIsOpen(!isOpen)}
-//       >
-//         <span className="text-gray-600">{title}</span>
-//         <BiChevronDown
-//           className={`w-5 h-5 text-gray-400 transition-transform ${
-//             isOpen ? "transform rotate-180" : ""
-//           }`}
-//         />
-//       </button>
-//       {isOpen && (
-//         <div className="p-4">
-//           {/* Content goes here */}
-//           <p>Accordion content</p>
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// const SectionAccordion = () => {
-//   return (
-//     <div className="rounded-xl overflow-hidden mx-auto">
-//       <div className="bg-cyan-500 text-white text-xl font-bold py-4 px-6">
-//         SECTION 01
-//       </div>
-//       <div className="bg-white shadow-md px-2">
-//         <AccordionItem title="QUADRATIC AND SIMULTANEOUS EQUATIONS" />
-//         <AccordionItem title="QUADRATIC AND SIMULTANEOUS EQUATIONS" />
-//         <AccordionItem title="QUADRATIC AND SIMULTANEOUS EQUATIONS" />
-//       </div>
-//     </div>
-//   );
-// };
 
 const resourcesData = [
   {
@@ -196,14 +188,37 @@ const credits = [
 
 export default function StudyArea() {
   const { bookId } = useParams();
-
-  const { data, isLoading } = libraryApiSlice.useGetLibraryBookQuery(
+  const [isFreshStart, setFreshStart] = useState(false);
+  const { data, isLoading, refetch } = libraryApiSlice.useGetLibraryBookQuery(
     bookId ?? "0"
   );
 
+
+
+  const checkFreshStart = () => {
+    let res = true;
+    data?.data.chapters?.forEach((chapter: any) => {
+      chapter.lessons.forEach((lesson: any) => {
+        if (lesson.has_started && lesson.status != "LOCKED") {
+          res = false;
+        }
+      });
+    });
+    return res;
+  };
+
+  useEffect(() => {
+    setFreshStart(checkFreshStart());
+  }, [data]);
+
+  useEffect(() => {
+    refetch();
+  }, []);
+
+
   return (
-    <div className="h-screen w-full flex justify-between px-4 lg:px-12 pt-12 pb-20">
-      <div className="h-full w-[68%]">
+    <div className="w-full flex flex-col lg:flex-row justify-between px-4 lg:px-12 pt-12 pb-20">
+      <div className="h-full lg:w-[68%]">
         <div className="mb-2 flex items-center gap-5">
           {data?.data?.cover_photo ? (
             <div className="w-14 h-14 rounded-full shrink-0 border overflow-hidden">
@@ -216,7 +231,7 @@ export default function StudyArea() {
           )}
           <div className="items-center w-10/12">
             {data?.data?.name ? (
-              <h1 className="text-primary urbanist font-[500] text-[30px]">
+              <h1 className="text-primary urbanist font-[500] text-[25px] lg:text-[30px]">
                 {data?.data?.name}
               </h1>
             ) : (
@@ -236,16 +251,13 @@ export default function StudyArea() {
           />
         </div>
 
-        {data?.data?.lesson_progress?.length && data?.data?.chapters?.length ? (
-          <CurrentLessonBar
-            lesson_progress={data?.data?.lesson_progress}
-            data={data?.data}
-            next={data?.data?.chapters[1]}
-            current={data?.data?.chapters[0]}
-          />
+        {data?.data?.lesson_progress?.length &&
+        !isFreshStart &&
+        data?.data?.chapters?.length ? (
+          <CurrentLessonBar data={data?.data} />
         ) : null}
 
-        {data?.data ?
+        {data?.data ? (
           data?.data.chapters?.map((chapter: any, index: number) => (
             <StudyLessonAccordion
               key={index}
@@ -253,19 +265,26 @@ export default function StudyArea() {
               chapter={chapter}
             />
           ))
-
-          : (
-            <div className="min-h-[10rem]">
-              <Skeleton className="w-full h-full mb-6" borderRadius={16} height={240}/>
-              <Skeleton className="w-full h-full" borderRadius={16} height={240}/>
-            </div>
-          )
-        }
+        ) : (
+          <div className="min-h-[10rem]">
+            <Skeleton
+              className="w-full h-full mb-6"
+              borderRadius={16}
+              height={240}
+            />
+            <Skeleton
+              className="w-full h-full"
+              borderRadius={16}
+              height={240}
+            />
+          </div>
+        )}
 
         {/* <SectionAccordion /> */}
       </div>
-      <div className="h-full w-[27%] flex-col flex gap-y-5">
-        { data?.data ? <SaveButton /> : <Skeleton height={60} /> } 
+
+      <div className="h-full lg:w-[27%] mt-10 lg:mt-0 flex-col flex gap-y-5">
+        {data?.data ? <SaveButton /> : <Skeleton height={60} />}
         <div className="flex flex-col gap-y-6 ">
           <StudyResourceCard sections={resourcesData} />
           <StudyHighlightCard items={highlights} />
