@@ -92,9 +92,9 @@ const CurrentLessonBar = ({ data }: any) => {
 
   const handleOpenLesson = useCallback(() => {
     navigate(`/books/${bookId}/study`, {
-      state: { currentLesson, tag: "resume" },
+      state: { lesson: nextLesson, tag: "resume" },
     });
-  }, [navigate, bookId, currentLesson]);
+  }, [navigate, bookId, nextLesson]);
 
   return (
     <div className="mb-6 mx-auto quicksand  text-primary bg-white items-center shadow-md rounded-md flex justify-between px-4 py-3">
