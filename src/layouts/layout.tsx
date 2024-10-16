@@ -7,6 +7,7 @@ import { dashboardApiSlice } from "../services/api/dashboardSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectSidebar, setExamFlag } from "../redux/reducers/sidebarReducer";
 import { ExamIcon } from "../components/Icons";
+import BannerAnnouncement from "../components/Common/Announcement";
 
 export default function DashboardLayout({ pages }: any) {
   const [sideOpen, setSideOpen] = useState(false);
@@ -56,8 +57,9 @@ export default function DashboardLayout({ pages }: any) {
   }, [sidebar.examFlag]);
 
   return (
-    <div className="flex h-screen overflow-hidden outfit-font bg-[#f9f7f3]s bg-[#f9f7f3]">
+    <div className="flex h-screen overflow-hidden outfit-font bg-[#f9f7f3]s bg-[rgb(249,247,243)]">
       <Sidebar links={links} {...{ sideOpen, setSideOpen }} />
+      <BannerAnnouncement/>
       <main className="grow flex flex-col w-full lg:w-[79.5%]">
         <Nav pages={links} {...{ sideOpen, setSideOpen }} />
         <div className="px-3 md:px-6 overflow-hidden grow overflow-y-auto">
