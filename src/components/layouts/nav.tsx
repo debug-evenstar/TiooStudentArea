@@ -3,11 +3,12 @@ import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { selectUser } from "../../redux/reducers/userReducer";
 import Notifications from "./notification";
-import { FaBars } from "react-icons/fa";
+// import { FaBars } from "react-icons/fa";
 import SearchBar from "../dashboard/common/SearchBar";
 import { useState } from "react";
 import { logoutUser } from "../../utils/logout";
 import { FaArrowLeft } from "react-icons/fa6";
+import { HiBars3 } from "react-icons/hi2";
 
 const Profile = ({ user }: { user: any }) => {
   return (
@@ -43,17 +44,27 @@ export default function Nav({ pages, hasBack, sideOpen, setSideOpen }: any) {
   };
 
   const goBack = () => {
-    navigate(-1)
-  }
+    navigate(-1);
+  };
 
   return (
     <div className="flex items-center border-b w-full justify-between px-6 py-6 bg-white">
       {hasBack ? (
-        <button onClick={goBack} className="flex outline-none items-center gap-3">
+        <button
+          onClick={goBack}
+          className="flex outline-none items-center gap-3"
+        >
           <FaArrowLeft /> <span className="text-xl">Back</span>
         </button>
       ) : (
-        <p className="font-[500] text-2xl">{currentPage?.name ?? "Dashboard"}</p>
+        <div className="flex items-center gap-x-2">
+          <button className="lg:hidden" onClick={() => setSideOpen(!sideOpen)}>
+            <HiBars3 size={30} />
+          </button>
+          <p className="font-[500] text-2xl">
+            {currentPage?.name ?? "Dashboard"}
+          </p>
+        </div>
       )}
       <SearchBar
         value={search}
@@ -64,9 +75,6 @@ export default function Nav({ pages, hasBack, sideOpen, setSideOpen }: any) {
       <div className="flex items-center space-x-4">
         <Notifications />
         <Profile user={user} />
-        <button className="lg:hidden" onClick={() => setSideOpen(!sideOpen)}>
-          <FaBars size={30} />
-        </button>
       </div>
     </div>
   );
