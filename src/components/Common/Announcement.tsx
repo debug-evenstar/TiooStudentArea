@@ -2,26 +2,25 @@ import React, { useState, useEffect } from "react";
 
 const BannerAnnouncement = () => {
   const [showBanner, setShowBanner] = useState(false);
-  const [isVisible, setIsVisible] = useState(false); // State to manage visibility
-
+  const [isVisible, setIsVisible] = useState(false);
   useEffect(() => {
     const bannerShown = localStorage.getItem("bannerShown");
     if (bannerShown) {
       setTimeout(() => {
         setShowBanner(true);
         setTimeout(() => {
-          setIsVisible(true); // Show the banner with animation
-        }, 100); // Delay to ensure the transition is smooth
+          setIsVisible(true);
+        }, 100);
       }, 1000);
     }
   }, []);
 
   const handleCloseBanner = () => {
-    setIsVisible(false); // First, start hiding animation
+    setIsVisible(false);
     setTimeout(() => {
-      setShowBanner(false); // After animation ends, remove from DOM
+      setShowBanner(false);
       localStorage.setItem("bannerShown", "true");
-    }, 300); // Timeout should match the CSS transition duration
+    }, 300);
   };
 
   if (!showBanner) {
