@@ -5,7 +5,7 @@ const BannerAnnouncement = () => {
   const [isVisible, setIsVisible] = useState(false);
   useEffect(() => {
     const bannerShown = localStorage.getItem("bannerShown");
-    if (bannerShown) {
+    if (!bannerShown) {
       setTimeout(() => {
         setShowBanner(true);
         setTimeout(() => {
