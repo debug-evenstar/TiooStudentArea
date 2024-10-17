@@ -29,7 +29,7 @@ const BannerAnnouncement = () => {
 
   return (
     <div
-      className={`fixed w-full text-gray-800 p-4 flex backdrop-blur h-full z-[1000] justify-center items-center 
+      className={`fixed inset-0 w-full text-gray-800 p-4 flex backdrop-blur h-full z-[1000] justify-center items-center 
         ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-10"}
         transition-all duration-300 ease-in-out`}
     >
