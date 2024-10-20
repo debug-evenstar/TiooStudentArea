@@ -62,7 +62,7 @@ const BookCard: FC<BookCardProps> = ({
   
   const isShelf = type === "shelf";
   return (
-    <div className="w-full border h-full bg-white duration-1000 hover: hover:scale-[1.05] ease-in-out border-gray-300 overflow-hidden px-3 py-2 relative rounded-2xl hover:shadow-[rgba(0,0,0,0.2)_0px_0px_45px_0px] group">
+    <div title={name} className="w-full border h-full bg-white duration-1000 hover: hover:scale-[1.05] ease-in-out border-gray-300 overflow-hidden px-3 py-2 relative rounded-2xl hover:shadow-[rgba(0,0,0,0.2)_0px_0px_45px_0px] group">
       <div className="absolute z-[40] inset-0 bg-gray-800/50 ease-in-out duration-1000 transition opacity-0 hover:opacity-100 flex items-center jusity-center">
         <button
           onClick={isShelf ? handleOpenLesson : handleClick}
