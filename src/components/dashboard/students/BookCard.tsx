@@ -62,19 +62,19 @@ const BookCard: FC<BookCardProps> = ({
   
   const isShelf = type === "shelf";
   return (
-    <div className="w-full border h-full bg-white duration-1000 hover: hover:scale-[1.05] ease-in-out border-gray-300 overflow-hidden px-3 py-2 relative rounded-2xl hover:shadow-[rgba(0,0,0,0.2)_0px_0px_45px_0px] group">
+    <div title={name} className="w-full border h-full bg-white duration-1000 hover: hover:scale-[1.05] ease-in-out border-gray-300 overflow-hidden px-3 py-2 relative rounded-2xl hover:shadow-[rgba(0,0,0,0.2)_0px_0px_45px_0px] group">
       <div className="absolute z-[40] inset-0 bg-gray-800/50 ease-in-out duration-1000 transition opacity-0 hover:opacity-100 flex items-center jusity-center">
         <button
           onClick={isShelf ? handleOpenLesson : handleClick}
-          className={`px-3 py-2 h-fit active:ring bg-white text-gray-900 quicksand font-[600] w-[80%] mx-auto justify-center flex space-x-2 items-center rounded-full border border-white ${
+          className={`px-3 py-2 h-fit active:ring bg-white text-gray-900 quicksand font-[600] w-[80%] mx-auto justify-center flex gap-x-2 items-center rounded-full border border-white ${
             inShelf ? "" : ""
           }`}
         >
           {!isShelf ? (
             !loading ? (
               <>
-                {inShelf ? <FiExternalLink /> : <img src={bookImg} alt="" />}
-                <span>{inShelf ? "Open" : "Add to shelf"}</span>
+                {inShelf ? <FiExternalLink /> : <img className="w-5 sm:w-auto" src={bookImg} alt="" />}
+                <span className="text-[14px]">{inShelf ? "Open" : "Add to shelf"}</span>
               </>
             ) : (
               <PulseLoader size={7} className="py-2" color="#323232" />
@@ -86,11 +86,6 @@ const BookCard: FC<BookCardProps> = ({
             </>
           )}
         </button>
-        {/* //   <button
-        //     onClick={handleOpenLesson}
-        //     className="px-3 py-2 w-[80%] mx-auto bg-white  text-gray-900 active:ring justify-center quicksand font-[600] flex items-center space-x-2 border-white rounded-full border"
-        //   >
-        //   </button> */}
       </div>
 
       {type === "shelf" ? (
@@ -122,7 +117,7 @@ const BookCard: FC<BookCardProps> = ({
       )}
 
       <div
-        className={`overflow-hidden rounded-lg flex h-[17rem]  justify-center mb-2 ${
+        className={`overflow-hidden rounded-lg flex h-[14rem] sm:h-[17rem] justify-center mb-2 ${
           cover_photo ? "" : "bg-gray-50"
         }`}
       >

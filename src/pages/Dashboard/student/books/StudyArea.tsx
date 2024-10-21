@@ -10,6 +10,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { libraryApiSlice } from "../../../../services/api/librarySlice";
 import "react-loading-skeleton/dist/skeleton.css";
 import Skeleton from "react-loading-skeleton";
+import { FaLock } from "react-icons/fa";
 
 const SaveButton = () => {
   return (
@@ -39,13 +40,15 @@ const SaveButton = () => {
   );
 };
 
-const CurrentLessonBar = ({ data }: any) => {
+const CurrentLessonBar = ({ data, isFreshStart }: any) => {
   const navigate = useNavigate();
   const bookId = data?.id;
   const [currentLesson, setCurrentLesson] = useState<any>(null);
   const [currentChapter, setCurrentChapter] = useState<any>(null);
   const [nextLesson, setNextLesson] = useState<any>(null);
-  const lesson_progress = data?.lesson_progress;
+  const lesson_progress = data?.lesson_progress
+  const firstLesson = [...data?.chapters[0]?.lessons].reverse()[0]
+  // const firstLesson = data?.chapters[0]?.lessons?.reverse()[0];
 
   const processLessonData = (id: any) => {
     let res = { lesson: null, chapter: null, next_lesson: null };
@@ -55,10 +58,7 @@ const CurrentLessonBar = ({ data }: any) => {
         if (less.id == id) {
           res.chapter = { chapter_number: index + 1, ...chapter };
           res.lesson = less;
-          // the commented out section is responsible for setting 
-          // the actual next lesson. but i'm not too sure of the next up is 
-          // the lesson to resume to or literally the next lesson after the current lesson
-          // res.next_lesson = less;
+
           if (!found) {
             res.next_lesson = less;
           }
@@ -69,16 +69,14 @@ const CurrentLessonBar = ({ data }: any) => {
     return res;
   };
 
-  const latest_record = lesson_progress?.reduce((latest: any, current: any) => {
+  const latest_record = lesson_progress?.length > 0 ?  lesson_progress?.reduce((latest: any, current: any) => {
     return new Date(current.updated_at) > new Date(latest.updated_at)
       ? current
       : latest;
-  });
-
+  }) : null;
 
   useEffect(() => {
-    if (lesson_progress && lesson_progress.length) {
-
+    if (lesson_progress && lesson_progress.length && latest_record) {
       const { lesson, chapter, next_lesson } = processLessonData(
         latest_record?.lesson_id
       );
@@ -92,9 +90,28 @@ const CurrentLessonBar = ({ data }: any) => {
 
   const handleOpenLesson = useCallback(() => {
     navigate(`/books/${bookId}/study`, {
-      state: { lesson: nextLesson, tag: "resume" },
+      state: { lesson: isFreshStart ? firstLesson: nextLesson, tag: "resume" },
     });
   }, [navigate, bookId, nextLesson]);
+
+  if (isFreshStart)
+    return (
+      <div className="mb-6 mx-auto quicksand  text-primary bg-white items-center shadow-md rounded-md flex justify-between px-4 py-3">
+        <div className="flex flex-col gap-3">
+          <p className="text-primary font-semibold uppercase">
+            READY TO BEGIN? START LEARNING NOW   
+          </p>
+        </div>
+
+        <button
+          onClick={handleOpenLesson}
+          disabled={firstLesson?.status == "LOCKED"}
+          className="bg-[#18D741] text-[16px] urbanist active:scale-95 text-white h-10 font-bold py-2 px-8 sm:px-12 rounded-md transition duration-300"
+        >
+          { firstLesson?.status == "LOCKED" ? <FaLock/> : "START" } 
+        </button>
+      </div>
+    );
 
   return (
     <div className="mb-6 mx-auto quicksand  text-primary bg-white items-center shadow-md rounded-md flex justify-between px-4 py-3">
@@ -107,10 +124,7 @@ const CurrentLessonBar = ({ data }: any) => {
         </div>
         <div className="flex items-center space-x-4">
           <div className="text-primary font-semibold">
-            NEXT UP:{" "}
-            <span className="">
-              {nextLesson?.topic} 
-            </span>
+            NEXT UP: <span className="">{nextLesson?.topic}</span>
           </div>
         </div>
       </div>
@@ -188,12 +202,9 @@ const credits = [
 
 export default function StudyArea() {
   const { bookId } = useParams();
-  const [isFreshStart, setFreshStart] = useState(false);
   const { data, isLoading, refetch } = libraryApiSlice.useGetLibraryBookQuery(
     bookId ?? "0"
   );
-
-
 
   const checkFreshStart = () => {
     let res = true;
@@ -207,14 +218,10 @@ export default function StudyArea() {
     return res;
   };
 
-  useEffect(() => {
-    setFreshStart(checkFreshStart());
-  }, [data]);
 
   useEffect(() => {
     refetch();
   }, []);
-
 
   return (
     <div className="w-full flex flex-col lg:flex-row justify-between px-4 lg:px-12 pt-12 pb-20">
@@ -251,10 +258,12 @@ export default function StudyArea() {
           />
         </div>
 
-        {data?.data?.lesson_progress?.length &&
-        !isFreshStart &&
+        {
         data?.data?.chapters?.length ? (
-          <CurrentLessonBar data={data?.data} />
+          <CurrentLessonBar
+            data={data?.data}
+            isFreshStart={checkFreshStart()}
+          />
         ) : null}
 
         {data?.data ? (

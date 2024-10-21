@@ -20,11 +20,12 @@ const ExamCard: FC<ExamCardProps> = ({ title, color, image, link }) => {
   const sidebar = useSelector(selectSidebar);
 
   const handleClick = () => {
+    if (link == "#") return;
+
     if (sidebar.examFlag) {
       return navigate("/student/dashboard/home");
     }
-
-    if (link !== "#") navigate(link);
+    return navigate(link);
   };
 
   return (
