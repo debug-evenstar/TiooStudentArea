@@ -66,19 +66,18 @@ const LessonItem = ({ lesson, bookId, open }: any) => {
     <div
       className={`bg-white flex justify-between border-b relative border-gray-400 `}
     >
-      <div className="lg:px-5 px-2 py-4 flex justify-between">
+      <div className="lg:px-5 px-2 py-4 w-full flex justify-between">
         <div>
           <p className="urbanist text-[20px] mb-1 font-[500] text-primary">
-            {lesson?.topic ?? "Chapter Name"}
+            {lesson?.topic}
           </p>
           <p className="flex font-[300] capitalize text-gray-600 items-center gap-x-2">
             {/* <span>This is a sample lesson description</span> */}
           </p>
         </div>
-        {/* <div>{isLocked ? <FaLock /> : null}</div> */}
       </div>
       {open && (
-        <div className="w-[8rem] lg:w-[13rem] relative bg-[#f3f3f3] min-h-[8rem] flex justify-between flex-col">
+        <div className="w-[8rem] lg:w-[13rem] shrink-0 relative bg-[#f3f3f3] min-h-[8rem] flex justify-between flex-col">
           <div className="grow flex items-center justify-center">
             <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center">
               {lesson.is_completed && (
