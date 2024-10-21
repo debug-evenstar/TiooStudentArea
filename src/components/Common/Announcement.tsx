@@ -38,7 +38,7 @@ const BannerAnnouncement = () => {
           <b>Get Ready for Launch</b>
           <p>
             We are excited to announce that Tioo will officially launch on{" "}
-            <b>October 21st, 2024</b> with Math as our first subject! You'll get
+            <b>October 21st, 2024</b> with Math and Physics as our first subject! You'll get
             a <b>7-day free trial</b> to explore the platform before choosing a
             plan
           </p>
