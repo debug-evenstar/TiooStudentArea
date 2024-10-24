@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { LessonPage } from "@Praxeum-ai/LearnBlocks";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { libraryApiSlice } from "../../../../services/api/librarySlice";
 import { ScaleLoader } from "react-spinners";
 
@@ -21,6 +21,7 @@ export default function Study() {
 
   const [loaderOpen, setLoaderOpen] = useState(true);
 
+  const navigate = useNavigate()
   const bookData = data?.data;
 
   useEffect(() => {
@@ -44,6 +45,7 @@ export default function Study() {
           chapters={bookData.chapters}
           retake={retake}
           lesson={lesson}
+          back={() => navigate(-1)}
         />
       )}
     </div>
