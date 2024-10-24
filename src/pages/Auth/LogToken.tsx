@@ -10,6 +10,7 @@ import { FailureCheck } from "../../old-components/Ui/AlertCheck";
 import { ScaleLoader } from "react-spinners";
 
 const LogToken = () => {
+
   const [isBusy, setIsBusy] = useState(false);
   const [failed, setFailed] = useState(false);
   const [verify] = useLazyVerifyTokenQuery();
@@ -17,11 +18,14 @@ const LogToken = () => {
   const navigate = useNavigate();
   const { token } = useParams();
 
+
   const verifyToken = async (data: any) => {
     setIsBusy(true);
     await verify(data)
       .then((res: any) => {
         if (res.isSuccess) {
+          // clear stuff first
+          localStorage.clear();
           dispatch(
             saveUser({
                 token: token,
@@ -40,10 +44,10 @@ const LogToken = () => {
                 flag: res.data.data.flag,
                 verification_status: res.data.data.verification_status,
                 school: res.data.data.schoolStudent,
-                independent: res.data.data.student_type
+                independent: res.data.data.student_type,
           }))
           storeLocalToken("token", token);
-          navigate("/student/dashboard/home");
+          navigate("/student/dashboard");
         } else {
           toast.error(res.error.data.message);
           setIsBusy(false);
@@ -70,7 +74,7 @@ const LogToken = () => {
               {isBusy && (
                 <div className="">
                   <div className="flex justify-center">
-                  <ScaleLoader height={30} speedMultiplier={1.3} color=" #9c29b2" />
+                  <ScaleLoader height={30} speedMultiplier={1.3} color="#9c29b2" />
                   </div>
                 </div>
               )}

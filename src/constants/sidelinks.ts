@@ -1,16 +1,16 @@
-import { AnalyticsIcon, BooksIcon, DashboardIcon, ExamIcon, NetworkIcon, SettingsIcon } from "../components/Icons";
+import { AnalyticsIcon, BooksIcon, DashboardIcon, ExamIcon, NetworkIcon, ReferralsIcon, SettingsIcon } from "../components/Icons";
 
 export const studentPages: any[] = [
   {name: "Home",Icon: DashboardIcon ,route: '/student/dashboard',submenu: []},
   {name: "Books",Icon: BooksIcon,route: '/student/dashboard/books', submenu: [
-    {name: "Library", route: '/student/dashboard/books/library'},
+    // {name: "Library", route: '/student/dashboard/books/library'},
     {name: "My shelf", route: '/student/dashboard/books/shelf'},
-    {name: "School books", route: '/student/dashboard/books/school'},
-    {name: "Past questions filter", route: '/student/dashboard/books/curator'},
+    // {name: "School books", route: '/student/dashboard/books/school'},
+    // {name: "Past questions filter", route: '/student/dashboard/books/curator'},
   ]},
   {name: "Analytics",Icon: AnalyticsIcon,route: '/student/dashboard/analytics',submenu: []},
-  {name: "Network",Icon: NetworkIcon,route: '/student/dashboard/network',submenu: []},
-  {name: "Referrals",Icon: NetworkIcon,route: '/student/dashboard/referral',submenu: []},
+  {name: "Socials",Icon: NetworkIcon,route: '/student/dashboard/network',submenu: []},
+  {name: "Referrals",Icon: ReferralsIcon,route: '/student/dashboard/referral',submenu: []},
   {name: "Settings",Icon: SettingsIcon,route: '/student/dashboard/settings',submenu: []},
 ];
 

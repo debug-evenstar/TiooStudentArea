@@ -15,7 +15,6 @@ export default function Curator() {
   const handleSubjectSelect = (subject: any) => {
     setTopic(null)
     setSubject(subject);
-    console.log(subject);
   };
 
   const handleTopicSelect = (topic: any) => {

@@ -16,7 +16,7 @@ const SubMenuItem = ({ name, route }: any) => {
     <li className=" mt-3 border-l -left-[1px] relative border-b-2 rounded-[10px] overflow w-[90%]">
       <Link className="text-gray-600" to={route}>
         <div
-          className={`relative py-2 px-4 left-3 top-4  rounded-[5px]  ${
+          className={`relative py-2 px-4 left-3 top-4 capitalize rounded-[5px]  ${
             isActive
               ? "bg-[#f4cffd] font-[500]"
               : "bg-white font-[300] hover:bg-light"
@@ -46,13 +46,11 @@ any) => {
     (sub: any) => sub.route == location.pathname
   );
 
-
   useEffect(() => {
-    if(!isOpen){
+    if (!isOpen && isSubActive) {
       setIsOpen(true);
     }
-  },[isSubActive]);
-
+  }, [isSubActive]);
 
   return (
     <li className="mb-5">
@@ -86,7 +84,9 @@ any) => {
               </div>
               <p className="font-[500] ">{name}</p>
             </div>
-            <MdOutlineKeyboardArrowDown className={`text-2xl duration-300 ${isOpen ? "rotate-180":""}`} />
+            <MdOutlineKeyboardArrowDown
+              className={`text-2xl duration-300 ${isOpen ? "rotate-180" : ""}`}
+            />
           </div>
           <div
             className={`
@@ -177,33 +177,7 @@ const Content = ({ pages }: any) => {
   );
 };
 
-const Sidebar: FC<any> = ({ pages, sideOpen, setSideOpen }: any) => {
-  const [links, setLinks] = useState(pages);
-  const sidebar = useSelector(selectSidebar);
-
-  const examLink = {
-    name: "Exam prep",
-    Icon: ExamIcon,
-    route: "/student/dashboard",
-    submenu: [
-      {
-        name: "Jamb",
-        route: "/student/dashboard/home",
-      },
-    ],
-  };
-
-  useEffect(() => {
-    setLinks(pages);
-  }, [pages]);
-
-  useEffect(() => {
-    if (sidebar.examFlag) {
-      const copied = [...pages];
-      copied.splice(1, 0, examLink);
-      setLinks(copied);
-    }
-  }, [sidebar.examFlag]);
+const Sidebar: FC<any> = ({ links, sideOpen, setSideOpen }: any) => {
 
   const content = <Content pages={links} />;
 

@@ -65,7 +65,7 @@ export default function Referral() {
 
   return (
     <div className="py-12">
-      <h3 className="text-3xl text-gray-800 capitalize">
+      <h3 className="text-2xl lg:text-3xl text-gray-800 capitalize">
         Refer friends and earn rewards
       </h3>
       <div className="flex gap-x-3 text-gray-800">
