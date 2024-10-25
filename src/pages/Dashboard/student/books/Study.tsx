@@ -32,7 +32,7 @@ export default function Study() {
   if (isLoading || !bookData) return <Loader />;
 
   return (
-    <div className="w-screen h-screen relative">
+    <div className="w-screen h-full relative">
       <div
         className={`z-[9999999999] w-full h-screen transition-opacity duration-1000 bg-white flex items-center justify-center fixed inset-0
         ${loaderOpen ? "opacity-100" : "opacity-0 pointer-events-none"}
