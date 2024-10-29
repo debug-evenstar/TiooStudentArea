@@ -25,5 +25,6 @@ export interface StudentProfile {
     status: string
     token?: string
     school?: boolean
-    independent: string | null
+    independent: string | null;
+    metadata?: any;
 }
