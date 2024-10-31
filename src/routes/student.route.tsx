@@ -15,6 +15,7 @@ import StudyArea from "../pages/Dashboard/student/books/StudyArea";
 import StudyLayout from "../layouts/studyLayout";
 import Onboarding from "../pages/Dashboard/student/Onboarding";
 import JambOnboarding from "../pages/Dashboard/student/jamb/JambOnboarding";
+import StudyPlan from "../pages/Dashboard/student/StudyPlan";
 
 function StudentRoutes() {
   return (
@@ -23,6 +24,7 @@ function StudentRoutes() {
         <Route path="dashboard" element={<Onboarding />} />
         <Route path="dashboard/home" element={<StudentDashboard />} />
         <Route path="dashboard/onboarding/jamb" element={<JambOnboarding />} />
+        <Route path="dashboard/onboarding/study-plan" element={<StudyPlan />} />
         <Route path="dashboard/books">
           <Route path="library" index element={<Library />} />
           <Route path="shelf" element={<Shelf />} />

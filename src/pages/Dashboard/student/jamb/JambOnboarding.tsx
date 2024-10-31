@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setExamFlag } from "../../../../redux/reducers/sidebarReducer";
+import { setUserExamData, setUserMetaData } from "../../../../redux/reducers/userReducer";
 
 const ExamCard = () => {
   return (
@@ -59,18 +60,23 @@ const SearchBar = ({
 
 export default function JambOnboarding() {
   const options = [
-    "English",
-    "Mathematics",
-    "Biology",
-    "Chemistry",
+    "Use of English",
+    "Mathematics ",
     "Physics",
-    "Geography",
-    "Agricultural Science",
-    "Music",
-    "Arts",
-    "Literature",
-    "Civic Education",
+    "Chemistry ",
+    "Biology ",
+    "Literature in English ",
+    "Government ",
+    "CRS",
+    "Fine Arts ",
+    "Music ",
+    "French",
+    "Yoruba, Igbo, Hausa",
+    "Civic Education ",
     "Economics",
+    "Commerce ",
+    "Accounting ",
+    "Geography"
   ];
 
   const [canProceed, setCanProceed] = useState(false);
@@ -81,7 +87,7 @@ export default function JambOnboarding() {
   const dispatch = useDispatch();
 
 
-  const [saveExamMetaData, { isLoading }] =
+  const [saveExamData, { isLoading }] =
     dashboardApiSlice.useSaveExamMetaDataMutation();
 
   useEffect(() => {
@@ -99,13 +105,14 @@ export default function JambOnboarding() {
       exam_subjects: subjects,
     };
 
-    saveExamMetaData(exam_data).then((response: any) => {
+    saveExamData(exam_data).then((response: any) => {
       if(response.data && response.data.error == false){
         toast.success("Saved");
+        dispatch(setUserExamData(exam_data))
         setTimeout(() => {
           dispatch(setExamFlag(true));
         },1000);
-        navigate('/student/dashboard/home');
+        navigate('/student/dashboard/onboarding/study-plan');
       }
     });
   };
