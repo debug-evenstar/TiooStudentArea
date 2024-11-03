@@ -10,6 +10,7 @@ import { FailureCheck } from "../../old-components/Ui/AlertCheck";
 import { ScaleLoader } from "react-spinners";
 
 const LogToken = () => {
+
   const [isBusy, setIsBusy] = useState(false);
   const [failed, setFailed] = useState(false);
   const [verify] = useLazyVerifyTokenQuery();
@@ -17,11 +18,14 @@ const LogToken = () => {
   const navigate = useNavigate();
   const { token } = useParams();
 
+
   const verifyToken = async (data: any) => {
     setIsBusy(true);
     await verify(data)
       .then((res: any) => {
         if (res.isSuccess) {
+          // clear stuff first
+          localStorage.clear();
           dispatch(
             saveUser({
                 token: token,
