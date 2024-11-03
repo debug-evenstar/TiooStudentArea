@@ -6,6 +6,7 @@ import { FaPlus } from "react-icons/fa6";
 export interface PlanItemProps {
   day: string;
   subjects: string[];
+  onChange?: any;
 }
 
 export interface ScheduleItemProps {
@@ -25,7 +26,7 @@ interface TimeSelectProps {
 
 const TimeSelect: FC<TimeSelectProps> = ({ name, onChange, value }) => (
   <TimePicker
-    className="w-[5rem] focus:border-primary font-semibold cursor-pointer outline-none"
+    className="w-[5rem] border-gray-400 border rounded font-semibold cursor-pointer outline-none"
     onChange={onChange}
     use12Hours
     showSecond={false}
@@ -57,7 +58,7 @@ const SubjectScheduleItem: FC<ScheduleItemProps> = ({
     <button className="mt-3 h-fit w-fit" onClick={() => onRemove(subject)}>
       <RemoveIcon />
     </button>
-    <div className="border-b ml-5 w-full">
+    <div className="border-b border-gray-400 ml-5 w-full">
       <div className="mb-3 mt-1 flex items-start gap-2 lg:gap-0 lg:items-center lg:flex-row flex-col justify-between">
         <span className="text-gray-600 inline-block outline-none font-semibold">
           {subject}
@@ -83,7 +84,7 @@ const SubjectScheduleItem: FC<ScheduleItemProps> = ({
   </div>
 );
 
-const PlanItem = React.forwardRef(({ day, subjects }: PlanItemProps, ref) => {
+const PlanItem = React.forwardRef(({ day, subjects,onChange }: PlanItemProps, ref) => {
   const [schedules, setSchedules] = useState<ScheduleItemProps[]>([]);
   const [open, setOpen] = useState(false);
 
@@ -92,6 +93,7 @@ const PlanItem = React.forwardRef(({ day, subjects }: PlanItemProps, ref) => {
   };
 
   const setTime = (name: string, subject: string, time: string) => {
+    onChange();
     setSchedules((prevSchedules) =>
       prevSchedules.map((s) =>
         s.subject === subject ? { ...s, [name]: time } : s
@@ -122,7 +124,7 @@ const PlanItem = React.forwardRef(({ day, subjects }: PlanItemProps, ref) => {
     getData: () => {
       return {
         day: day,
-        schedules: schedules
+        schedules: schedules.filter((s) => (s.end_time !== null ) && (s.start_time != null))
       }
     }
   }));
