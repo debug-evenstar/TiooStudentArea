@@ -19,6 +19,7 @@ const initialState = {
     status: "",
     school: false,
     independent: "",
+    metadata: null
   } as StudentProfile,
   shelf: [] as number[],
 
@@ -37,11 +38,19 @@ export const userSlice = createSlice({
 
     updateShelf: (state, action: PayloadAction<number[]>) => {
       state.shelf = action.payload;
+    }, 
+
+    setUserMetaData: (state, action: PayloadAction<any>) => {
+      state.user.metadata = action.payload;
+    }, 
+
+    setUserExamData: (state, action: PayloadAction<any>) => {
+      state.user.metadata = { ...state.user.metadata, exam_data: action.payload}
     }
   },
 });
 
-export const { saveUser, resetUser, updateShelf } = userSlice.actions;
+export const { saveUser, resetUser, updateShelf ,setUserExamData, setUserMetaData} = userSlice.actions;
 
 export const selectUser = (state: RootState) => state.user;
 export const selectShelf = (state: RootState) => state.user.shelf;

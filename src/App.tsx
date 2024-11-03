@@ -37,7 +37,7 @@ function App() {
         <Route path="/auth/:token" element={<LogToken />} />
         <Route element={<ProtectedRoutes />}>
           {StudentRoutes()}
-          {ParentRoutes()}
+          {/* {ParentRoutes()} */}
           <Route path="/books/:bookId/study" element={<Study />} />
         </Route>
         <Route path="*" element={<Navigate to="/student/dashboard/home" />} />
