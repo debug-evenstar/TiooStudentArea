@@ -9,7 +9,7 @@ import TargetScoreModal from "../../../../components/dashboard/StudyPlan/TargetS
 import {
   useSaveStudyPlanMutation,
   useSetTargetScoreMutation,
-} from "../../../../services/api/studyPlanSlice";
+} from "../../../../services/api/studyPlanSclice";
 import { toast } from "react-toastify";
 import Confetti from "react-confetti-boom";
 import { useSelector } from "react-redux";
