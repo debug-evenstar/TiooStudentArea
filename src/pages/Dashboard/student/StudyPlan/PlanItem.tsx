@@ -172,8 +172,8 @@ const PlanItem = React.forwardRef(
             </button>
           </div>
         </div>
-        {open && (
-          <div className="py-3 px-2">
+
+          <div className={`py-3 px-2 ${open ? "":"hidden"}`}>
             <ul>
               {schedules.map((sched) => (
                 <li key={sched.index}>
@@ -192,7 +192,7 @@ const PlanItem = React.forwardRef(
               )}
             </div>
           </div>
-        )}
+
       </div>
     );
   }
