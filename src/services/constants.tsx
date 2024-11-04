@@ -44,3 +44,7 @@ export enum CACHE_LIFETIME {
 
   // Network
   export const FETCH_USER_REFERRALS = 'account/referrals'
+
+  // StudyPlan
+  export const STUDY_PLAN_TARGET_SCORE = "account/studyplan/target-score";
+  export const STUDY_PLAN = "account/studyplan";

@@ -88,7 +88,7 @@ const LessonItem = ({ lesson, bookId, open }: any) => {
                 <FaPause className="text-primary" />
               )}
 
-              {!lesson.has_started && <FaPlay className="text-primary" />}
+              {!lesson.has_started && !lesson.is_completed && <FaPlay className="text-primary" />}
             </div>
           </div>
 
@@ -118,7 +118,7 @@ const LessonItem = ({ lesson, bookId, open }: any) => {
                   RETAKE
                 </button>
               )}
-              {!lesson.has_started && (
+              {!lesson.has_started && !lesson.is_completed && (
                 <button
                   onClick={() => handleOpenLesson("start")}
                   className="h-12 w-full bg-[#18D741] text-white"
@@ -143,7 +143,10 @@ export default function StudyLessonAccordion({ chapter, bookId }: any) {
 
   useEffect(() => {
     if (chapter && chapter.lessons && chapter.lessons.length) {
-      setLessons([ ...chapter.lessons ].reverse())
+      const sorted = [...chapter.lessons].sort((a: any, b: any) => {
+        return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+      })
+      setLessons(sorted)
     }
   }, [chapter]);
 

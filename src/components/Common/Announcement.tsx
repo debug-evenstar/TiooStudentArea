@@ -35,23 +35,55 @@ const BannerAnnouncement = () => {
     >
       <div className="bg-white shadow-lg rounded-[16px] p-5 w-full lg:w-[40rem]">
         <div className="flex flex-col gap-5">
-          <b>Get Ready for Launch</b>
-          <p>
-            We are excited to announce that Tioo will officially launch on{" "}
-            <b>October 21st, 2024</b> with Math and Physics as our first subject! You'll get
-            a <b>7-day free trial</b> to explore the platform before choosing a
-            plan
-          </p>
-          <p>
-            By the end of November, we'll roll out <b> all other subjects</b>,
-            complete with tutorials and past lessons. In the meantime, whether
-            you're focusing on Math or waiting for more subjects, we invite you
-            to <b>join our WhatsApp group</b> to stay updated, ask questions,
-            and connect with others.
-          </p>
-          <p>
-            <b>Stay tuned for an amazing learning experience</b>
-          </p>
+          <div className="p-6 text-gray-800">
+            <p className="font-bold text-xl">
+              Welcome to Tioo! We're thrilled to have you on board!
+            </p>
+
+            <p className="mt-4">
+              Currently, we offer comprehensive{" "}
+              <span className="font-semibold">Math</span> and{" "}
+              <span className="font-semibold">Physics</span> tutorials, with:
+            </p>
+
+            <ul className="list-disc ml-6 mt-2 space-y-1">
+              <li>
+                <span className="font-semibold">Chemistry</span> launching on
+                November 11th
+              </li>
+              <li>
+                Past Questions and Answers for the above subjects will launch in
+                December along with our{" "}
+                <span className="font-semibold">CBT/mock exam practice</span>.
+              </li>
+              <li>
+                <span className="font-semibold">
+                  Biology, Use of English, and other Commercial
+                </span>{" "}
+                and <span className="font-semibold">Art</span> subjects will follow
+                in January next year.
+              </li>
+            </ul>
+
+            <p className="mt-4">Join our WhatsApp study group for:</p>
+
+            <ul className="list-disc ml-6 mt-2 space-y-1">
+              <li>
+                <span className="font-semibold">Exclusive updates</span> on new
+                subjects
+              </li>
+              <li>
+                <span className="font-semibold">Early access</span> to upcoming
+                features
+              </li>
+              <li>
+                <span className="font-semibold">Community support</span> from fellow
+                students and our team
+              </li>
+            </ul>
+
+            <p className="italic mt-4">Learn smart, Learn with experience</p>
+          </div>
         </div>
         <div className="flex justify-end mt-3">
           <button

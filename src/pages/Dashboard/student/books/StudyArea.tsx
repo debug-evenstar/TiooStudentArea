@@ -46,8 +46,8 @@ const CurrentLessonBar = ({ data, isFreshStart }: any) => {
   const [currentLesson, setCurrentLesson] = useState<any>(null);
   const [currentChapter, setCurrentChapter] = useState<any>(null);
   const [nextLesson, setNextLesson] = useState<any>(null);
-  const lesson_progress = data?.lesson_progress
-  const firstLesson = [...data?.chapters[0]?.lessons].reverse()[0]
+  const lesson_progress = data?.lesson_progress;
+  const firstLesson = [...data?.chapters[0]?.lessons].reverse()[0];
   // const firstLesson = data?.chapters[0]?.lessons?.reverse()[0];
 
   const processLessonData = (id: any) => {
@@ -69,11 +69,15 @@ const CurrentLessonBar = ({ data, isFreshStart }: any) => {
     return res;
   };
 
-  const latest_record = lesson_progress?.length > 0 ?  lesson_progress?.reduce((latest: any, current: any) => {
-    return new Date(current.updated_at) > new Date(latest.updated_at)
-      ? current
-      : latest;
-  }) : null;
+  const latest_record =
+    lesson_progress?.length > 0
+      ? lesson_progress?.reduce((latest: any, current: any) => {
+          return new Date(current.updated_at) > new Date(latest.updated_at)
+            ? current
+            : latest;
+        })
+      : null;
+
 
   useEffect(() => {
     if (lesson_progress && lesson_progress.length && latest_record) {
@@ -83,32 +87,33 @@ const CurrentLessonBar = ({ data, isFreshStart }: any) => {
       setCurrentLesson(lesson);
       setCurrentChapter(chapter);
       setNextLesson(next_lesson);
+      console.log(lesson);
     } else {
       // setCurrentLesson(data?.chapters[0]?.lessons[0]);
     }
   }, [lesson_progress, latest_record]);
 
-  const handleOpenLesson = useCallback(() => {
+  const handleOpenLesson = useCallback((tag: string) => {
     navigate(`/books/${bookId}/study`, {
-      state: { lesson: isFreshStart ? firstLesson: nextLesson, tag: "resume" },
+      state: { lesson: isFreshStart ? firstLesson : nextLesson, tag: tag},
     });
   }, [navigate, bookId, nextLesson]);
 
-  if (isFreshStart)
+  if (isFreshStart )
     return (
       <div className="mb-6 mx-auto quicksand  text-primary bg-white items-center shadow-md rounded-md flex justify-between px-4 py-3">
         <div className="flex flex-col gap-3">
           <p className="text-primary font-semibold uppercase">
-            READY TO BEGIN? START LEARNING NOW   
+            READY TO BEGIN? START LEARNING NOW
           </p>
         </div>
 
         <button
-          onClick={handleOpenLesson}
+          onClick={() => handleOpenLesson("start")}
           disabled={firstLesson?.status == "LOCKED"}
           className="bg-[#18D741] text-[16px] urbanist active:scale-95 text-white h-10 font-bold py-2 px-8 sm:px-12 rounded-md transition duration-300"
         >
-          { firstLesson?.status == "LOCKED" ? <FaLock/> : "START" } 
+          {firstLesson?.status == "LOCKED" ? <FaLock /> : "START"}
         </button>
       </div>
     );
@@ -130,10 +135,10 @@ const CurrentLessonBar = ({ data, isFreshStart }: any) => {
       </div>
 
       <button
-        onClick={handleOpenLesson}
-        className="bg-primary text-[16px] urbanist active:scale-95 text-white h-10 font-bold py-2 px-8 rounded-md transition duration-300"
+        onClick={() => handleOpenLesson(nextLesson?.has_started? "resume": "start")}
+        className={`${ nextLesson?.has_started? "bg-primary":"bg-[#18D741]"} text-[16px] urbanist active:scale-95 text-white h-10 font-bold py-2 px-8 rounded-md transition duration-300`}
       >
-        RESUME
+        { nextLesson?.has_started? "RESUME": "START" }
       </button>
     </div>
   );
@@ -218,7 +223,6 @@ export default function StudyArea() {
     return res;
   };
 
-
   useEffect(() => {
     refetch();
   }, []);
@@ -258,8 +262,7 @@ export default function StudyArea() {
           />
         </div>
 
-        {
-        data?.data?.chapters?.length ? (
+        {data?.data?.chapters?.length ? (
           <CurrentLessonBar
             data={data?.data}
             isFreshStart={checkFreshStart()}
