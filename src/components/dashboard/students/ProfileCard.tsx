@@ -14,7 +14,7 @@ const ProfileCard = () => {
   else firstName = name.slice(0, 2).join(" ");
 
   return (
-    <div className="p-4 rounded-[16px] bg-[#50035E] w-full overflow-hidden lg:w-[60%] flex justify-between">
+    <div className="p-4 rounded-[16px] bg-[#50035E] w-full overflow-hidden lg:w-[55%] flex justify-between">
       <div className="text-white flex flex-col gap-y-3 w-full">
         <div className="flex items-center space-x-2">
           <img

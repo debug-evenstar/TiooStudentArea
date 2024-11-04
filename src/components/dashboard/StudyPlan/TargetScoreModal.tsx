@@ -15,7 +15,7 @@ const TargetScoreModal: React.FC<TargetScoreModalProps> = ({
   onSubmit,
   maxScore = 400,
 }) => {
-  const [score, setScore] = React.useState(maxScore / 2);
+  const [score, setScore] = React.useState<number | string>(maxScore / 2);
   const modalRef = useRef<HTMLDivElement>(null);
 
   // Handle click outside
@@ -56,10 +56,15 @@ const TargetScoreModal: React.FC<TargetScoreModalProps> = ({
   }, [isOpen, onOpenChange]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Number(e.target.value);
-    if (!isNaN(value) && value >= 0 && value <= maxScore) {
+    const value = e.target.value;
+    // Allow empty string to avoid the "0" issue
+    if (value === "" || (!isNaN(Number(value)) && Number(value) >= 0 && Number(value) <= maxScore)) {
       setScore(value);
     }
+  };
+
+  const handleSliderChange = (value: number) => {
+    setScore(value);
   };
 
   const handleSubmit = () => {
@@ -88,8 +93,8 @@ const TargetScoreModal: React.FC<TargetScoreModalProps> = ({
               className="w-full h-8"
               thumbClassName="h-6 w-6 border border-primary bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-purple-400 -mt-2"
               trackClassName="h-2 bg-gray-200 rounded-full"
-              value={score}
-              onChange={(value: number) => setScore(value)}
+              value={typeof score === "number" ? score : Number(score) || 0}
+              onChange={handleSliderChange}
               min={0}
               max={maxScore}
               renderTrack={(props: any, state: any) => (

@@ -7,6 +7,7 @@ import BooksList from "../../../components/dashboard/students/BooksList";
 import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import BannerAnnouncement from "../../../components/Common/Announcement";
+import TargetScoreCard from "../../../components/dashboard/students/TargetScoreCard";
 
 const Dashboard = () => {
   const studentShelf = dashboardApiSlice.useGetStudentShelfQuery();
@@ -26,13 +27,23 @@ const Dashboard = () => {
     <>
       <BannerAnnouncement />
       <div className="mt-7">
-        {loading ? (
-          <div className="lg:w-[60%] ">
-            <Skeleton borderRadius={16} height={210} width="" />
-          </div>
-        ) : (
-          <ProfileCard />
-        )}
+        <div className="flex flex-col lg:flex-row gap-5">
+          {loading ? (
+            <>
+              <div className="lg:w-[55%] ">
+                <Skeleton borderRadius={16} height={230} width="" />
+              </div>
+              <div className="lg:w-[40%]">
+                <Skeleton borderRadius={16} height={230} width="" />
+              </div>
+            </>
+          ) : (
+            <>
+              <ProfileCard />
+              <TargetScoreCard />
+            </>
+          )}
+        </div>
         {/* FOR Now the Type Names must match the book type ( it's lower case sha) */}
         <BooksList title="Tutorials" type="tutorial" />
         <BooksList title="Past Questions" type="past questions" />

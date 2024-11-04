@@ -4,7 +4,6 @@ import trophyImg from "../../../../assets/images/tropy.svg";
 import continueImg from "../../../../assets/images/ContinueButton.png";
 import continueLightImg from "../../../../assets/images/ContinueButtonLight.png";
 import backImg from "../../../../assets/icons/back.svg";
-import { FaPlus } from "react-icons/fa6";
 import PlanItem from "./PlanItem";
 import TargetScoreModal from "../../../../components/dashboard/StudyPlan/TargetScoreModal";
 import {
@@ -81,10 +80,10 @@ const StudyPlanWidget = ({ score }: any) => {
         <img src={clockImg} alt="Clock" />
         <div className="flex flex-col gap-y-1">
           <h1 className="text-[22px] lg:text-[28px] font-[500]">
-            Set up your Learning Plans
+            Set up your learning plan
           </h1>
           <p className="text-gray-500 urbanist">
-            Personalize your learning plans
+            Personalize your learning plan
           </p>
         </div>
       </div>
