@@ -9,7 +9,7 @@ import TargetScoreModal from "../../../../components/dashboard/StudyPlan/TargetS
 import {
   useSaveStudyPlanMutation,
   useSetTargetScoreMutation,
-} from "../../../../services/api/studyPlanSclice";
+} from "../../../../services/api/studyPlanSlice";
 import { toast } from "react-toastify";
 import Confetti from "react-confetti-boom";
 import { useSelector } from "react-redux";
@@ -50,7 +50,7 @@ const StudyPlanWidget = ({ score }: any) => {
 
     const payload = { schedules: plansData.filter((s) => s.schedules.length) };
 
-    if ((payload.schedules.length == 0)) {
+    if (payload.schedules.length == 0) {
       toast.error("please set at least one study plan");
       return;
     }
@@ -65,11 +65,10 @@ const StudyPlanWidget = ({ score }: any) => {
 
   const onChange = (value: any) => {
     const schedules = plans.map((p) => p.ref.current?.getData());
-    const validSchedules = schedules.filter((s) => s.schedules.length)
-    console.log("valid schedules", validSchedules);
-    if(validSchedules.length){
+    const validSchedules = schedules.filter((s) => s.schedules.length);
+    if (validSchedules.length) {
       setContinueActive(true);
-    }else{
+    } else {
       setContinueActive(false);
     }
   };
@@ -109,7 +108,7 @@ const StudyPlanWidget = ({ score }: any) => {
           }`}
         >
           <img
-            src={continueActive && score? continueImg : continueLightImg}
+            src={continueActive && score ? continueImg : continueLightImg}
             alt="Continue"
             className="w-[9rem] lg:w-[12rem]"
           />
@@ -192,7 +191,7 @@ const TargetScoreWidget = ({ score, setScore }: any) => {
       />
       <div className="p-4 pb-0 bg-white lg:pr-20 mb-6 w-full">
         <button
-          onClick={() => navigate(-1)}
+          onClick={() => navigate('/student/dashboard/onboarding/jamb')}
           className="flex items-center urbanist gap-2 mb-6"
         >
           <img src={backImg} alt="Back" className="w-6" />

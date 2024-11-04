@@ -123,7 +123,7 @@ export default function JambOnboarding() {
         <ExamCard />
       </div>
       <div className="bg-white quicksand rounded-[20px] px-3 lg:px-16 py-6 mt-10">
-        <p className="text-xl lg:text-2xl font-semibold">Select your course combination</p>
+        <p className="text-xl lg:text-2xl font-semibold">Select your four subject combination</p>
         <SearchBar value={search} setValue={setSearch} />
         <div className="mt-8">
           <MultiSelectGroup

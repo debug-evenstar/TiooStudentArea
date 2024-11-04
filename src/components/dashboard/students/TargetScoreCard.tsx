@@ -1,22 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactSlider from "react-slider";
 import trophyImg from "../../../assets/images/trophy-gold.png";
 import { Link } from "react-router-dom";
+import { studyPlanSlice } from "../../../services/api/studyPlanSlice";
 
 const TargetScoreCard = ({ targetScore = 0 }: any) => {
-  const targetPercentage = (targetScore / 400) * 100;
+  
+  const studyPlanRequest = studyPlanSlice.useGetStudyPlanQuery(null);
+  const userScore = studyPlanRequest.data?.data?.target_score;
+  
+  const targetPercentage = ((userScore ?? 0) / 400) * 100;
+
+  useEffect(() => {
+    userScore && studyPlanRequest.refetch();
+  },[]) 
 
   return (
     <div className="bg-[#334E3E] p-6 rounded-[16px] lg:w-[40%] w-full justify-between text-white flex items-center">
       <div className="flex flex-col items-start">
         <div>
           <div className="quicksand font-semibold flex items-center ">
-            <span className="text-[30px] font-[500]">Target Score</span>
-            <div className="ml-4 border urbanist shadow-lg shadow-inner-lg text-[#FFB74D] flex items-center justify-center text-[16px] font-bold border-gray-600 rounded-full w-10 h-10">
-              {targetScore}
+            <span className="text-[23px] lg:text-[30px] font-[500]">Target Score</span>
+            <div className="ml-4 border urbanist shadow-lg shadow-inner-lg text-[#FFB74D] flex items-center justify-center text-[14px] lg:text-[16px] font-bold border-gray-600 rounded-full w-8 lg:w-10 h-8 lg:h-10">
+              {userScore ?? 0}
             </div>
           </div>
-          <div className="text-[#87909E] ">In Progress</div>
+          <div className="text-[#87909E]">In Progress</div>
           <div className="flex items-center justify-between w-full mt-2">
             <ReactSlider
               className="w-10/12 h-8"
@@ -43,7 +52,7 @@ const TargetScoreCard = ({ targetScore = 0 }: any) => {
           </div>
         </div>
         {targetScore == 0 && (
-          <Link to='/student/dashboard/onboarding/study-plan'>
+          <Link to="/student/dashboard/onboarding/study-plan">
             <button className="bg-white text-black px-4 py-2 rounded-lg font-semibold mt-4">
               Set target score
             </button>
