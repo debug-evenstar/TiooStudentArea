@@ -17,11 +17,7 @@ import { resetStateAction } from "../../../redux/actions/resetState";
 const Header = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user.user);
-  const logotUser = () => {
-    dispatch(resetStateAction());
-    localStorage.clear();
-    window.location.replace("https://hellotioo.com/login");
-  };
+
   return (
     <>
       <div className="flex lg:py-3 lg:px-8 px-2 py-2 justify-between items-center bg-[#4F46E5] text-white">

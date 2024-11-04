@@ -50,6 +50,7 @@ const UserTable = ({ users }: any) => {
 
 export default function Referral() {
   const { user } = useSelector(selectUser);
+  console.log(user);
 
   const link = `${import.meta.env.VITE_APP_HOME_URL}/signup?ref=${
     user?.referral_code || ""

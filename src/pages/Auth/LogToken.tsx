@@ -45,7 +45,10 @@ const LogToken = () => {
                 verification_status: res.data.data.verification_status,
                 school: res.data.data.schoolStudent,
                 independent: res.data.data.student_type,
+                metadata: res.data.data.metadata,
           }))
+
+          console.log(res.data);
           storeLocalToken("token", token);
           navigate("/student/dashboard");
         } else {

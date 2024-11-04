@@ -47,11 +47,10 @@ export default function Study() {
     }, [bookData]);
 
     if (isLoading || !bookData) return <Loader />;
-
     return (
         <div className="w-screen h-full relative">
             <div
-                className={`z-[9999999999] w-full h-screen transition-opacity duration-1000 bg-white flex items-center justify-center fixed inset-0
+                className={`z-[99999999] w-full h-screen transition-opacity duration-1000 bg-white flex items-center justify-center fixed inset-0
         ${loaderOpen ? "opacity-100" : "opacity-0 pointer-events-none"}
         `}
             >
@@ -65,7 +64,7 @@ export default function Study() {
                 <LessonPage
                     textbook={bookData}
                     chapters={bookData.chapters}
-                    retake={retake}
+                    retake={false} // if retake is false, default behaviour takes place
                     lesson={lessonData}
                     back={() => navigate(-1)}
                 />
