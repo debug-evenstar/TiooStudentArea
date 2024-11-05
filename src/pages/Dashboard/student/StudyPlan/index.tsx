@@ -15,6 +15,7 @@ import Confetti from "react-confetti-boom";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { selectUser } from "../../../../redux/reducers/userReducer";
+import ConfirmationModal from "../../../../components/dashboard/StudyPlan/ConfirmationModal";
 
 const days = [
   "Monday",
@@ -30,6 +31,7 @@ const StudyPlanWidget = ({ score }: any) => {
   const { user } = useSelector(selectUser);
   const [saveStudyPlan] = useSaveStudyPlanMutation();
   const navigate = useNavigate();
+  const [ showConfirm, setShowConfirm ] = useState(false);
 
   const [continueActive, setContinueActive] = useState(false);
 
@@ -55,12 +57,18 @@ const StudyPlanWidget = ({ score }: any) => {
       return;
     }
 
+    if(payload.schedules.length < 7 && !showConfirm){
+      setShowConfirm(true);
+      return;
+    }
+
     saveStudyPlan(payload)
       .then((response) => {
         toast.success(response.data.message);
         navigate("/student/dashboard/home");
       })
-      .catch((error) => toast.error(error));
+      .catch((error) => toast.error(error))
+      .finally(() => setShowConfirm(false))
   };
 
   const onChange = (value: any) => {
@@ -74,6 +82,8 @@ const StudyPlanWidget = ({ score }: any) => {
   };
 
   return (
+    <>
+    <ConfirmationModal onOpenChange={setShowConfirm} isOpen={showConfirm} onConfirm={handleContinue}/>
     <div className="flex flex-col p-4 bg-white">
       <div className="flex items-center gap-x-3 mb-7">
         <img src={clockImg} alt="Clock" />
@@ -95,8 +105,8 @@ const StudyPlanWidget = ({ score }: any) => {
             ref={plan.ref}
             onChange={onChange}
             subjects={user?.metadata?.exam_data?.exam_subjects ?? []}
-          />
-        ))}
+            />
+          ))}
       </div>
 
       <div className="flex justify-end mt-7">
@@ -115,6 +125,7 @@ const StudyPlanWidget = ({ score }: any) => {
         </button>
       </div>
     </div>
+  </>
   );
 };
 
