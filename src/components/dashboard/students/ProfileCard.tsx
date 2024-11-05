@@ -14,7 +14,7 @@ const ProfileCard = () => {
   else firstName = name.slice(0, 2).join(" ");
 
   return (
-    <div className="p-4 rounded-[16px] bg-[#50035E] w-full overflow-hidden lg:w-[60%] flex justify-between">
+    <div className="p-4 rounded-[16px] bg-[#50035E] w-full overflow-hidden lg:w-[55%] flex justify-between">
       <div className="text-white flex flex-col gap-y-3 w-full">
         <div className="flex items-center space-x-2">
           <img
@@ -35,15 +35,11 @@ const ProfileCard = () => {
           I'm Timothy Icon, your JAMB coach. Join our WhatsApp study group to achieve a score of 300+ in your JAMB exam.
           Ask questions, share feedback, and make friends.
           </span>
-          <a href="https://chat.whatsapp.com/LXuTq372Pfy1M13uh0FZjG" target="_blank" className="mt-2 px-2 py-1 text-sm rounded bg-white text-gray-800 inline-block">
+          <a href="https://chat.whatsapp.com/LXuTq372Pfy1M13uh0FZjG" target="_blank" className="mt-2 bg-white text-black px-4 py-2 rounded-lg font-semibold inline-block">
             WhatsApp Group
           </a>
           
-          {/* I'm Timothy Icon the moderator of JAMB Tioo. My goal is to help you pass your JAMB exam with at least 280 score. */}
-          {/* join our study group on WhatsApp and feel free to ask for help and provide any feedback on how we can improve the platform! */}
         </p>
-        {/* <div className="flex justify-between space-x-4 mb-5"></div> */}
-        {/* <p className="font-[300]">Flowinton Montessori School</p> */}
       </div>
       {/* <img src={doodleImg} alt="" className="sm:w-[8rem] h-auto" /> */}
     </div>

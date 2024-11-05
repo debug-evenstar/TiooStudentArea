@@ -1,7 +1,7 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Nav from "../components/layouts/nav";
 import Sidebar from "../components/layouts/sidebar";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { studentPages, parentPages } from "../constants/sidelinks";
 import { dashboardApiSlice } from "../services/api/dashboardSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +16,8 @@ export default function DashboardLayout({ pages }: any) {
     dashboardApiSlice.useGetMetaDataQuery();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const outletRef = useRef<any>();
+  const { pathname } = useLocation();
 
   useEffect(() => {
     // check if the student has gone through exam onboarding
@@ -58,12 +60,22 @@ export default function DashboardLayout({ pages }: any) {
     }, 2000);
   }, [sidebar.examFlag]);
 
+
+
+  useEffect(() => {
+    outletRef.current?.scrollTo({
+      top: 0,
+      left: 0,
+      // behavior: "smooth", // Optional if you want to skip the scrolling animation
+    });
+  }, [pathname]);
+
   return (
     <div className="flex h-screen overflow-hidden outfit-font bg-[#f9f7f3]s bg-[rgb(249,247,243)]">
       <Sidebar links={links} {...{ sideOpen, setSideOpen }} />
       <main className="grow flex flex-col w-full lg:w-[79.5%]">
         <Nav pages={links} {...{ sideOpen, setSideOpen }} />
-        <div className="px-3 md:px-6 overflow-hidden grow overflow-y-auto">
+        <div className="px-3 md:px-6 overflow-hidden grow overflow-y-auto" ref={outletRef}>
           <Outlet />
         </div>
       </main>

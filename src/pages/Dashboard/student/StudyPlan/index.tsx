@@ -2,16 +2,20 @@ import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import clockImg from "../../../../assets/images/clock.svg";
 import trophyImg from "../../../../assets/images/tropy.svg";
 import continueImg from "../../../../assets/images/ContinueButton.png";
+import continueLightImg from "../../../../assets/images/ContinueButtonLight.png";
 import backImg from "../../../../assets/icons/back.svg";
-import { FaPlus } from "react-icons/fa6";
 import PlanItem from "./PlanItem";
 import TargetScoreModal from "../../../../components/dashboard/StudyPlan/TargetScoreModal";
-import { useSaveStudyPlanMutation, useSetTargetScoreMutation } from "../../../../services/api/studyPlanSclice";
+import {
+  useSaveStudyPlanMutation,
+  useSetTargetScoreMutation,
+} from "../../../../services/api/studyPlanSlice";
 import { toast } from "react-toastify";
 import Confetti from "react-confetti-boom";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { selectUser } from "../../../../redux/reducers/userReducer";
+import ConfirmationModal from "../../../../components/dashboard/StudyPlan/ConfirmationModal";
 
 const days = [
   "Monday",
@@ -23,42 +27,72 @@ const days = [
   "Sunday",
 ];
 
-const StudyPlanWidget  = ({score}: any) => {
+const StudyPlanWidget = ({ score }: any) => {
   const { user } = useSelector(selectUser);
-  const [ saveStudyPlan ] = useSaveStudyPlanMutation();
+  const [saveStudyPlan] = useSaveStudyPlanMutation();
   const navigate = useNavigate();
-  const [plans, setPlans] = useState(
+  const [ showConfirm, setShowConfirm ] = useState(false);
 
+  const [continueActive, setContinueActive] = useState(false);
+
+  const [plans, setPlans] = useState(
     days.map((d, i) => ({
       day: d,
       ref: useRef<any>(),
     }))
   );
 
-
   const handleContinue = () => {
     // rapture all the schedules from the plans
-    const schedules = plans.map((p) => p.ref.current?.getData());
-    if(score == null || score == ''){
+    const plansData = plans.map((p) => p.ref.current?.getData());
+    if (score == null || score == "") {
       toast.error("please select a target score");
       return;
     }
-    saveStudyPlan({schedules})
-      .then(response => {
-        toast.success(response.data.message);    
-        navigate('/student/dashboard/home');
+
+    const payload = { schedules: plansData.filter((s) => s.schedules.length) };
+
+    if (payload.schedules.length == 0) {
+      toast.error("please set at least one study plan");
+      return;
+    }
+
+    if(payload.schedules.length < 7 && !showConfirm){
+      setShowConfirm(true);
+      return;
+    }
+
+    saveStudyPlan(payload)
+      .then((response) => {
+        toast.success(response.data.message);
+        navigate("/student/dashboard/home");
       })
-      .catch(error => toast.error(error));
+      .catch((error) => toast.error(error))
+      .finally(() => setShowConfirm(false))
+  };
+
+  const onChange = (value: any) => {
+    const schedules = plans.map((p) => p.ref.current?.getData());
+    const validSchedules = schedules.filter((s) => s.schedules.length);
+    if (validSchedules.length) {
+      setContinueActive(true);
+    } else {
+      setContinueActive(false);
+    }
   };
 
   return (
+    <>
+    <ConfirmationModal onOpenChange={setShowConfirm} isOpen={showConfirm} onConfirm={handleContinue}/>
     <div className="flex flex-col p-4 bg-white">
       <div className="flex items-center gap-x-3 mb-7">
         <img src={clockImg} alt="Clock" />
         <div className="flex flex-col gap-y-1">
-          <h1 className="text-[22px] lg:text-[28px] font-[500]">Set up your Learning Plans</h1>
+          <h1 className="text-[22px] lg:text-[28px] font-[500]">
+            Set up your learning plan
+          </h1>
           <p className="text-gray-500 urbanist">
-            Personalize your learning plans
+            Personalize your learning plan
           </p>
         </div>
       </div>
@@ -69,17 +103,29 @@ const StudyPlanWidget  = ({score}: any) => {
             key={index}
             day={plan.day}
             ref={plan.ref}
+            onChange={onChange}
             subjects={user?.metadata?.exam_data?.exam_subjects ?? []}
-          />
-        ))}
+            />
+          ))}
       </div>
 
       <div className="flex justify-end mt-7">
-        <button onClick={handleContinue} className="active:scale-[0.98] outline-none">
-          <img src={continueImg} alt="Continue" className="w-[9rem] lg:w-[12rem]" />
+        <button
+          // disabled={!continueActive}
+          onClick={handleContinue}
+          className={`active:scale-[0.98] outline-none ${
+            continueActive ? "cursor-pointer" : "cursor-not-allowed"
+          }`}
+        >
+          <img
+            src={continueActive && score ? continueImg : continueLightImg}
+            alt="Continue"
+            className="w-[9rem] lg:w-[12rem]"
+          />
         </button>
       </div>
     </div>
+  </>
   );
 };
 
@@ -122,7 +168,7 @@ const TargetScoreBoard: React.FC<TargetScoreBoardProps> = ({
   </div>
 );
 
-const TargetScoreWidget = ({score, setScore}: any) => {
+const TargetScoreWidget = ({ score, setScore }: any) => {
   const [modal, setModal] = useState(false);
 
   const [showConfetti, setShowConfetti] = useState(false);
@@ -156,7 +202,7 @@ const TargetScoreWidget = ({score, setScore}: any) => {
       />
       <div className="p-4 pb-0 bg-white lg:pr-20 mb-6 w-full">
         <button
-          onClick={() => navigate(-1)}
+          onClick={() => navigate('/student/dashboard/onboarding/jamb')}
           className="flex items-center urbanist gap-2 mb-6"
         >
           <img src={backImg} alt="Back" className="w-6" />
@@ -164,10 +210,12 @@ const TargetScoreWidget = ({score, setScore}: any) => {
         </button>
         <div className="flex justify-between flex-col pb-5 lg:pb-0 w-full lg:flex-row">
           <div className="flex order-2 lg:order-1 flex-col gap-y-1 pt-5">
-            <h1 className="text-[22px] lg:text-[28px] font-[500]">Set your target score</h1>
+            <h1 className="text-[22px] lg:text-[28px] font-[500]">
+              Set your target score
+            </h1>
             <p className="text-gray-500 urbanist">
-              Choose the desirable score you wish to <br/>achieve at the end of this
-              examination
+              Choose the desirable score you wish to <br />
+              achieve at the end of this examination
             </p>
             <button
               onClick={() => setModal(true)}
@@ -177,7 +225,7 @@ const TargetScoreWidget = ({score, setScore}: any) => {
             </button>
           </div>
           <div className="order-1 lg:order-2 w-fit mx-auto lg:mx-0">
-          <TargetScoreBoard showConfetti={showConfetti} score={score} />
+            <TargetScoreBoard showConfetti={showConfetti} score={score} />
           </div>
         </div>
       </div>
@@ -187,11 +235,12 @@ const TargetScoreWidget = ({score, setScore}: any) => {
 
 const StudyPlan: React.FC = () => {
   const [score, setScore] = useState("");
-  return(
-  <div className="outfit-font mt-8 pb-32">
-    <TargetScoreWidget {...{score, setScore}} />
-    <StudyPlanWidget score={score}/>
-  </div>
-)};
+  return (
+    <div className="outfit-font mt-8 pb-32">
+      <TargetScoreWidget {...{ score, setScore }} />
+      <StudyPlanWidget score={score} />
+    </div>
+  );
+};
 
 export default StudyPlan;

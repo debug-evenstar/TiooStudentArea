@@ -25,7 +25,8 @@ const LogToken = () => {
       .then((res: any) => {
         if (res.isSuccess) {
           // clear stuff first
-          localStorage.clear();
+          localStorage.removeItem('token');
+          localStorage.removeItem('persist:rootpal');
           dispatch(
             saveUser({
                 token: token,
@@ -48,7 +49,6 @@ const LogToken = () => {
                 metadata: res.data.data.metadata,
           }))
 
-          console.log(res.data);
           storeLocalToken("token", token);
           navigate("/student/dashboard");
         } else {
