@@ -171,5 +171,4 @@ const StudyPlanWidget = ({ score, setScore }: any) => {
   );
 };
 
-
 export default StudyPlanWidget;
