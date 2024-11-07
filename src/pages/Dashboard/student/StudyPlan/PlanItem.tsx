@@ -2,19 +2,21 @@ import React, { useEffect, useState, FC } from "react";
 import TimePicker from "rc-time-picker";
 import "rc-time-picker/assets/index.css";
 import { FaPlus } from "react-icons/fa6";
+import moment from "moment";
 
 export interface PlanItemProps {
   day: string;
   subjects: string[];
   onChange?: any;
+  replicate?: any;
 }
 
 export interface ScheduleItemProps {
   subject: string;
   index: number;
   onRemove: (subject: string) => void;
-  start_time?: string;
-  end_time?: string;
+  start_time: string;
+  end_time: string;
   setTime: (name: string, subject: string, time: string) => void;
 }
 
@@ -31,6 +33,7 @@ const TimeSelect: FC<TimeSelectProps> = ({ name, onChange, value }) => (
     use12Hours
     showSecond={false}
     placeholder={name}
+    value={value ? moment(value, "hh:mm A") : undefined}
   />
 );
 
@@ -85,7 +88,7 @@ const SubjectScheduleItem: FC<ScheduleItemProps> = ({
 );
 
 const PlanItem = React.forwardRef(
-  ({ day, subjects, onChange }: PlanItemProps, ref) => {
+  ({ day, subjects, onChange, replicate }: PlanItemProps, ref) => {
     const [schedules, setSchedules] = useState<ScheduleItemProps[]>([]);
     const [open, setOpen] = useState(false);
 
@@ -102,6 +105,8 @@ const PlanItem = React.forwardRef(
       );
     };
 
+    useEffect(() => {
+    }, [schedules]);
     const addSchedule = () => {
       const existingSubjects = schedules.map((s) => s.subject);
       const newSubject = subjects.find(
@@ -114,6 +119,8 @@ const PlanItem = React.forwardRef(
           {
             subject: newSubject,
             index: prev.length,
+            start_time: "",
+            end_time: "",
             onRemove: handleRemoval,
             setTime: setTime,
           },
@@ -130,12 +137,28 @@ const PlanItem = React.forwardRef(
           ),
         };
       },
+      updateSchedules: (values: any) => {
+        const insertValues = (prev: any) =>
+          prev.map((sched: any, i: number) => {
+            const temp = {
+              ...sched,
+              start_time: values[i].start_time,
+              end_time: values[i].end_time,
+            };
+
+            return temp;
+          });
+
+        setSchedules(insertValues);
+      },
     }));
 
     useEffect(() => {
       const initialSchedules = subjects.map((subject, index) => ({
         index,
         subject,
+        start_time: "",
+        end_time: "",
         onRemove: handleRemoval,
         setTime: setTime,
       }));
@@ -173,26 +196,32 @@ const PlanItem = React.forwardRef(
           </div>
         </div>
 
-          <div className={`py-3 px-2 ${open ? "":"hidden"}`}>
-            <ul>
-              {schedules.map((sched) => (
-                <li key={sched.index}>
-                  <SubjectScheduleItem {...sched} />
-                </li>
-              ))}
-            </ul>
-            <div className="mt-3">
-              {schedules.length < subjects.length && (
-                <button
-                  onClick={addSchedule}
-                  className="bg-[#9C29B233]  border-primary px-5 text-lg border flex items-center urbanist text-primary py-2 rounded-md"
-                >
-                  <FaPlus />
-                </button>
-              )}
-            </div>
-          </div>
+        <div className={`py-3 px-2 ${open ? "" : "hidden"}`}>
+          <ul>
+            {schedules.map((sched) => (
+              <li key={sched.index}>
+                <SubjectScheduleItem {...sched} />
+              </li>
+            ))}
+          </ul>
+          <div className="mt-3 flex gap-3 items-center">
+            {schedules.length < subjects.length && (
+              <button
+                onClick={addSchedule}
+                className="bg-[#9C29B233]  border-primary px-5 text-lg border flex items-center urbanist text-primary py-2 rounded-md"
+              >
+                <FaPlus />
+              </button>
+            )}
 
+            <button
+              onClick={() => replicate(schedules, day)}
+              className="px-5 py-2 rounded-md border border-gray-400 active:scale-95"
+            >
+              Replicate for other days
+            </button>
+          </div>
+        </div>
       </div>
     );
   }

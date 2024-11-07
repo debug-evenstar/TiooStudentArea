@@ -8,6 +8,8 @@ export interface StudentLoginResult extends BaseResult{
     profile: StudentProfile
     token: string
 }
+
+
 export interface StudentProfile {
     AccountId: number
     name: string
@@ -27,4 +29,5 @@ export interface StudentProfile {
     school?: boolean
     independent: string | null;
     metadata?: any;
+    studyPlan?: any;
 }

@@ -8,7 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectSidebar, setExamFlag } from "../redux/reducers/sidebarReducer";
 import { ExamIcon } from "../components/Icons";
 import BannerAnnouncement from "../components/Common/Announcement";
-import { setUserMetaData } from "../redux/reducers/userReducer";
+import { setUserMetaData, setUserStudyPlan } from "../redux/reducers/userReducer";
+import { studyPlanSlice } from "../services/api/studyPlanSlice";
 
 export default function DashboardLayout({ pages }: any) {
   const [sideOpen, setSideOpen] = useState(false);
@@ -18,6 +19,13 @@ export default function DashboardLayout({ pages }: any) {
   const dispatch = useDispatch();
   const outletRef = useRef<any>();
   const { pathname } = useLocation();
+
+
+  const studyPlanRequest = studyPlanSlice.useGetStudyPlanQuery(null);
+ 
+  useEffect(() => {
+    dispatch(setUserStudyPlan(studyPlanRequest.data?.data));
+  }, [studyPlanRequest]);
 
   useEffect(() => {
     // check if the student has gone through exam onboarding
