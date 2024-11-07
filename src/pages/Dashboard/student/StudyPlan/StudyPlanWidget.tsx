@@ -1,11 +1,9 @@
-import {  useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import clockImg from "../../../../assets/images/clock.svg";
 import continueImg from "../../../../assets/images/ContinueButton.png";
 import continueLightImg from "../../../../assets/images/ContinueButtonLight.png";
 import PlanItem from "./PlanItem";
-import {
-  useSaveStudyPlanMutation,
-} from "../../../../services/api/studyPlanSlice";
+import { useSaveStudyPlanMutation } from "../../../../services/api/studyPlanSlice";
 import { toast } from "react-toastify";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -16,8 +14,6 @@ import {
   setUserStudyPlan,
 } from "../../../../redux/reducers/userReducer";
 import ConfirmationModal from "../../../../components/dashboard/StudyPlan/ConfirmationModal";
-import LessonItem from "../../../../old-components/dashboard/lessonItem";
-
 
 const days = [
   "Monday",
@@ -32,7 +28,9 @@ const days = [
 const StudyPlanWidget = ({ score, setScore }: any) => {
   const { user } = useSelector(selectUser);
   const [saveStudyPlan] = useSaveStudyPlanMutation();
+
   const navigate = useNavigate();
+
   const [showConfirm, setShowConfirm] = useState(false);
 
   const [continueActive, setContinueActive] = useState(false);
@@ -42,7 +40,7 @@ const StudyPlanWidget = ({ score, setScore }: any) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-      setScore(userStudyPlan?.target_score ?? 0);
+    setScore(userStudyPlan?.target_score ?? 0);
   }, []);
 
   const [plans] = useState(
@@ -57,22 +55,20 @@ const StudyPlanWidget = ({ score, setScore }: any) => {
     // loop true the chosen ones and update the schedules respectively
     const data = userStudyPlan?.data ?? [];
     let changed = false;
-    data.forEach((p: any) => {
-      const target = plans.find((planItem) => (planItem.day == p.day))
-      if(target){
-        target.ref.current?.updateSchedules(p.schedules);
-        changed = true
-      }
-    })
-
-    if(changed){
-      setContinueActive(true);
+    if (Array.isArray(data)) {
+      data.forEach((p: any) => {
+        const target = plans.find((planItem) => planItem.day == p.day);
+        if (target) {
+          target.ref.current?.updateSchedules(p.schedules);
+          changed = true;
+        }
+      });
     }
 
-
-  },[userStudyPlan])
-
-
+    if (changed) {
+      setContinueActive(true);
+    }
+  }, [userStudyPlan]);
 
   const handleContinue = () => {
     // rapture all the schedules from the plans
@@ -170,6 +166,5 @@ const StudyPlanWidget = ({ score, setScore }: any) => {
     </>
   );
 };
-
 
 export default StudyPlanWidget;
