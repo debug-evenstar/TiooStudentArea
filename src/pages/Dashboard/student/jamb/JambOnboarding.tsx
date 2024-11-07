@@ -5,9 +5,10 @@ import { dashboardApiSlice } from "../../../../services/api/dashboardSlice";
 import { DotLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setExamFlag } from "../../../../redux/reducers/sidebarReducer";
-import { setUserExamData, setUserMetaData } from "../../../../redux/reducers/userReducer";
+import { selectExamData, setUserExamData, setUserMetaData } from "../../../../redux/reducers/userReducer";
+import { RootState } from "@reduxjs/toolkit/query";
 
 const ExamCard = () => {
   return (
@@ -90,6 +91,15 @@ export default function JambOnboarding() {
   const [saveExamData, { isLoading }] =
     dashboardApiSlice.useSaveExamMetaDataMutation();
 
+  const userMeta = useSelector(selectExamData);
+  
+  useEffect(() => {
+    if(userMeta){
+      setSubjects(userMeta.exam_subjects);
+    }
+
+  },[userMeta]);
+
   useEffect(() => {
     setCanProceed(subjects.length === 4);
   }, [subjects]);
@@ -129,6 +139,7 @@ export default function JambOnboarding() {
           <MultiSelectGroup
             max={4}
             options={filteredOptions}
+            values={subjects ?? []}
             setAnswer={(value: any) => setSubjects(value)}
           />
         </div>

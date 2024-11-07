@@ -4,6 +4,7 @@ import doneImg from "../../../assets/images/DoneButton.png";
 
 interface TargetScoreModalProps {
   isOpen: boolean;
+  value: number | string | null;
   onOpenChange: (open: boolean) => void;
   onSubmit: (score: string) => void;
   maxScore?: number;
@@ -11,15 +12,20 @@ interface TargetScoreModalProps {
 
 const TargetScoreModal: React.FC<TargetScoreModalProps> = ({
   isOpen,
+  value,
   onOpenChange,
   onSubmit,
   maxScore = 400,
 }) => {
-  const [score, setScore] = React.useState<number | string>(maxScore / 2);
+  const [score, setScore] = React.useState<number | string>(value ?? maxScore / 2);
   const modalRef = useRef<HTMLDivElement>(null);
+
+  
 
   // Handle click outside
   useEffect(() => {
+
+    setScore(value ?? maxScore / 2);
     const handleClickOutside = (event: MouseEvent) => {
       if (
         modalRef.current &&
