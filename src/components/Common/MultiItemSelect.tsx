@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { Options } from "@Praxeum-ai/LearnBlocks";
+import { useEffect, useState } from "react";
 
 const MultiSelectGroup = ({
   setAnswer,
-  answer,
+  values,
   options,
   max,
   activeSelection,
@@ -13,21 +14,30 @@ const MultiSelectGroup = ({
   //   setAnswer(options[index]);
   // };
 
-  const [selection, setSelection] = useState<number[]>([]);
-  const isActive = (index: number) => selection.includes(index);
+  const [selection, setSelection] = useState<any[]>([]);
+
+  useEffect(() =>{
+    if(values)
+    setSelection(values);
+  },[values])
+
+  const isActive = (option:string ) => selection.includes(option);
 
   const handleClick = (option: any, index: number) => {
-    let data: number[] = [];
-    if (!selection.includes(index)) {
-      data = selection.length < max ? [...selection, index] : selection;
+    let data: string[] = [];
+
+    if (!selection.includes(option)) {
+      data = selection.length < max ? [...selection, option] : selection;
     } else {
-      data = selection.filter((i) => i != index);
+      data = selection.filter((i) => i != option);
     }
     setSelection(data);
-    const answers = data.map((i) => options[i]);
-    setAnswer(answers);
+    // const answers = data.map((i) => options[i]);
+    setAnswer(data);
+
     setActiveSelection && setActiveSelection(index);
   };
+
 
   return (
     <div className="flex gap-3 gap-y-5 flex-wrap">
@@ -36,10 +46,10 @@ const MultiSelectGroup = ({
           key={index}
           onClick={() => handleClick(option, index)}
           className={`p-3 py-2 border border-gray-300 active:ring ring-primary outline-none rounded-[12px] flex items-center space-x-3 ${
-            isActive(index) && ""
+            isActive(option) && ""
           }`}
         >
-          {isActive(index) ? (
+          {isActive(option) ? (
             <svg
               width="18"
               height="18"

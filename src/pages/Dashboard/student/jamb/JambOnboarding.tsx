@@ -5,9 +5,10 @@ import { dashboardApiSlice } from "../../../../services/api/dashboardSlice";
 import { DotLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setExamFlag } from "../../../../redux/reducers/sidebarReducer";
-import { setUserExamData, setUserMetaData } from "../../../../redux/reducers/userReducer";
+import { selectExamData, setUserExamData, setUserMetaData } from "../../../../redux/reducers/userReducer";
+import { RootState } from "@reduxjs/toolkit/query";
 
 const ExamCard = () => {
   return (
@@ -90,6 +91,15 @@ export default function JambOnboarding() {
   const [saveExamData, { isLoading }] =
     dashboardApiSlice.useSaveExamMetaDataMutation();
 
+  const userMeta = useSelector(selectExamData);
+  
+  useEffect(() => {
+    if(userMeta){
+      setSubjects(userMeta.exam_subjects);
+    }
+
+  },[userMeta]);
+
   useEffect(() => {
     setCanProceed(subjects.length === 4);
   }, [subjects]);
@@ -123,12 +133,13 @@ export default function JambOnboarding() {
         <ExamCard />
       </div>
       <div className="bg-white quicksand rounded-[20px] px-3 lg:px-16 py-6 mt-10">
-        <p className="text-xl lg:text-2xl font-semibold">Select your course combination</p>
+        <p className="text-xl lg:text-2xl font-semibold">Select your four subject combination</p>
         <SearchBar value={search} setValue={setSearch} />
         <div className="mt-8">
           <MultiSelectGroup
             max={4}
             options={filteredOptions}
+            values={subjects ?? []}
             setAnswer={(value: any) => setSubjects(value)}
           />
         </div>
