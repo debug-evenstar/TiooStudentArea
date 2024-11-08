@@ -7,7 +7,11 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setExamFlag } from "../../../../redux/reducers/sidebarReducer";
-import { selectExamData, setUserExamData, setUserMetaData } from "../../../../redux/reducers/userReducer";
+import {
+  selectExamData,
+  setUserExamData,
+  setUserMetaData,
+} from "../../../../redux/reducers/userReducer";
 import { RootState } from "@reduxjs/toolkit/query";
 
 const ExamCard = () => {
@@ -77,7 +81,7 @@ export default function JambOnboarding() {
     "Economics",
     "Commerce ",
     "Accounting ",
-    "Geography"
+    "Geography",
   ];
 
   const [canProceed, setCanProceed] = useState(false);
@@ -87,18 +91,18 @@ export default function JambOnboarding() {
 
   const dispatch = useDispatch();
 
-
   const [saveExamData, { isLoading }] =
     dashboardApiSlice.useSaveExamMetaDataMutation();
 
   const userMeta = useSelector(selectExamData);
-  
-  useEffect(() => {
-    if(userMeta){
-      setSubjects(userMeta.exam_subjects);
-    }
 
-  },[userMeta]);
+  useEffect(() => {
+    if (userMeta) {
+      setSubjects(
+        userMeta.exam_subjects?.filter((s: string) => options.includes(s))
+      );
+    }
+  }, [userMeta]);
 
   useEffect(() => {
     setCanProceed(subjects.length === 4);
@@ -116,13 +120,13 @@ export default function JambOnboarding() {
     };
 
     saveExamData(exam_data).then((response: any) => {
-      if(response.data && response.data.error == false){
+      if (response.data && response.data.error == false) {
         toast.success("Saved");
-        dispatch(setUserExamData(exam_data))
+        dispatch(setUserExamData(exam_data));
         setTimeout(() => {
           dispatch(setExamFlag(true));
-        },1000);
-        navigate('/student/dashboard/onboarding/study-plan');
+        }, 1000);
+        navigate("/student/dashboard/onboarding/study-plan");
       }
     });
   };
@@ -133,7 +137,9 @@ export default function JambOnboarding() {
         <ExamCard />
       </div>
       <div className="bg-white quicksand rounded-[20px] px-3 lg:px-16 py-6 mt-10">
-        <p className="text-xl lg:text-2xl font-semibold">Select your four subject combination</p>
+        <p className="text-xl lg:text-2xl font-semibold">
+          Select your four subject combination
+        </p>
         <SearchBar value={search} setValue={setSearch} />
         <div className="mt-8">
           <MultiSelectGroup
