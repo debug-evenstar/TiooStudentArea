@@ -10,6 +10,7 @@ import ProtectedRoutes from "./components/Auth/ProtectedRoutes";
 import StudentRoutes from "./routes/student.route";
 import ParentRoutes from "./routes/parent.route";
 import { useToken } from "./hooks/useToken";
+import Assessment from "./pages/Hatchery/CBT/Assessment";
 
 const env = import.meta.env;
 
@@ -35,6 +36,7 @@ function App() {
       <Routes>
         {/* auth routes */}
         <Route path="/auth/:token" element={<LogToken />} />
+        {/* <Route path="/hatchery/cbt" element={<Assessment/>} /> */}
         <Route element={<ProtectedRoutes />}>
           {StudentRoutes()}
           {/* {ParentRoutes()} */}
