@@ -14,6 +14,7 @@ import {
   setUserStudyPlan,
 } from "../../../../redux/reducers/userReducer";
 import ConfirmationModal from "../../../../components/dashboard/StudyPlan/ConfirmationModal";
+import { PulseLoader } from "react-spinners";
 
 const days = [
   "Monday",
@@ -36,6 +37,8 @@ const StudyPlanWidget = ({ score, setScore }: any) => {
   const [continueActive, setContinueActive] = useState(false);
 
   const userStudyPlan = useSelector(selectStudyPlan);
+
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -89,7 +92,7 @@ const StudyPlanWidget = ({ score, setScore }: any) => {
       setShowConfirm(true);
       return;
     }
-
+    setLoading(true);
     saveStudyPlan(payload)
       .then((response) => {
         toast.success(response.data.message);
@@ -97,7 +100,10 @@ const StudyPlanWidget = ({ score, setScore }: any) => {
         navigate("/student/dashboard/home");
       })
       .catch((error) => toast.error(error))
-      .finally(() => setShowConfirm(false));
+      .finally(() => {
+        setShowConfirm(false);
+        setLoading(false);
+      });
   };
 
   const onChange = () => {
@@ -149,16 +155,21 @@ const StudyPlanWidget = ({ score, setScore }: any) => {
 
         <div className="flex justify-end mt-7">
           <button
-            // disabled={!continueActive}
+            disabled={!continueActive || loading}
             onClick={handleContinue}
-            className={`active:scale-[0.98] outline-none ${
+            className={`w-[9rem] lg:w-[12rem] relative active:scale-[0.98] outline-none ${
               continueActive ? "cursor-pointer" : "cursor-not-allowed"
             }`}
           >
+            {loading && 
+              <div className="px-3  inset-0 absolute w-full flex items-center justify-center">
+                <PulseLoader size={12} className="bg-[#9c29b2] px-4 py-1" color="white" />
+              </div>
+            }
             <img
               src={continueActive && score ? continueImg : continueLightImg}
               alt="Continue"
-              className="w-[9rem] lg:w-[12rem]"
+              className="w-full"
             />
           </button>
         </div>
