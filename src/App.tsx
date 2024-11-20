@@ -10,7 +10,7 @@ import ProtectedRoutes from "./components/Auth/ProtectedRoutes";
 import StudentRoutes from "./routes/student.route";
 import ParentRoutes from "./routes/parent.route";
 import { useToken } from "./hooks/useToken";
-import Assessment from "./pages/Hatchery/CBT/Assessment";
+// import Assessment from "./pages/Hatchery/CBT/Assessment";
 
 const env = import.meta.env;
 
