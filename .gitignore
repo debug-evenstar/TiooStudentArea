@@ -12,7 +12,7 @@ dist
 dist-ssr
 *.local
 .env
-
+src/pages/Hatchery
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
