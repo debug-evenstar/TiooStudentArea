@@ -8,14 +8,14 @@ import Settings from "../pages/Dashboard/student/Settings";
 import Analytics from "../pages/Dashboard/student/Analytics";
 import ComingSoon from "../components/Common/ComingSoon";
 import { studentPages } from "../constants/sidelinks";
-// import Network from "../pages/Dashboard/student/Network";
 import Curator from "../pages/Dashboard/student/books/Curator";
 import Referral from "../pages/Dashboard/student/Referral";
 import StudyArea from "../pages/Dashboard/student/books/StudyArea";
 import StudyLayout from "../layouts/studyLayout";
 import Onboarding from "../pages/Dashboard/student/Onboarding";
-import JambOnboarding from "../pages/Dashboard/student/jamb/JambOnboarding";
 import StudyPlan from "../pages/Dashboard/student/StudyPlan";
+import AdmissionSetup from "../pages/Dashboard/student/onboarding/admissionSetup";
+import UniversitySetup from "../pages/Dashboard/student/onboarding/universitySetup";
 
 function StudentRoutes() {
   return (
@@ -23,7 +23,8 @@ function StudentRoutes() {
       <Route path="/student" element={<DashboardLayout pages={studentPages} />}>
         <Route path="dashboard" element={<Onboarding />} />
         <Route path="dashboard/home" element={<StudentDashboard />} />
-        <Route path="dashboard/onboarding/jamb" element={<JambOnboarding />} />
+        <Route path="dashboard/onboarding/admissions/:exam_id" element={<AdmissionSetup />} />
+        <Route path="dashboard/onboarding/university/:uni_id" element={<UniversitySetup />} />
         <Route path="dashboard/onboarding/study-plan" element={<StudyPlan />} />
         <Route path="dashboard/books">
           <Route path="library" index element={<Library />} />
