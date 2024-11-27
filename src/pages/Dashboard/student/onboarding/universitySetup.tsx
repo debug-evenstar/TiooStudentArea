@@ -96,8 +96,7 @@ export default function UniversitySetup() {
   const dispatch = useDispatch();
   const { uni_id } = useParams();
 
-  const [saveExamData, { isLoading }] =
-    dashboardApiSlice.useSaveExamMetaDataMutation();
+  const [registerExams, { isLoading }] = examsApiSlice.useRegisterExamsMutation();
 
 
   const { data: examData , isLoading: examIsLoading} = examsApiSlice.useGetUniversityQuery(uni_id);
@@ -127,21 +126,18 @@ export default function UniversitySetup() {
   const filteredOptions = examOptions?.filter((exam: any) =>
     exam.name.toLowerCase().includes(search.toLowerCase())
   );
-
+  const payload = {
+    exams
+  }
   const handleContinue = () => {
-    const exam_data = {
-      exam_type: examData?.data.name,
-      exam_exams: exams,
-    };
-
-    saveExamData(exam_data).then((response: any) => {
+    registerExams(payload).then((response: any) => {
       if (response.data && response.data.error == false) {
         toast.success("Saved");
-        dispatch(setUserExamData(exam_data));
+        // dispatch(setUserExamData(exam_data));
         setTimeout(() => {
           dispatch(setExamFlag(true));
         }, 1000);
-        navigate("/student/dashboard/onboarding/study-plan");
+        navigate("/student/dashboard");
       }
     });
   };

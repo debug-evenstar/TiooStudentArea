@@ -6,11 +6,12 @@ import { studyPlanSlice } from "../../../services/api/studyPlanSlice";
 import {
   selectStudyPlan,
   setUserStudyPlan,
+  setUserStudyPlans,
 } from "../../../redux/reducers/userReducer";
 import { useDispatch, useSelector } from "react-redux";
 
-const TargetScoreCard = ({ targetScore = 0 }: any) => {
-  const studyPlanRequest = studyPlanSlice.useGetStudyPlanQuery(null);
+const TargetScoreCard = ({ targetScore = 0, examId }: any) => {
+  const studyPlanRequest = studyPlanSlice.useGetStudyPlansQuery(null);
   const userStudyPlan = useSelector(selectStudyPlan);
   const userScore = userStudyPlan?.target_score;
   const targetPercentage = ((userScore ?? 0) / 400) * 100;
@@ -18,7 +19,7 @@ const TargetScoreCard = ({ targetScore = 0 }: any) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setUserStudyPlan(studyPlanRequest.data?.data));
+    dispatch(setUserStudyPlans(studyPlanRequest.data?.data));
     if (userScore) {
       studyPlanRequest.refetch();
     }
@@ -63,7 +64,7 @@ const TargetScoreCard = ({ targetScore = 0 }: any) => {
           </div>
         </div>
         {targetScore == 0 && (
-          <Link to="/student/dashboard/onboarding/jamb">
+          <Link to={`/student/dashboard/onboarding/admissions/${examId}`}>
             <button className="bg-white text-black px-4 py-2 rounded-lg font-semibold mt-4">
               Set target score
             </button>

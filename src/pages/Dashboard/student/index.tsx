@@ -1,6 +1,5 @@
 import { useDispatch } from "react-redux";
 import ProfileCard from "../../../components/dashboard/students/ProfileCard";
-import RecommendedBooks from "../../../components/dashboard/students/BooksList";
 import { dashboardApiSlice } from "../../../services/api/dashboardSlice";
 import { updateShelf } from "../../../redux/reducers/userReducer";
 import BooksList from "../../../components/dashboard/students/BooksList";
@@ -8,12 +7,16 @@ import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import BannerAnnouncement from "../../../components/Common/Announcement";
 import TargetScoreCard from "../../../components/dashboard/students/TargetScoreCard";
+import { useParams } from "react-router-dom";
 
 const Dashboard = () => {
   const studentShelf = dashboardApiSlice.useGetStudentShelfQuery();
   const { data, error, isLoading } = studentShelf;
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
+
+
+  // const { exam_id } = useParams();
 
   if (!error && !isLoading) {
     dispatch(updateShelf(data.data));

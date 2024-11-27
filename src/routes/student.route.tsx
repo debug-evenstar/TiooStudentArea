@@ -16,16 +16,18 @@ import Onboarding from "../pages/Dashboard/student/Onboarding";
 import StudyPlan from "../pages/Dashboard/student/StudyPlan";
 import AdmissionSetup from "../pages/Dashboard/student/onboarding/admissionSetup";
 import UniversitySetup from "../pages/Dashboard/student/onboarding/universitySetup";
+import ExamDashboard from "../pages/Dashboard/student/ExamDashboard";
 
 function StudentRoutes() {
   return (
     <>
       <Route path="/student" element={<DashboardLayout pages={studentPages} />}>
         <Route path="dashboard" element={<Onboarding />} />
+        <Route path="dashboard/exam/:exam_id" element={<ExamDashboard />} />
         <Route path="dashboard/home" element={<StudentDashboard />} />
         <Route path="dashboard/onboarding/admissions/:exam_id" element={<AdmissionSetup />} />
         <Route path="dashboard/onboarding/university/:uni_id" element={<UniversitySetup />} />
-        <Route path="dashboard/onboarding/study-plan" element={<StudyPlan />} />
+        <Route path="dashboard/onboarding/study-plan/:exam_id" element={<StudyPlan />} />
         <Route path="dashboard/books">
           <Route path="library" index element={<Library />} />
           <Route path="shelf" element={<Shelf />} />

@@ -15,7 +15,7 @@ import {
 import { RootState } from "@reduxjs/toolkit/query";
 import { examsApiSlice } from "../../../../services/api/examsSlice";
 
-const ExamCard = ({color,name,image_path}: any) => {
+const ExamCard = ({ color, name, image_path }: any) => {
   return (
     <div
       className="rounded-[20px] px-2 py-3 cursor-pointer flex justify-between items-center pr-10"
@@ -85,7 +85,6 @@ export default function AdmissionSetup() {
     "Geography",
   ];
 
-
   const [canProceed, setCanProceed] = useState(false);
   const [subjects, setSubjects] = useState([]);
   const [search, setSearch] = useState("");
@@ -96,12 +95,12 @@ export default function AdmissionSetup() {
 
   const [saveExamData, { isLoading }] =
     dashboardApiSlice.useSaveExamMetaDataMutation();
+  const [registerExam, { isLoading: registrationLoading }] =
+    examsApiSlice.useRegisterExamMutation();
+  const { data: examData, isLoading: examIsLoading } =
+    examsApiSlice.useGetExamQuery(exam_id);
 
-
-  const { data: examData , isLoading: examIsLoading} = examsApiSlice.useGetExamQuery(exam_id);
-
-
-  const  location  = useLocation();
+  const location = useLocation();
 
   const color = location?.state?.color;
 
@@ -116,7 +115,7 @@ export default function AdmissionSetup() {
   }, [userMeta]);
 
   useEffect(() => {
-    setCanProceed(subjects.length === 4);
+    setCanProceed(subjects?.length === 4);
   }, [subjects]);
 
   // Filter options based on search input
@@ -130,22 +129,35 @@ export default function AdmissionSetup() {
       exam_subjects: subjects,
     };
 
-    saveExamData(exam_data).then((response: any) => {
-      if (response.data && response.data.error == false) {
-        toast.success("Saved");
-        dispatch(setUserExamData(exam_data));
-        setTimeout(() => {
-          dispatch(setExamFlag(true));
-        }, 1000);
-        navigate("/student/dashboard/onboarding/study-plan");
-      }
+    const regPayload = {
+      id: examData?.data.id,
+      data: {
+        subjects: subjects,
+      },
+    };
+
+    registerExam(regPayload).then((response: any) => {
+      saveExamData(exam_data).then((response: any) => {
+        if (response.data && response.data.error == false) {
+          toast.success("Saved");
+          dispatch(setUserExamData(exam_data));
+          setTimeout(() => {
+            dispatch(setExamFlag(true));
+          }, 1000);
+          navigate(`/student/dashboard/onboarding/study-plan/${regPayload.id}`);
+        }
+      });
     });
   };
 
   return (
     <div className="mt-7">
       <div className="">
-        <ExamCard color={color} name={examData?.data?.name} image_path={examData?.data.image_path} />
+        <ExamCard
+          color={color}
+          name={examData?.data?.name}
+          image_path={examData?.data.image_path}
+        />
       </div>
       <div className="bg-white quicksand rounded-[20px] px-3 lg:px-16 py-6 mt-10">
         <p className="text-xl lg:text-2xl font-semibold">
@@ -154,7 +166,7 @@ export default function AdmissionSetup() {
         <SearchBar value={search} setValue={setSearch} />
         <div className="mt-8">
           <MultiSelectGroup
-            max={9}
+            max={4}
             options={filteredOptions}
             values={subjects ?? []}
             setAnswer={(value: any) => setSubjects(value)}

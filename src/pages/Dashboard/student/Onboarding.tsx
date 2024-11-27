@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { selectSidebar } from "../../../redux/reducers/sidebarReducer";
 import { dashboardApiSlice } from "../../../services/api/dashboardSlice";
 import { examsApiSlice } from "../../../services/api/examsSlice";
+import Skeleton from "react-loading-skeleton";
 
 interface UniversityCardProps {
   name: string;
@@ -129,27 +130,68 @@ export default function Onboarding() {
       <div>
         <p className="mb-4 text-2xl">University Admission Exams</p>
         <div className="flex gap-5 flex-col lg:flex-row">
-          {admissionExams &&
-            admissionExams?.data.map((exam: ExamCardProps, index: number) => (
+          {!isLoadingAdmissionExams ? (
+            admissionExams?.data?.map((exam: ExamCardProps, index: number) => (
               <ExamCard
                 key={exam.name}
                 id={exam.id}
                 {...exam}
                 color={exams[index]?.color}
               />
-            ))}
+            ))
+          ) : (
+            <>
+              <Skeleton
+                className="w-full"
+                borderRadius={20}
+                height={130}
+                width={300}
+              />
+              <Skeleton
+                className="w-full"
+                borderRadius={20}
+                height={130}
+                width={300}
+              />
+              <Skeleton
+                className="w-full"
+                borderRadius={20}
+                height={130}
+                width={300}
+              />
+            </>
+          )}
         </div>
       </div>
 
       <div className="mt-12">
         <p className="mb-4 text-2xl">University Exams</p>
         <div className="gap-5 grid lg:grid-cols-3 grid-cols-1">
-          {universities &&
-            universities?.data.map(
+          {!isLoadingUni ? (
+            universities?.data?.map(
               (uni: UniversityCardProps, index: number) => (
                 <UniversityCard id={uni.id} key={uni.name} {...uni} />
               )
-            )}
+            )
+          ) : (
+            <>
+              <Skeleton
+                className="w-full"
+                borderRadius={20}
+                height={130}
+              />
+              <Skeleton
+                className="w-full"
+                borderRadius={20}
+                height={130}
+              />
+              <Skeleton
+                className="w-full"
+                borderRadius={20}
+                height={130}
+              />
+            </>
+          )}
         </div>
       </div>
     </div>

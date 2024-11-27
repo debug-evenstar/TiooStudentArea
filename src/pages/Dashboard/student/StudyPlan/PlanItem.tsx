@@ -133,7 +133,7 @@ const PlanItem = React.forwardRef(
         return {
           day: day,
           schedules: schedules.filter(
-            (s) => s.end_time !== null && s.start_time != null
+            (s) => s?.end_time !== null && s?.start_time != null
           ),
         };
       },
@@ -142,8 +142,8 @@ const PlanItem = React.forwardRef(
           prev.map((sched: any, i: number) => {
             const temp = {
               ...sched,
-              start_time: values[i].start_time,
-              end_time: values[i].end_time,
+              start_time: values[i]?.start_time,
+              end_time: values[i]?.end_time,
             };
 
             return temp;
