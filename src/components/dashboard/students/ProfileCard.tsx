@@ -30,15 +30,22 @@ const ProfileCard = () => {
           </p>
         </div>
         <p className="w-full relative leading-[1.2rem] text-[15px]">
-          Welcome to JAMB Tioo!<br/>
+          Welcome to Champion Tutorials!
+          <br />
           <span className="inline-block mb-1">
-          I'm Timothy Icon, your JAMB coach. Join our WhatsApp study group to achieve a score of 300+ in your JAMB exam.
-          Ask questions, share feedback, and make friends.
+            Join our WhatsApp study group to achieve a score of 300+ in your
+            JAMB exam. Ask questions, share feedback, and make friends.
           </span>
-          <a href="https://chat.whatsapp.com/LXuTq372Pfy1M13uh0FZjG" target="_blank" className="mt-2 bg-white text-black px-4 py-2 rounded-lg font-semibold inline-block">
+          <a
+            href="https://chat.whatsapp.com/KGjtTMbbwpRCIWzFrjKaAq"
+            target="_blank"
+            className="mt-2 bg-white text-black px-4 py-2 rounded-lg font-semibold inline-block"
+          >
             WhatsApp Group
           </a>
-          
+          {/* <a href="https://chat.whatsapp.com/LXuTq372Pfy1M13uh0FZjG" target="_blank" className="mt-2 bg-white text-black px-4 py-2 rounded-lg font-semibold inline-block">
+            WhatsApp Group
+          </a> */}
         </p>
       </div>
       {/* <img src={doodleImg} alt="" className="sm:w-[8rem] h-auto" /> */}
