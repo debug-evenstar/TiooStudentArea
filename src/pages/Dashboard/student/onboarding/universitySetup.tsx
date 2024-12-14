@@ -6,7 +6,7 @@ import { DotLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setExamFlag } from "../../../../redux/reducers/sidebarReducer";
+import { setExamFlag, toggleSidebarReload } from "../../../../redux/reducers/sidebarReducer";
 import {
   selectExamData,
   setUserExamData,
@@ -66,26 +66,6 @@ const SearchBar = ({
 };
 
 export default function UniversitySetup() {
-  const options = [
-    "Use of English",
-    "Mathematics ",
-    "Physics",
-    "Chemistry ",
-    "Biology ",
-    "Literature in English ",
-    "Government ",
-    "CRS",
-    "Fine Arts ",
-    "Music ",
-    "French",
-    "Yoruba, Igbo, Hausa",
-    "Civic Education ",
-    "Economics",
-    "Commerce ",
-    "Accounting ",
-    "Geography",
-  ];
-
 
 
   const [canProceed, setCanProceed] = useState(false);
@@ -134,6 +114,7 @@ export default function UniversitySetup() {
       if (response.data && response.data.error == false) {
         toast.success("Saved");
         // dispatch(setUserExamData(exam_data));
+        dispatch(toggleSidebarReload());
         setTimeout(() => {
           dispatch(setExamFlag(true));
         }, 1000);

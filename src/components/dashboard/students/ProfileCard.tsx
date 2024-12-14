@@ -14,7 +14,7 @@ const ProfileCard = ({data}: any) => {
   else firstName = name.slice(0, 2).join(" ");
 
   return (
-    <div className="p-4 rounded-[16px] h-full bg-[#50035E] w-full overflow-hidden lg:w-[55%] flex justify-between">
+    <div className="p-4 rounded-[16px] bg-[#50035E] w-full overflow-hidden lg:w-[55%] flex justify-between">
       <div className="text-white flex flex-col h-full gap-y-3 w-full">
         <div className="flex h-full items-center space-x-2">
           <img
@@ -35,8 +35,10 @@ const ProfileCard = ({data}: any) => {
           <span className="inline-block mb-1">
             {data?.message}
           </span>
+          <br/>
           <a
-            href="https://chat.whatsapp.com/KGjtTMbbwpRCIWzFrjKaAq"
+            // href="https://chat.whatsapp.com/KGjtTMbbwpRCIWzFrjKaAq"
+            href={data?.link}
             target="_blank"
             className="mt-2 bg-white text-black px-4 py-2 rounded-lg font-semibold inline-block"
           >

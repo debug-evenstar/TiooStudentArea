@@ -18,7 +18,11 @@ const ExamDashboard = () => {
 
   const { exam_id } = useParams();
 
-  const { data: examData, isLoading: examLoading, refetch: refetchExam } = examsApiSlice.useGetExamQuery(exam_id);
+  const {
+    data: examData,
+    isLoading: examLoading,
+    refetch: refetchExam,
+  } = examsApiSlice.useGetExamQuery(exam_id);
 
   if (!error && !isLoading) {
     dispatch(updateShelf(data.data));
@@ -34,7 +38,7 @@ const ExamDashboard = () => {
       <BannerAnnouncement />
       <div className="mt-7">
         <div className="flex flex-col lg:flex-row gap-5">
-          {loading || examLoading? (
+          {loading || examLoading ? (
             <>
               <div className="lg:w-[55%] ">
                 <Skeleton borderRadius={16} height={230} width="" />
@@ -46,7 +50,13 @@ const ExamDashboard = () => {
           ) : (
             <>
               <ProfileCard data={examData?.data.metadata} />
-              {examData?.data?.exam_type == 'admission' && <TargetScoreCard examId={exam_id} />}
+              {examData?.data?.exam_type == "admission" && (
+                <TargetScoreCard
+                  targetScore={examData?.data?.study_plan?.target_score}
+                  currentScore={examData?.data?.exam_set?.exam_session?.score}
+                  examId={exam_id}
+                />
+              )}
             </>
           )}
         </div>

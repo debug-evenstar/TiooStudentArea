@@ -24,7 +24,7 @@ const UniversityCard: FC<UniversityCardProps> = ({ name, id, image_path }) => {
     if (isDisabled) return;
 
     if (sidebar.examFlag) {
-      // return navigate("/student/dashboard/home");
+      // return navigate(`/student/dashboard/${id}`);
     }
     return navigate(`/student/dashboard/onboarding/university/${id}`);
   };
@@ -62,7 +62,7 @@ interface ExamCardProps {
 const ExamCard: FC<ExamCardProps> = ({ name, color, id, image_path }) => {
   const navigate = useNavigate();
 
-  const isDisabled = false;
+  const isDisabled = !name?.toLowerCase().includes('jamb');
 
   const sidebar = useSelector(selectSidebar);
 
@@ -70,18 +70,18 @@ const ExamCard: FC<ExamCardProps> = ({ name, color, id, image_path }) => {
     if (isDisabled) return;
 
     if (sidebar.examFlag) {
-      // return navigate("/student/dashboard/home");
+      return navigate(`/student/dashboard/exam/${id}`);
+      
     }
     return navigate(`/student/dashboard/onboarding/admissions/${id}`, {
       state: { color: color },
     });
-    // return navigate(link);
   };
 
   return (
     <div
       onClick={handleClick}
-      className="rounded-[20px] px-2 py-3 flex gap-3 w-full lg:w-fit"
+      className="rounded-[20px] px-2 py-3 flex gap-3 w-full h-[7rem] lg:w-fit"
       style={{
         backgroundColor: color,
         cursor: isDisabled ? "not-allowed" : "pointer",
@@ -113,6 +113,12 @@ export default function Onboarding() {
     {
       color: "#A288A6",
     },
+    {
+      color: "#03D8A6",
+    },
+    {
+      color: "#823886",
+    },
   ];
 
   const { data: admissionExams, isLoading: isLoadingAdmissionExams } =
@@ -121,22 +127,22 @@ export default function Onboarding() {
     examsApiSlice.useGetUniversitiesQuery("");
 
   return (
-    <div className="mt-7">
+    <div className="mt-7 pb-12">
       <div className=" mb-12">
         {/* <div className="border-b relative w-full border-gray-800">
         </div>
         <h1 className="text-center text-lg font-[500] px-2 bottom-3 w-fit mx-auto relative bg-[#f9f7f3] urbanist">Select your </h1> */}
       </div>
       <div>
-        <p className="mb-4 text-2xl">University Admission Exams</p>
-        <div className="flex gap-5 flex-col lg:flex-row">
+        <p className="mb-4 text-2xl">Pre-University Exams</p>
+        <div className="gap-5 grid grid-cols-1 lg:grid-cols-3">
           {!isLoadingAdmissionExams ? (
             admissionExams?.data?.map((exam: ExamCardProps, index: number) => (
               <ExamCard
                 key={exam.name}
                 id={exam.id}
                 {...exam}
-                color={exams[index]?.color}
+                color={exams[index % exams.length]?.color}
               />
             ))
           ) : (

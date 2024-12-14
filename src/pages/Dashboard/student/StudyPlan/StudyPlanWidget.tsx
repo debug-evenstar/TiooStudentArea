@@ -109,7 +109,8 @@ const StudyPlanWidget = ({ score, setScore }: any) => {
       .then((response) => {
         toast.success(response.data.message);
         dispatch(setUserStudyPlan(response.data.data));
-        navigate("/student/dashboard/home");
+        // navigate("/student/dashboard/home");
+        navigate(`/student/dashboard/exam/${exam_id}/to-assessment`);
       })
       .catch((error) => toast.error(error))
       .finally(() => {
@@ -121,11 +122,7 @@ const StudyPlanWidget = ({ score, setScore }: any) => {
   const onChange = () => {
     const schedules = plans.map((p) => p.ref.current?.getData());
     const validSchedules = schedules.filter((s) => s.schedules.length);
-    if (validSchedules.length) {
-      setContinueActive(true);
-    } else {
-      setContinueActive(false);
-    }
+    setContinueActive(!!validSchedules.length);
   };
 
   const replicate = (schedules: any, day: string) => {

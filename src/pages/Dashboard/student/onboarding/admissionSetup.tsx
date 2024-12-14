@@ -6,7 +6,7 @@ import { DotLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setExamFlag } from "../../../../redux/reducers/sidebarReducer";
+import { setExamFlag, toggleSidebarReload } from "../../../../redux/reducers/sidebarReducer";
 import {
   selectExamData,
   setUserExamData,
@@ -14,6 +14,7 @@ import {
 } from "../../../../redux/reducers/userReducer";
 import { RootState } from "@reduxjs/toolkit/query";
 import { examsApiSlice } from "../../../../services/api/examsSlice";
+import MultiSelectExt from "../../../../components/Common/MultiItemSelectExt";
 
 const ExamCard = ({ color, name, image_path }: any) => {
   return (
@@ -65,25 +66,7 @@ const SearchBar = ({
 };
 
 export default function AdmissionSetup() {
-  const options = [
-    "Use of English",
-    "Mathematics ",
-    "Physics",
-    "Chemistry ",
-    "Biology ",
-    "Literature in English ",
-    "Government ",
-    "CRS",
-    "Fine Arts ",
-    "Music ",
-    "French",
-    "Yoruba, Igbo, Hausa",
-    "Civic Education ",
-    "Economics",
-    "Commerce ",
-    "Accounting ",
-    "Geography",
-  ];
+
 
   const [canProceed, setCanProceed] = useState(false);
   const [subjects, setSubjects] = useState([]);
@@ -106,10 +89,14 @@ export default function AdmissionSetup() {
 
   const userMeta = useSelector(selectExamData);
 
+  const options = examData?.data.subjects;
+
+  console.log(options);
+
   useEffect(() => {
     if (userMeta) {
       setSubjects(
-        userMeta.exam_subjects?.filter((s: string) => options.includes(s))
+        userMeta.exam_subjects?.filter((s: any) => options?.map((s: any) => s.id).includes(s.id))
       );
     }
   }, [userMeta]);
@@ -119,8 +106,8 @@ export default function AdmissionSetup() {
   }, [subjects]);
 
   // Filter options based on search input
-  const filteredOptions = options.filter((subject) =>
-    subject.toLowerCase().includes(search.toLowerCase())
+  const filteredOptions = options?.filter((subject: any) =>
+    subject?.name.toLowerCase().includes(search.toLowerCase())
   );
 
   const handleContinue = () => {
@@ -140,6 +127,7 @@ export default function AdmissionSetup() {
       saveExamData(exam_data).then((response: any) => {
         if (response.data && response.data.error == false) {
           toast.success("Saved");
+          dispatch(toggleSidebarReload());
           dispatch(setUserExamData(exam_data));
           setTimeout(() => {
             dispatch(setExamFlag(true));
@@ -165,9 +153,10 @@ export default function AdmissionSetup() {
         </p>
         <SearchBar value={search} setValue={setSearch} />
         <div className="mt-8">
-          <MultiSelectGroup
+          <MultiSelectExt
             max={4}
             options={filteredOptions}
+            ext
             values={subjects ?? []}
             setAnswer={(value: any) => setSubjects(value)}
           />

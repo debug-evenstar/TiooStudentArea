@@ -16,17 +16,17 @@ export const examsApiSlice = apiSlice.injectEndpoints({
           Authorization: requestAuthorization(),
         },
       }),
-      // invalidatesTags: [''] as any
     }),
+
     getExam: builder.query<any | ErrorResult, string | undefined>({
       query: (id) => ({
-        url: `/exams/${id}` ,
+        url: `/exams/${id}`,
         method: ENDPOINT.HTTP_METHODS.GET,
         headers: {
           Authorization: requestAuthorization(),
         },
       }),
-      keepUnusedDataFor: ENDPOINT.CACHE_LIFETIME.EXTENDED,
+      keepUnusedDataFor: ENDPOINT.CACHE_LIFETIME.DEFAULT,
     }),
 
     getExams: builder.query<any | ErrorResult, string | undefined>({
@@ -40,7 +40,7 @@ export const examsApiSlice = apiSlice.injectEndpoints({
       keepUnusedDataFor: ENDPOINT.CACHE_LIFETIME.MEDIUM,
     }),
 
-    getAccountExams: builder.query<any , any>({
+    getAccountExams: builder.query<any, any>({
       query: () => ({
         url: `/exams/account`,
         method: ENDPOINT.HTTP_METHODS.GET,
@@ -48,30 +48,35 @@ export const examsApiSlice = apiSlice.injectEndpoints({
           Authorization: requestAuthorization(),
         },
       }),
+      providesTags: ['UserExams'] as any,
+      keepUnusedDataFor: ENDPOINT.CACHE_LIFETIME.DEFAULT,
     }),
 
-    registerExam: builder.mutation< any , any>({
+    registerExam: builder.mutation<any, any>({
       query: (payload: any) => ({
         url: `/exams/register/${payload.id}`,
         method: ENDPOINT.HTTP_METHODS.POST,
         headers: {
           Authorization: requestAuthorization(),
         },
-        body: payload.data
+        body: payload.data,
       }),
+      invalidatesTags: ['UserExams'] as any,
     }),
 
-    registerExams: builder.mutation< any , any>({
+    registerExams: builder.mutation<any, any>({
       query: (payload: any) => ({
         url: `/exams/register`,
         method: ENDPOINT.HTTP_METHODS.POST,
         headers: {
           Authorization: requestAuthorization(),
         },
-        body: payload
+        body: payload,
       }),
+      invalidatesTags: ['UserExams'] as any, // This ensures getAccountExams is refetched
     }),
-    unregisterExam: builder.mutation< any , any>({
+
+    unregisterExam: builder.mutation<any, any>({
       query: (id) => ({
         url: `/exams/register/${id}`,
         method: ENDPOINT.HTTP_METHODS.POST,
@@ -79,6 +84,7 @@ export const examsApiSlice = apiSlice.injectEndpoints({
           Authorization: requestAuthorization(),
         },
       }),
+      invalidatesTags: ['UserExams'] as any, // Optional, if unregistering should also refetch
     }),
 
     getUniversities: builder.query<any | ErrorResult, string | undefined>({
@@ -99,6 +105,17 @@ export const examsApiSlice = apiSlice.injectEndpoints({
         headers: {
           Authorization: requestAuthorization(),
         },
+      }),
+      keepUnusedDataFor: 0,
+    }),
+
+    getActiveExamSet: builder.query<any | ErrorResult,  string | undefined>({
+      query: (id) => ({
+        url: `/exam-set/exam/${id}`,
+        method: ENDPOINT.HTTP_METHODS.GET,
+        headers: {
+          Authorization: requestAuthorization(),
+        }
       }),
       keepUnusedDataFor: 0,
     }),

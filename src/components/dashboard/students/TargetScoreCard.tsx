@@ -10,12 +10,15 @@ import {
 } from "../../../redux/reducers/userReducer";
 import { useDispatch, useSelector } from "react-redux";
 
-const TargetScoreCard = ({ targetScore = 0, examId }: any) => {
+const TargetScoreCard = ({
+  targetScore = 0,
+  currentScore = 0,
+  examId,
+}: any) => {
   const studyPlanRequest = studyPlanSlice.useGetStudyPlansQuery(null);
-  const userStudyPlan = useSelector(selectStudyPlan);
-  const userScore = userStudyPlan?.target_score;
+  const userScore = targetScore; // userStudyPlan?.target_score;
   const targetPercentage = ((userScore ?? 0) / 400) * 100;
-
+  const currentPercentage = ((currentScore ?? 0) / 400) * 100;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -43,7 +46,7 @@ const TargetScoreCard = ({ targetScore = 0, examId }: any) => {
               className="w-10/12 h-8"
               thumbClassName="h-4 w-4 border shrink-0  bg-[#4285F4] bg-white outline-none shadow-md rounded-full -mt-1"
               trackClassName="h-2 bg-gray-200 rounded-full"
-              value={0}
+              value={currentScore}
               min={0}
               max={400}
               renderTrack={(props: any, state: any) => (
@@ -52,24 +55,27 @@ const TargetScoreCard = ({ targetScore = 0, examId }: any) => {
                     style={{ left: `${targetPercentage}%` }}
                     className="h-5 -mt-1.5  absolute bg-[#FFB74D] w-[2px]"
                   />
-                  <div
-                    {...props}
-                    className={`h-2 rounded-full ${
-                      state.index === 0 ? "bg-[#4285F4]" : "bg-gray-200"
-                    }`}
-                  />
+                  <div className="relative">
+                    <div
+                      {...props}
+                      className={`h-2 rounded-full ${
+                        state.index === 0 ? "bg-[#4285F4]" : "bg-gray-200"
+                      }`}
+                    />
+                    { currentScore && <span className="absolute mt-3 text-sm" style={{ left: `${currentPercentage}%` }} >{currentScore}</span> }
+                  </div>
                 </div>
               )}
             />
           </div>
         </div>
-        {targetScore == 0 && (
-          <Link to={`/student/dashboard/onboarding/admissions/${examId}`}>
+        {
+          <Link to={`/exams/assessment/${examId}`}>
             <button className="bg-white text-black px-4 py-2 rounded-lg font-semibold mt-4">
-              Set target score
+              Take mock exam
             </button>
           </Link>
-        )}
+        }
       </div>
 
       <div className="ml-4">
