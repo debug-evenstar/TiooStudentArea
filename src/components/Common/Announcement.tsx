@@ -24,7 +24,7 @@ const BannerAnnouncement = () => {
     setIsVisible(false);
     setTimeout(() => {
       setShowBanner(false);
-      if (stopShowing) localStorage.setItem("bannerShown", "true");
+      localStorage.setItem("bannerShown", "true");
     }, 300);
   };
 

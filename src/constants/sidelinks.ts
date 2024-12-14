@@ -1,7 +1,7 @@
 import { AnalyticsIcon, BooksIcon, DashboardIcon, ExamIcon, NetworkIcon, ReferralsIcon, SettingsIcon } from "../components/Icons";
 
 export const studentPages: any[] = [
-  {name: "Home",Icon: DashboardIcon ,route: '/student/dashboard',submenu: []},
+  {name: "Home",Icon: DashboardIcon ,route: '/student/dashboard/home',submenu: []},
   {name: "Books",Icon: BooksIcon,route: '/student/dashboard/books', submenu: [
     // {name: "Library", route: '/student/dashboard/books/library'},
     {name: "My shelf", route: '/student/dashboard/books/shelf'},

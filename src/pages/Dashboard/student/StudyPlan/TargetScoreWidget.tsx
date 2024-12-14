@@ -2,10 +2,7 @@ import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import trophyImg from "../../../../assets/images/tropy.svg";
 import backImg from "../../../../assets/icons/back.svg";
 import TargetScoreModal from "../../../../components/dashboard/StudyPlan/TargetScoreModal";
-import {
-
-  useSetTargetScoreMutation,
-} from "../../../../services/api/studyPlanSlice";
+import { useSetTargetScoreMutation } from "../../../../services/api/studyPlanSlice";
 import { toast } from "react-toastify";
 import Confetti from "react-confetti-boom";
 import { useNavigate } from "react-router-dom";
@@ -54,17 +51,12 @@ const TargetScoreWidget = ({ score, setScore }: any) => {
 
   const [showConfetti, setShowConfetti] = useState(false);
   const navigate = useNavigate();
-  const [setTargetScore] = useSetTargetScoreMutation();
 
-  const handleSubmit = async (value: string) => {
-    try {
-      setScore(value);
-      const response = await setTargetScore({ target_score: value }).unwrap();
-      toast.success(response.data.message);
-      setShowConfetti(true);
-    } catch (error) {
-      console.error(error);
-    }
+
+  useEffect(() => {}, [score]);
+
+  const handleSubmit = async (value: any) => {
+    setShowConfetti(true);
   };
 
   useEffect(() => {
@@ -80,11 +72,12 @@ const TargetScoreWidget = ({ score, setScore }: any) => {
         onOpenChange={setModal}
         isOpen={modal}
         value={score}
+        setValue={setScore}
         onSubmit={handleSubmit}
       />
       <div className="p-4 pb-0 bg-white lg:pr-20 mb-6 w-full">
         <button
-          onClick={() => navigate("/student/dashboard/onboarding/jamb")}
+          onClick={() => navigate(-1)}
           className="flex items-center urbanist gap-2 mb-6"
         >
           <img src={backImg} alt="Back" className="w-6" />
@@ -114,6 +107,5 @@ const TargetScoreWidget = ({ score, setScore }: any) => {
     </>
   );
 };
-
 
 export default TargetScoreWidget;

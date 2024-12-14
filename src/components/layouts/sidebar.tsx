@@ -38,7 +38,7 @@ const ListMenuItem = ({
 // index,
 any) => {
   const location = useLocation();
-  const isActive = location.pathname == route;
+  const isActive = location.pathname == route || location.pathname.includes(route)
   const hasMenu = submenu.length != 0;
   const [isOpen, setIsOpen] = useState(false);
 
@@ -91,7 +91,7 @@ any) => {
           <div
             className={`
               overflow-hidden transition-[max-height] duration-300 flex ps-6
-              ${isOpen ? "max-h-[20rem]" : "h-0"}
+              ${isOpen ? "max-h-[40rem]" : "h-0"}
             `}
           >
             <ul className="border-l-2 w-full  rounded-[10px] -top-4 relative">
