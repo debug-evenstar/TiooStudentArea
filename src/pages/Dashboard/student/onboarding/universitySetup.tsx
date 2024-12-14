@@ -4,28 +4,30 @@ import { FaMagnifyingGlass } from "react-icons/fa6";
 import { dashboardApiSlice } from "../../../../services/api/dashboardSlice";
 import { DotLoader } from "react-spinners";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setExamFlag } from "../../../../redux/reducers/sidebarReducer";
+import { setExamFlag, toggleSidebarReload } from "../../../../redux/reducers/sidebarReducer";
 import {
   selectExamData,
   setUserExamData,
   setUserMetaData,
 } from "../../../../redux/reducers/userReducer";
 import { RootState } from "@reduxjs/toolkit/query";
+import { examsApiSlice } from "../../../../services/api/examsSlice";
+import MultiSelectExt from "../../../../components/Common/MultiItemSelectExt";
 
-const ExamCard = () => {
+const ExamCard = ({color,name,image_path}: any) => {
   return (
     <div
       className="rounded-[20px] px-2 py-3 cursor-pointer flex justify-between items-center pr-10"
-      style={{ backgroundColor: "#17C880" }}
+      style={{ backgroundColor: color ?? "#17C880" }}
     >
       <div className="flex gap-3">
         <div className="w-[7rem] p-2 rounded-[20px] bg-white">
-          <img src={"/images/exams/jamb.png"} alt="" className="w-full" />
+          <img src={image_path} alt="" className="w-full" />
         </div>
         <div className="flex flex-col py-4 justify-between">
-          <p className="font-bold text-lg text-white">JAMB/UTME</p>
+          <p className="font-bold text-lg text-white">{name}</p>
           <div className="flex text-white items-center gap-x-10 mr-10 justify-between">
             Examination
           </div>
@@ -63,90 +65,82 @@ const SearchBar = ({
   );
 };
 
-export default function JambOnboarding() {
-  const options = [
-    "Use of English",
-    "Mathematics ",
-    "Physics",
-    "Chemistry ",
-    "Biology ",
-    "Literature in English ",
-    "Government ",
-    "CRS",
-    "Fine Arts ",
-    "Music ",
-    "French",
-    "Yoruba, Igbo, Hausa",
-    "Civic Education ",
-    "Economics",
-    "Commerce ",
-    "Accounting ",
-    "Geography",
-  ];
+export default function UniversitySetup() {
+
 
   const [canProceed, setCanProceed] = useState(false);
-  const [subjects, setSubjects] = useState([]);
+  const [exams, setExams] = useState([]);
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
+  const { uni_id } = useParams();
 
-  const [saveExamData, { isLoading }] =
-    dashboardApiSlice.useSaveExamMetaDataMutation();
+  const [registerExams, { isLoading }] = examsApiSlice.useRegisterExamsMutation();
+
+
+  const { data: examData , isLoading: examIsLoading} = examsApiSlice.useGetUniversityQuery(uni_id);
+
+
+  const  location  = useLocation();
+
+  const color = location?.state?.color;
 
   const userMeta = useSelector(selectExamData);
 
   useEffect(() => {
     if (userMeta) {
-      setSubjects(
-        userMeta.exam_subjects?.filter((s: string) => options.includes(s))
-      );
+      // setExams(
+      //   userMeta.exam_exams?.filter((s: string) => options.includes(s))
+      // );
     }
   }, [userMeta]);
 
   useEffect(() => {
-    setCanProceed(subjects.length === 4);
-  }, [subjects]);
+    setCanProceed(exams.length > 0);
+  }, [exams]);
+
+  const examOptions = examData?.data?.exams?.map((e: any) => ( {name: e.name, id: e.id}));
 
   // Filter options based on search input
-  const filteredOptions = options.filter((subject) =>
-    subject.toLowerCase().includes(search.toLowerCase())
+  const filteredOptions = examOptions?.filter((exam: any) =>
+    exam.name.toLowerCase().includes(search.toLowerCase())
   );
-
+  const payload = {
+    exams
+  }
   const handleContinue = () => {
-    const exam_data = {
-      exam_type: "JAMB",
-      exam_subjects: subjects,
-    };
-
-    saveExamData(exam_data).then((response: any) => {
+    registerExams(payload).then((response: any) => {
       if (response.data && response.data.error == false) {
         toast.success("Saved");
-        dispatch(setUserExamData(exam_data));
+        // dispatch(setUserExamData(exam_data));
+        dispatch(toggleSidebarReload());
         setTimeout(() => {
           dispatch(setExamFlag(true));
         }, 1000);
-        navigate("/student/dashboard/onboarding/study-plan");
+        navigate("/student/dashboard");
       }
     });
   };
 
+
   return (
     <div className="mt-7">
       <div className="">
-        <ExamCard />
+        <ExamCard color={color} name={examData?.data?.name} image_path={examData?.data.image_path} />
       </div>
       <div className="bg-white quicksand rounded-[20px] px-3 lg:px-16 py-6 mt-10">
         <p className="text-xl lg:text-2xl font-semibold">
-          Select your four subject combination
+          Select your exams
         </p>
         <SearchBar value={search} setValue={setSearch} />
         <div className="mt-8">
-          <MultiSelectGroup
+          <MultiSelectExt
             max={4}
             options={filteredOptions}
-            values={subjects ?? []}
-            setAnswer={(value: any) => setSubjects(value)}
+            values={exams ?? []}
+            ext={true}
+            setAnswer={(value: any) => setExams(value)}
           />
         </div>
         <div className="mt-8 flex justify-end">

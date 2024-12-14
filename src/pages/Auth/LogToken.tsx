@@ -10,7 +10,6 @@ import { FailureCheck } from "../../old-components/Ui/AlertCheck";
 import { ScaleLoader } from "react-spinners";
 
 const LogToken = () => {
-
   const [isBusy, setIsBusy] = useState(false);
   const [failed, setFailed] = useState(false);
   const [verify] = useLazyVerifyTokenQuery();
@@ -18,38 +17,37 @@ const LogToken = () => {
   const navigate = useNavigate();
   const { token } = useParams();
 
-
   const verifyToken = async (data: any) => {
     setIsBusy(true);
     await verify(data)
       .then((res: any) => {
         if (res.isSuccess) {
           // clear stuff first
-          localStorage.removeItem('token');
-          localStorage.removeItem('persist:rootpal');
+          localStorage.removeItem("token");
+          localStorage.removeItem("persist:rootpal");
           dispatch(
             saveUser({
-                token: token,
-                name: res.data.data.name,
-                AccountId: res.data.data.id,
-                account_type: res.data.data.account_type,
-                email: res.data.data.email,
-                phone: res.data.data.phone,
-                schoolName: res.data.data.schoolName,
-                studentClass: res.data.data.studentClass,
-                studentClassArm: res.data.data.studentClassArm,
-                status: res.data.data.status,
-                term: res.data.data.term,
-                subjectsCount: res.data.data.subjectsCount,
-                referral_code: res.data.data.referral_code,
-                flag: res.data.data.flag,
-                verification_status: res.data.data.verification_status,
-                school: res.data.data.schoolStudent,
-                independent: res.data.data.student_type,
-                metadata: res.data.data.metadata,
-          }))
-
-          storeLocalToken("token", token);
+              token: token,
+              name: res.data.data.name,
+              AccountId: res.data.data.id,
+              account_type: res.data.data.account_type,
+              email: res.data.data.email,
+              phone: res.data.data.phone,
+              schoolName: res.data.data.schoolName,
+              studentClass: res.data.data.studentClass,
+              studentClassArm: res.data.data.studentClassArm,
+              status: res.data.data.status,
+              term: res.data.data.term,
+              subjectsCount: res.data.data.subjectsCount,
+              referral_code: res.data.data.referral_code,
+              flag: res.data.data.flag,
+              verification_status: res.data.data.verification_status,
+              school: res.data.data.schoolStudent,
+              independent: res.data.data.student_type,
+              metadata: res.data.data.metadata,
+            })
+          );
+          if (token) localStorage.setItem("token", token);
           navigate("/student/dashboard");
         } else {
           toast.error(res.error.data.message);
@@ -77,7 +75,11 @@ const LogToken = () => {
               {isBusy && (
                 <div className="">
                   <div className="flex justify-center">
-                  <ScaleLoader height={30} speedMultiplier={1.3} color="#9c29b2" />
+                    <ScaleLoader
+                      height={30}
+                      speedMultiplier={1.3}
+                      color="#9c29b2"
+                    />
                   </div>
                 </div>
               )}

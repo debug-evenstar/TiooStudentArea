@@ -10,7 +10,7 @@ import ProtectedRoutes from "./components/Auth/ProtectedRoutes";
 import StudentRoutes from "./routes/student.route";
 import ParentRoutes from "./routes/parent.route";
 import { useToken } from "./hooks/useToken";
-// import Assessment from "./pages/Hatchery/CBT/Assessment";
+import Assessment from "./pages/Dashboard/student/exams/Assessment";
 
 const env = import.meta.env;
 
@@ -23,12 +23,10 @@ function App() {
     ConfigureLibrary.save({
       baseUrl: env.VITE_APP_API_BASE_URL,
       authType: "student",
-      token: token ? JSON.parse(token) : "",
+      token: token ? token : "",
     });
 
   }, []);
-
-
 
   return (
     <BrowserRouter>
@@ -36,13 +34,16 @@ function App() {
       <Routes>
         {/* auth routes */}
         <Route path="/auth/:token" element={<LogToken />} />
-        {/* <Route path="/hatchery/cbt" element={<Assessment/>} /> */}
         <Route element={<ProtectedRoutes />}>
           {StudentRoutes()}
           {/* {ParentRoutes()} */}
           <Route path="/books/:bookId/study" element={<Study />} />
         </Route>
         <Route path="*" element={<Navigate to="/student/dashboard/home" />} />
+        <Route
+          path="exams/assessment/:exam_id"
+          element={<Assessment />}
+        />
       </Routes>
     </BrowserRouter>
   );

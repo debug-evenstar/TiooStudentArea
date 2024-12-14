@@ -31,6 +31,17 @@ export const dashboardApiSlice = apiSlice.injectEndpoints({
       // invalidatesTags: [''] as any
     }),
 
+    getExams: builder.query<any | ErrorResult, string | undefined>({
+      query: (type) => ({
+        url: type ? `/exams?type=${type}` : '/exams',
+        method: ENDPOINT.HTTP_METHODS.GET,
+        headers: {
+          Authorization: requestAuthorization(),
+        },
+      }),
+      keepUnusedDataFor: ENDPOINT.CACHE_LIFETIME.EXTENDED,
+    }),
+
 
     getNotifications: builder.query<any | ErrorResult, void>({
       query: () => ({
@@ -55,6 +66,8 @@ export const dashboardApiSlice = apiSlice.injectEndpoints({
       providesTags: ['Books'] as any,
       keepUnusedDataFor: ENDPOINT.CACHE_LIFETIME.EXTENDED,
     }),
+
+
     getLibraryBooks: builder.query<any | ErrorResult, any>({
       query: () => ({
         url: `/front/student/textbook/librarytextbooks`,

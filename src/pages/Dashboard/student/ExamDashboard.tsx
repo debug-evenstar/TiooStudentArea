@@ -1,6 +1,5 @@
 import { useDispatch } from "react-redux";
 import ProfileCard from "../../../components/dashboard/students/ProfileCard";
-import RecommendedBooks from "../../../components/dashboard/students/BooksList";
 import { dashboardApiSlice } from "../../../services/api/dashboardSlice";
 import { updateShelf } from "../../../redux/reducers/userReducer";
 import BooksList from "../../../components/dashboard/students/BooksList";
@@ -8,18 +7,29 @@ import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import BannerAnnouncement from "../../../components/Common/Announcement";
 import TargetScoreCard from "../../../components/dashboard/students/TargetScoreCard";
+import { useParams } from "react-router-dom";
+import { examsApiSlice } from "../../../services/api/examsSlice";
 
-const Dashboard = () => {
+const ExamDashboard = () => {
   const studentShelf = dashboardApiSlice.useGetStudentShelfQuery();
   const { data, error, isLoading } = studentShelf;
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
+
+  const { exam_id } = useParams();
+
+  const {
+    data: examData,
+    isLoading: examLoading,
+    refetch: refetchExam,
+  } = examsApiSlice.useGetExamQuery(exam_id);
 
   if (!error && !isLoading) {
     dispatch(updateShelf(data.data));
   }
 
   useEffect(() => {
+    refetchExam();
     setTimeout(() => setLoading(false), 2000);
   }, []);
 
@@ -28,7 +38,7 @@ const Dashboard = () => {
       <BannerAnnouncement />
       <div className="mt-7">
         <div className="flex flex-col lg:flex-row gap-5">
-          {loading ? (
+          {loading || examLoading ? (
             <>
               <div className="lg:w-[55%] ">
                 <Skeleton borderRadius={16} height={230} width="" />
@@ -39,8 +49,14 @@ const Dashboard = () => {
             </>
           ) : (
             <>
-              <ProfileCard />
-              <TargetScoreCard />
+              <ProfileCard data={examData?.data.metadata} />
+              {examData?.data?.exam_type == "admission" && (
+                <TargetScoreCard
+                  targetScore={examData?.data?.study_plan?.target_score}
+                  currentScore={examData?.data?.exam_set?.exam_session?.score}
+                  examId={exam_id}
+                />
+              )}
             </>
           )}
         </div>
@@ -54,4 +70,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default ExamDashboard;
