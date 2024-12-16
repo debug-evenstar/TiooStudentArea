@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { useLazyVerifyTokenQuery } from "../../services/api/authSlice";
 import { FailureCheck } from "../../old-components/Ui/AlertCheck";
 import { ScaleLoader } from "react-spinners";
+import { ConfigureLibrary } from "@Praxeum-ai/LearnBlocks";
 
 const LogToken = () => {
   const [isBusy, setIsBusy] = useState(false);
@@ -47,7 +48,14 @@ const LogToken = () => {
               metadata: res.data.data.metadata,
             })
           );
-          if (token) localStorage.setItem("token", token);
+          if (token) {
+            localStorage.setItem("token", token);
+            ConfigureLibrary.save({
+              baseUrl: import.meta.env.VITE_APP_API_BASE_URL,
+              authType: "student",
+              token: token ? token : "",
+            });
+          }
           navigate("/student/dashboard");
         } else {
           toast.error(res.error.data.message);
