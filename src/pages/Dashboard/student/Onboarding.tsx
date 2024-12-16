@@ -187,7 +187,7 @@ export default function Onboarding() {
               )
             ) : (
               <div className=" mx-auto w-full">
-                <p className="text-center py-24 gap-3 flex items-center justify-center rounded-[18px] border-2 shadow mx-auto w-full border-gray-300 text-4xl text-gray-500">
+                <p className="text-center py-24 gap-3 flex items-center justify-center rounded-[18px] mx-auto w-full border-gray-300 text-4xl text-gray-500">
                   Coming soon
                   <DotLoader
                     color="gray"
