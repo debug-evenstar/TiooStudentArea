@@ -1,26 +1,33 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { AssessmentPage } from "@Praxeum-ai/LearnBlocks";
+import { AssessmentPage, ConfigureLibrary } from "@Praxeum-ai/LearnBlocks";
 import { ScaleLoader } from "react-spinners";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../../redux/reducers/userReducer";
 import { examsApiSlice } from "../../../../services/api/examsSlice";
+import { useToken } from "../../../../hooks/useToken";
 
 export default function Assessment() {
   const { exam_id } = useParams();
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const user = useSelector(selectUser);
-  const [data, setData] = useState(null);
-  const [fetchSet, { isLoading, data:  examSetResponse }] =
+  const [loadingConfig, setLoadingConfig] = useState(true);
+  const [fetchSet, { isLoading, data: examSetResponse }] =
     examsApiSlice.useLazyGetActiveExamSetQuery();
 
   useEffect(() => {
     if (exam_id) {
       fetchSet(exam_id);
+      const token = useToken();
+      ConfigureLibrary.save({
+        baseUrl: import.meta.env.VITE_APP_API_BASE_URL,
+        authType: "student",
+        token: token ? token : "",
+      });
+      setLoadingConfig(false);
     }
   }, []);
-
 
   const goHome = () => navigate(`/student/dashboard/exam/${exam_id}`);
   const goBack = () => navigate(-1);
@@ -37,7 +44,7 @@ export default function Assessment() {
       <div
         className={`fixed inset-0 duration-1000 bg-white z-[2000] flex items-center justify-center w-full
         ${
-          loading || isLoading ? "opacity-100" : "opacity-0 pointer-events-none"
+          loading || isLoading || loadingConfig ? "opacity-100" : "opacity-0 pointer-events-none"
         }
         `}
       >

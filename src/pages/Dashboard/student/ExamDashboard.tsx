@@ -12,6 +12,8 @@ import { examsApiSlice } from "../../../services/api/examsSlice";
 
 const ExamDashboard = () => {
   const studentShelf = dashboardApiSlice.useGetStudentShelfQuery();
+  const [fetchSession, { data: sessionData, isLoading: sessionLoading }] =
+    examsApiSlice.useLazyGetExamSessionQuery();
   const { data, error, isLoading } = studentShelf;
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
@@ -27,6 +29,14 @@ const ExamDashboard = () => {
   if (!error && !isLoading) {
     dispatch(updateShelf(data.data));
   }
+
+
+  console.log(sessionData);
+  useEffect(() => {
+    if (examData) {
+      fetchSession(examData?.data?.exam_set?.id);
+    }
+  }, [examData]);
 
   useEffect(() => {
     refetchExam();
@@ -53,7 +63,7 @@ const ExamDashboard = () => {
               {examData?.data?.exam_type == "admission" && (
                 <TargetScoreCard
                   targetScore={examData?.data?.study_plan?.target_score}
-                  currentScore={examData?.data?.exam_set?.exam_session?.score}
+                  currentScore={examData?.data?.score ?? 0}
                   examId={exam_id}
                 />
               )}
