@@ -21,6 +21,7 @@ const initialState = {
     independent: "",
     metadata: null,
     studyPlan: null,
+    studyPlans: null
   } as StudentProfile,
   shelf: [] as number[],
 
@@ -50,16 +51,19 @@ export const userSlice = createSlice({
     },
     setUserStudyPlan: (state, action: PayloadAction<any>) => {
       state.user.studyPlan = action.payload;
+    },
+    setUserStudyPlans: (state, action: PayloadAction<any>) => {
+      state.user.studyPlans = action.payload;
     }
   },
 });
 
-export const { saveUser, resetUser, updateShelf ,setUserExamData,setUserStudyPlan, setUserMetaData} = userSlice.actions;
-
+export const { saveUser, resetUser, updateShelf ,setUserExamData,setUserStudyPlan, setUserStudyPlans,setUserMetaData} = userSlice.actions;
 
 export const selectExamData = (state: RootState) => state.user.user.metadata.exam_data;
 export const selectUser = (state: RootState) => state.user;
 export const selectStudyPlan = (state: RootState) => state.user.user.studyPlan;
+export const selectStudyPlans = (state: RootState) => state.user.user.studyPlans;
 export const selectShelf = (state: RootState) => state.user.shelf;
 
 export default userSlice.reducer;

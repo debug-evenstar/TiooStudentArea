@@ -6,19 +6,23 @@ import { studyPlanSlice } from "../../../services/api/studyPlanSlice";
 import {
   selectStudyPlan,
   setUserStudyPlan,
+  setUserStudyPlans,
 } from "../../../redux/reducers/userReducer";
 import { useDispatch, useSelector } from "react-redux";
 
-const TargetScoreCard = ({ targetScore = 0 }: any) => {
-  const studyPlanRequest = studyPlanSlice.useGetStudyPlanQuery(null);
-  const userStudyPlan = useSelector(selectStudyPlan);
-  const userScore = userStudyPlan?.target_score;
+const TargetScoreCard = ({
+  targetScore = 0,
+  currentScore = 0,
+  examId,
+}: any) => {
+  const studyPlanRequest = studyPlanSlice.useGetStudyPlansQuery(null);
+  const userScore = targetScore; // userStudyPlan?.target_score;
   const targetPercentage = ((userScore ?? 0) / 400) * 100;
-
+  const currentPercentage = ((currentScore ?? 0) / 400) * 100;
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setUserStudyPlan(studyPlanRequest.data?.data));
+    dispatch(setUserStudyPlans(studyPlanRequest.data?.data));
     if (userScore) {
       studyPlanRequest.refetch();
     }
@@ -42,33 +46,36 @@ const TargetScoreCard = ({ targetScore = 0 }: any) => {
               className="w-10/12 h-8"
               thumbClassName="h-4 w-4 border shrink-0  bg-[#4285F4] bg-white outline-none shadow-md rounded-full -mt-1"
               trackClassName="h-2 bg-gray-200 rounded-full"
-              value={0}
+              value={currentScore}
               min={0}
               max={400}
               renderTrack={(props: any, state: any) => (
-                <div className="relative ">
+                <div className="w-full h-0">
                   <div
                     style={{ left: `${targetPercentage}%` }}
                     className="h-5 -mt-1.5  absolute bg-[#FFB74D] w-[2px]"
-                  />
-                  <div
-                    {...props}
-                    className={`h-2 rounded-full ${
-                      state.index === 0 ? "bg-[#4285F4]" : "bg-gray-200"
-                    }`}
-                  />
+                  ></div>
+                  <div className="relative">
+                    <div
+                      {...props}
+                      className={`h-2 mt-0 relative rounded-full ${
+                        state.index === 0 ? "bg-[#4285F4]" : "bg-gray-200"
+                      }`}
+                    />
+                    <span className="absolute mt-3 text-xs">{currentScore}</span>
+                  </div>
                 </div>
               )}
             />
           </div>
         </div>
-        {targetScore == 0 && (
-          <Link to="/student/dashboard/onboarding/jamb">
+        {
+          <Link to={`/exams/assessment/${examId}`}>
             <button className="bg-white text-black px-4 py-2 rounded-lg font-semibold mt-4">
-              Set target score
+              Take mock exam
             </button>
           </Link>
-        )}
+        }
       </div>
 
       <div className="ml-4">

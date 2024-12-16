@@ -4,6 +4,7 @@ import { StudentProfile } from "../../utils/dataTypes/auth";
 
 const initialState = {
     examFlag: false,
+    reload: false,
 };
 
 export const sidebarSlice = createSlice({
@@ -13,10 +14,13 @@ export const sidebarSlice = createSlice({
     setExamFlag: (state, action: PayloadAction<any>) => {
       state.examFlag = action.payload;
     },
+    toggleSidebarReload: (state) => {
+      state.reload = !state.reload;
+    }
   },
 });
 
-export const { setExamFlag } = sidebarSlice.actions;
+export const { setExamFlag,toggleSidebarReload } = sidebarSlice.actions;
 
 export const selectSidebar = (state: RootState) => state.sidebar;
 

@@ -1,6 +1,10 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ReactSlider from "react-slider";
 import doneImg from "../../../assets/images/DoneButton.png";
+import { useSetTargetScoreMutation } from "../../../services/api/studyPlanSlice";
+import { toast } from "react-toastify";
+import { PulseLoader } from "react-spinners";
+import { useParams } from "react-router-dom";
 
 interface TargetScoreModalProps {
   isOpen: boolean;
@@ -8,6 +12,7 @@ interface TargetScoreModalProps {
   onOpenChange: (open: boolean) => void;
   onSubmit: (score: string) => void;
   maxScore?: number;
+  setValue?: any;
 }
 
 const TargetScoreModal: React.FC<TargetScoreModalProps> = ({
@@ -16,15 +21,18 @@ const TargetScoreModal: React.FC<TargetScoreModalProps> = ({
   onOpenChange,
   onSubmit,
   maxScore = 400,
+  setValue,
 }) => {
-  const [score, setScore] = React.useState<number | string>(value ?? maxScore / 2);
+  const [score, setScore] = React.useState<number | string>(
+    value ?? maxScore / 2
+  );
   const modalRef = useRef<HTMLDivElement>(null);
-
-  
+  const [setTargetScore] = useSetTargetScoreMutation();
+  const [loading, setLoading] = useState(false);
+  const { exam_id } = useParams();
 
   // Handle click outside
   useEffect(() => {
-
     setScore(value ?? maxScore / 2);
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -64,7 +72,10 @@ const TargetScoreModal: React.FC<TargetScoreModalProps> = ({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     // Allow empty string to avoid the "0" issue
-    if (value === "" || (!isNaN(Number(value)) && Number(value) >= 0 && Number(value) <= maxScore)) {
+    if (
+      value === "" ||
+      (!isNaN(Number(value)) && Number(value) >= 0 && Number(value) <= maxScore)
+    ) {
       setScore(value);
     }
   };
@@ -73,9 +84,18 @@ const TargetScoreModal: React.FC<TargetScoreModalProps> = ({
     setScore(value);
   };
 
-  const handleSubmit = () => {
-    onSubmit(`${score}`);
-    onOpenChange(false);
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      setValue(score);
+      const response = await setTargetScore({ target_score: score, exam_id: exam_id });
+      toast.success(response.data.message);
+      // onSubmit(score);
+      onOpenChange(false);
+    } catch (error) {
+      console.error(error);
+    }
+    setLoading(false);
   };
 
   if (!isOpen) return null;
@@ -125,7 +145,16 @@ const TargetScoreModal: React.FC<TargetScoreModalProps> = ({
             </div>
           </div>
           <div className="flex w-full">
-            <button onClick={handleSubmit} className="mx-auto w-[14rem]">
+            <button onClick={handleSubmit} className="mx-auto w-[14rem] relative">
+              {loading && (
+                <div className="px-3  inset-0 absolute w-full flex items-center justify-center">
+                  <PulseLoader
+                    size={12}
+                    className="bg-[#9c29b2] px-4 py-1"
+                    color="white"
+                  />
+                </div>
+              )}
               <img src={doneImg} alt="" />
             </button>
           </div>
