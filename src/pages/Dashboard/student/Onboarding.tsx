@@ -7,6 +7,7 @@ import { selectSidebar } from "../../../redux/reducers/sidebarReducer";
 import { dashboardApiSlice } from "../../../services/api/dashboardSlice";
 import { examsApiSlice } from "../../../services/api/examsSlice";
 import Skeleton from "react-loading-skeleton";
+import { FaClock } from "react-icons/fa6";
 
 interface UniversityCardProps {
   name: string;
@@ -62,7 +63,7 @@ interface ExamCardProps {
 const ExamCard: FC<ExamCardProps> = ({ name, color, id, image_path }) => {
   const navigate = useNavigate();
 
-  const isDisabled = !name?.toLowerCase().includes('jamb');
+  const isDisabled = !name?.toLowerCase().includes("jamb");
 
   const sidebar = useSelector(selectSidebar);
 
@@ -71,7 +72,6 @@ const ExamCard: FC<ExamCardProps> = ({ name, color, id, image_path }) => {
 
     if (sidebar.examFlag) {
       return navigate(`/student/dashboard/exam/${id}`);
-      
     }
     return navigate(`/student/dashboard/onboarding/admissions/${id}`, {
       state: { color: color },
@@ -172,30 +172,30 @@ export default function Onboarding() {
 
       <div className="mt-12">
         <p className="mb-4 text-2xl">University Exams</p>
-        <div className="gap-5 grid lg:grid-cols-3 grid-cols-1">
+        <div
+          className={`gap-5 ${
+            universities?.data?.length > 10 ? "grid" : "w-full"
+          } lg:grid-cols-3 grid-cols-1`}
+        >
           {!isLoadingUni ? (
-            universities?.data?.map(
-              (uni: UniversityCardProps, index: number) => (
-                <UniversityCard id={uni.id} key={uni.name} {...uni} />
+            universities?.data.length > 10 ? (
+              universities?.data?.map(
+                (uni: UniversityCardProps, index: number) => (
+                  <UniversityCard id={uni.id} key={uni.name} {...uni} />
+                )
               )
+            ) : (
+              <div className=" mx-auto w-full">
+                <p className="text-center py-24 rounded-[18px] border-2 shadow mx-auto w-full border-gray-300 text-4xl text-gray-500">
+                 Coming soon
+                </p>
+              </div>
             )
           ) : (
             <>
-              <Skeleton
-                className="w-full"
-                borderRadius={20}
-                height={130}
-              />
-              <Skeleton
-                className="w-full"
-                borderRadius={20}
-                height={130}
-              />
-              <Skeleton
-                className="w-full"
-                borderRadius={20}
-                height={130}
-              />
+              <Skeleton className="w-full" borderRadius={20} height={130} />
+              <Skeleton className="w-full" borderRadius={20} height={130} />
+              <Skeleton className="w-full" borderRadius={20} height={130} />
             </>
           )}
         </div>
