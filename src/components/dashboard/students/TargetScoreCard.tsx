@@ -62,7 +62,7 @@ const TargetScoreCard = ({
                         state.index === 0 ? "bg-[#4285F4]" : "bg-gray-200"
                       }`}
                     />
-                    <span className="absolute mt-3 text-xs">{currentScore}</span>
+                    <span style={{left: `${currentPercentage}%`}} className="absolute mt-3 text-xs">{currentScore}</span>
                   </div>
                 </div>
               )}
