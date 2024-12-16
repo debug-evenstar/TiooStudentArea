@@ -50,19 +50,19 @@ const TargetScoreCard = ({
               min={0}
               max={400}
               renderTrack={(props: any, state: any) => (
-                <div className="relative ">
+                <div className="w-full h-0">
                   <div
                     style={{ left: `${targetPercentage}%` }}
                     className="h-5 -mt-1.5  absolute bg-[#FFB74D] w-[2px]"
-                  />
+                  ></div>
                   <div className="relative">
                     <div
                       {...props}
-                      className={`h-2 rounded-full ${
+                      className={`h-2 mt-0 relative rounded-full ${
                         state.index === 0 ? "bg-[#4285F4]" : "bg-gray-200"
                       }`}
                     />
-                    { currentScore && <span className="absolute mt-3 text-sm" style={{ left: `${currentPercentage}%` }} >{currentScore}</span> }
+                    <span className="absolute mt-3 text-xs">{currentScore}</span>
                   </div>
                 </div>
               )}
