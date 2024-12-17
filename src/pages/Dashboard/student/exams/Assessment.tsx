@@ -19,11 +19,11 @@ export default function Assessment() {
   useEffect(() => {
     if (exam_id) {
       fetchSet(exam_id);
-      const token = useToken();
+      const token = localStorage.getItem('token');
       ConfigureLibrary.save({
         baseUrl: import.meta.env.VITE_APP_API_BASE_URL,
         authType: "student",
-        token: token ? token : "",
+        token: token ?? "",
       });
       setLoadingConfig(false);
     }
