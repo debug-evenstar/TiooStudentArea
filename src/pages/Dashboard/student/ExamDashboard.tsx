@@ -43,6 +43,7 @@ const ExamDashboard = () => {
     setTimeout(() => setLoading(false), 2000);
   }, []);
 
+
   return (
     <>
       <BannerAnnouncement />
@@ -63,7 +64,7 @@ const ExamDashboard = () => {
               {examData?.data?.exam_type == "admission" && (
                 <TargetScoreCard
                   targetScore={examData?.data?.study_plan?.target_score}
-                  currentScore={examData?.data?.score ?? 0}
+                  currentScore={sessionData?.data?.score ?? 0}
                   examId={exam_id}
                 />
               )}

@@ -11,6 +11,10 @@ import { libraryApiSlice } from "../../../../services/api/librarySlice";
 import "react-loading-skeleton/dist/skeleton.css";
 import Skeleton from "react-loading-skeleton";
 import { FaLock } from "react-icons/fa";
+import { examsApiSlice } from "../../../../services/api/examsSlice";
+import MockExamNotice from "../../../../components/Common/MockExamNotice";
+import { ScaleLoader } from "react-spinners";
+import { useExamNotice } from "../../../../hooks/useExamNotice";
 
 const SaveButton = () => {
   return (
@@ -40,7 +44,7 @@ const SaveButton = () => {
   );
 };
 
-const CurrentLessonBar = ({ data, isFreshStart }: any) => {
+const CurrentLessonBar = ({ data, isFreshStart, hasSession }: any) => {
   const navigate = useNavigate();
   const bookId = data?.id;
   const [currentLesson, setCurrentLesson] = useState<any>(null);
@@ -49,6 +53,8 @@ const CurrentLessonBar = ({ data, isFreshStart }: any) => {
   const lesson_progress = data?.lesson_progress;
   const firstLesson = [...data?.chapters[0]?.lessons].reverse()[0];
   // const firstLesson = data?.chapters[0]?.lessons?.reverse()[0];
+
+  const { showNotice, closeNotice, isNoticeOpen } = useExamNotice();
 
   const processLessonData = (id: any) => {
     let res = { lesson: null, chapter: null, next_lesson: null };
@@ -78,7 +84,6 @@ const CurrentLessonBar = ({ data, isFreshStart }: any) => {
         })
       : null;
 
-
   useEffect(() => {
     if (lesson_progress && lesson_progress.length && latest_record) {
       const { lesson, chapter, next_lesson } = processLessonData(
@@ -93,13 +98,17 @@ const CurrentLessonBar = ({ data, isFreshStart }: any) => {
     }
   }, [lesson_progress, latest_record]);
 
-  const handleOpenLesson = useCallback((tag: string) => {
+  const handleOpenLesson = (tag: string) => {
+    if (!hasSession && !isNoticeOpen) {
+      showNotice();
+      return;
+    }
     navigate(`/books/${bookId}/study`, {
-      state: { lesson: isFreshStart ? firstLesson : nextLesson, tag: tag},
+      state: { lesson: isFreshStart ? firstLesson : nextLesson, tag: tag },
     });
-  }, [navigate, bookId, nextLesson]);
+  };
 
-  if (isFreshStart )
+  if (isFreshStart)
     return (
       <div className="mb-6 mx-auto quicksand  text-primary bg-white items-center shadow-md rounded-md flex justify-between px-4 py-3">
         <div className="flex flex-col gap-3">
@@ -135,10 +144,14 @@ const CurrentLessonBar = ({ data, isFreshStart }: any) => {
       </div>
 
       <button
-        onClick={() => handleOpenLesson(nextLesson?.has_started? "resume": "start")}
-        className={`${ nextLesson?.has_started? "bg-primary":"bg-[#18D741]"} text-[16px] urbanist active:scale-95 text-white h-10 font-bold py-2 px-8 rounded-md transition duration-300`}
+        onClick={() =>
+          handleOpenLesson(nextLesson?.has_started ? "resume" : "start")
+        }
+        className={`${
+          nextLesson?.has_started ? "bg-primary" : "bg-[#18D741]"
+        } text-[16px] urbanist active:scale-95 text-white h-10 font-bold py-2 px-8 rounded-md transition duration-300`}
       >
-        { nextLesson?.has_started? "RESUME": "START" }
+        {nextLesson?.has_started ? "RESUME" : "START"}
       </button>
     </div>
   );
@@ -210,6 +223,10 @@ export default function StudyArea() {
   const { data, isLoading, refetch } = libraryApiSlice.useGetLibraryBookQuery(
     bookId ?? "0"
   );
+  const { data: sessionData, isLoading: sessionLoading } =
+    examsApiSlice.useGetExamSessionQuery("1"); // useless
+
+  const { isNoticeOpen } = useExamNotice();
 
   const checkFreshStart = () => {
     let res = true;
@@ -224,86 +241,109 @@ export default function StudyArea() {
   };
 
   useEffect(() => {
-    refetch();
-  }, []);
+    if (!sessionData) {
+      refetch();
+      console.log("refetching");
+      return;
+    }
+  }, [sessionData]);
+
+  const hasSession = !!sessionData?.data?.score;
 
   return (
-    <div className="w-full flex flex-col lg:flex-row justify-between px-4 lg:px-12 pt-12 pb-20">
-      <div className="h-full lg:w-[68%]">
-        <div className="mb-2 flex items-center gap-5">
-          {data?.data?.cover_photo ? (
-            <div className="w-14 h-14 rounded-full shrink-0 border overflow-hidden">
-              <img className="w-full" src={data?.data?.cover_photo} alt="" />
+    <>
+      <div
+        className={`z-[99999999] w-full h-screen transition-opacity duration-1000 bg-white flex items-center justify-center fixed inset-0
+        ${
+          isLoading || sessionLoading
+            ? "opacity-100"
+            : "opacity-0 pointer-events-none"
+        }
+        `}
+      >
+        <ScaleLoader height={30} speedMultiplier={1.3} color="#9c29b2" />
+      </div>
+      {isNoticeOpen && <MockExamNotice />}
+      <div className="w-full flex flex-col lg:flex-row justify-between px-4 lg:px-12 pt-12 pb-20">
+        <div className="h-full lg:w-[68%]">
+          <div className="mb-2 flex items-center gap-5">
+            {data?.data?.cover_photo ? (
+              <div className="w-14 h-14 rounded-full shrink-0 border overflow-hidden">
+                <img className="w-full" src={data?.data?.cover_photo} alt="" />
+              </div>
+            ) : (
+              <div className="w-14">
+                <Skeleton circle className="w-14 h-14 " />
+              </div>
+            )}
+            <div className="items-center w-10/12">
+              {data?.data?.name ? (
+                <h1 className="text-primary urbanist font-[500] text-[25px] lg:text-[30px]">
+                  {data?.data?.name}
+                </h1>
+              ) : (
+                <Skeleton className="w-full h-10" />
+              )}
             </div>
+          </div>
+          <p className="text-base mb-16 urbanist font-[400] text-[#470454]">
+            {data?.data?.description || <Skeleton width={500} />}
+          </p>
+          <div className=" border-t border-black">
+            {/* Icon and Divider */}
+            <img
+              src={robot}
+              alt=""
+              className="w-14 relative px-2 -top-6 mx-auto bg-[#f9f7f3]"
+            />
+          </div>
+
+          {data?.data?.chapters?.length ? (
+            <CurrentLessonBar
+              data={data?.data}
+              hasSession={hasSession}
+              isFreshStart={checkFreshStart()}
+            />
+          ) : null}
+
+          {data?.data ? (
+            data?.data.chapters?.map((chapter: any, index: number) => (
+              <StudyLessonAccordion
+                key={index}
+                hasSession={hasSession}
+                bookId={bookId}
+                chapter={chapter}
+                showNotice
+              />
+            ))
           ) : (
-            <div className="w-14">
-              <Skeleton circle className="w-14 h-14 " />
+            <div className="min-h-[10rem]">
+              <Skeleton
+                className="w-full h-full mb-6"
+                borderRadius={16}
+                height={240}
+              />
+              <Skeleton
+                className="w-full h-full"
+                borderRadius={16}
+                height={240}
+              />
             </div>
           )}
-          <div className="items-center w-10/12">
-            {data?.data?.name ? (
-              <h1 className="text-primary urbanist font-[500] text-[25px] lg:text-[30px]">
-                {data?.data?.name}
-              </h1>
-            ) : (
-              <Skeleton className="w-full h-10" />
-            )}
+
+          {/* <SectionAccordion /> */}
+        </div>
+
+        <div className="h-full lg:w-[27%] mt-10 lg:mt-0 flex-col flex gap-y-5">
+          {data?.data ? <SaveButton /> : <Skeleton height={60} />}
+          <div className="flex flex-col gap-y-6 ">
+            <StudyResourceCard sections={resourcesData} />
+            <StudyHighlightCard items={highlights} />
+            <StudyRelationsCard items={relations} />
+            <StudyCreditsCard items={credits} />
           </div>
         </div>
-        <p className="text-base mb-16 urbanist font-[400] text-[#470454]">
-          {data?.data?.description || <Skeleton width={500} />}
-        </p>
-        <div className=" border-t border-black">
-          {/* Icon and Divider */}
-          <img
-            src={robot}
-            alt=""
-            className="w-14 relative px-2 -top-6 mx-auto bg-[#f9f7f3]"
-          />
-        </div>
-
-        {data?.data?.chapters?.length ? (
-          <CurrentLessonBar
-            data={data?.data}
-            isFreshStart={checkFreshStart()}
-          />
-        ) : null}
-
-        {data?.data ? (
-          data?.data.chapters?.map((chapter: any, index: number) => (
-            <StudyLessonAccordion
-              key={index}
-              bookId={bookId}
-              chapter={chapter}
-            />
-          ))
-        ) : (
-          <div className="min-h-[10rem]">
-            <Skeleton
-              className="w-full h-full mb-6"
-              borderRadius={16}
-              height={240}
-            />
-            <Skeleton
-              className="w-full h-full"
-              borderRadius={16}
-              height={240}
-            />
-          </div>
-        )}
-
-        {/* <SectionAccordion /> */}
       </div>
-
-      <div className="h-full lg:w-[27%] mt-10 lg:mt-0 flex-col flex gap-y-5">
-        {data?.data ? <SaveButton /> : <Skeleton height={60} />}
-        <div className="flex flex-col gap-y-6 ">
-          <StudyResourceCard sections={resourcesData} />
-          <StudyHighlightCard items={highlights} />
-          <StudyRelationsCard items={relations} />
-          <StudyCreditsCard items={credits} />
-        </div>
-      </div>
-    </div>
+    </>
   );
 }

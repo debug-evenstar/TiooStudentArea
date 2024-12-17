@@ -1,4 +1,10 @@
-import { BrowserRouter, Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
 import "./App.css";
 import ScrollToTop from "./utils/scrollTop";
 import LogToken from "./pages/Auth/LogToken";
@@ -11,13 +17,11 @@ import StudentRoutes from "./routes/student.route";
 import ParentRoutes from "./routes/parent.route";
 import { useToken } from "./hooks/useToken";
 import Assessment from "./pages/Dashboard/student/exams/Assessment";
+import { NoticeProvider } from "./hooks/useExamNotice";
 
 const env = import.meta.env;
 
-
 function App() {
-
-
   useEffect(() => {
     const token = useToken();
     ConfigureLibrary.save({
@@ -25,26 +29,24 @@ function App() {
       authType: "student",
       token: token ? token : "",
     });
-
   }, []);
 
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <Routes>
-        {/* auth routes */}
-        <Route path="/auth/:token" element={<LogToken />} />
-        <Route element={<ProtectedRoutes />}>
-          {StudentRoutes()}
-          {/* {ParentRoutes()} */}
-          <Route path="/books/:bookId/study" element={<Study />} />
-        </Route>
-        <Route path="*" element={<Navigate to="/student/dashboard/home" />} />
-        <Route
-          path="exams/assessment/:exam_id"
-          element={<Assessment />}
-        />
-      </Routes>
+      <NoticeProvider>
+        <Routes>
+          {/* auth routes */}
+          <Route path="/auth/:token" element={<LogToken />} />
+          <Route element={<ProtectedRoutes />}>
+            {StudentRoutes()}
+            {/* {ParentRoutes()} */}
+            <Route path="/books/:bookId/study" element={<Study />} />
+          </Route>
+          <Route path="*" element={<Navigate to="/student/dashboard/home" />} />
+          <Route path="exams/assessment/:exam_id" element={<Assessment />} />
+        </Routes>
+      </NoticeProvider>
     </BrowserRouter>
   );
 }
