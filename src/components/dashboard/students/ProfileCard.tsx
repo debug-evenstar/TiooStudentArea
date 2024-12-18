@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/reducers/userReducer";
 import "animate.css";
 
-const ProfileCard = () => {
+const ProfileCard = ({data}: any) => {
   const { user } = useSelector(selectUser);
 
   const name = user?.name?.split(" ");
@@ -15,8 +15,8 @@ const ProfileCard = () => {
 
   return (
     <div className="p-4 rounded-[16px] bg-[#50035E] w-full overflow-hidden lg:w-[55%] flex justify-between">
-      <div className="text-white flex flex-col gap-y-3 w-full">
-        <div className="flex items-center space-x-2">
+      <div className="text-white flex flex-col h-full gap-y-3 w-full">
+        <div className="flex h-full items-center space-x-2">
           <img
             src={profilePic}
             alt=""
@@ -30,14 +30,15 @@ const ProfileCard = () => {
           </p>
         </div>
         <p className="w-full relative leading-[1.2rem] text-[15px]">
-          Welcome to Champion Tutorials!
+          {/* Welcome to Champion Tutorials! */}
           <br />
           <span className="inline-block mb-1">
-            Join our WhatsApp study group to achieve a score of 300+ in your
-            JAMB exam. Ask questions, share feedback, and make friends.
+            {data?.message}
           </span>
+          <br/>
           <a
-            href="https://chat.whatsapp.com/KGjtTMbbwpRCIWzFrjKaAq"
+            // href="https://chat.whatsapp.com/KGjtTMbbwpRCIWzFrjKaAq"
+            href={data?.link}
             target="_blank"
             className="mt-2 bg-white text-black px-4 py-2 rounded-lg font-semibold inline-block"
           >

@@ -7,14 +7,16 @@ import { useSaveStudyPlanMutation } from "../../../../services/api/studyPlanSlic
 import { toast } from "react-toastify";
 
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
-  selectStudyPlan,
+  selectStudyPlans,
   selectUser,
   setUserStudyPlan,
+  setUserStudyPlans,
 } from "../../../../redux/reducers/userReducer";
 import ConfirmationModal from "../../../../components/dashboard/StudyPlan/ConfirmationModal";
 import { PulseLoader } from "react-spinners";
+import { examsApiSlice } from "../../../../services/api/examsSlice";
 
 const days = [
   "Monday",
@@ -33,18 +35,31 @@ const StudyPlanWidget = ({ score, setScore }: any) => {
   const navigate = useNavigate();
 
   const [showConfirm, setShowConfirm] = useState(false);
-
+  const [ plan, setPlan] = useState<any>(null);
   const [continueActive, setContinueActive] = useState(false);
 
-  const userStudyPlan = useSelector(selectStudyPlan);
+  const { exam_id } = useParams();
+
+  const userStudyPlans = useSelector(selectStudyPlans);
 
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
 
+  const accountExams = examsApiSlice.useGetAccountExamsQuery(null);
+
+  const currentExam = accountExams?.data?.data.find((e: any) => e.id == exam_id)
+
   useEffect(() => {
-    setScore(userStudyPlan?.target_score ?? 0);
-  }, []);
+    setScore(plan?.target_score ?? 0);
+  }, [plan]);
+
+
+  useEffect(() => {
+    const p = userStudyPlans?.find((p: any) => p.exam_id == exam_id);
+    setPlan(p);
+  },[userStudyPlans]);
+
 
   const [plans] = useState(
     days.map((d, i) => ({
@@ -56,7 +71,7 @@ const StudyPlanWidget = ({ score, setScore }: any) => {
   useEffect(() => {
     // trying to restore from the saved data
     // loop true the chosen ones and update the schedules respectively
-    const data = userStudyPlan?.data ?? [];
+    const data = plan?.data ?? [];
     let changed = false;
     if (Array.isArray(data)) {
       data.forEach((p: any) => {
@@ -71,7 +86,7 @@ const StudyPlanWidget = ({ score, setScore }: any) => {
     if (changed) {
       setContinueActive(true);
     }
-  }, [userStudyPlan]);
+  }, [plan]);
 
   const handleContinue = () => {
     // rapture all the schedules from the plans
@@ -81,7 +96,7 @@ const StudyPlanWidget = ({ score, setScore }: any) => {
       return;
     }
 
-    const payload = { schedule: plansData.filter((s) => s.schedules.length) };
+    const payload = { exam_id: exam_id, schedule: plansData.filter((s) => s.schedules.length) };
 
     if (payload.schedule.length == 0) {
       toast.error("please set at least one study plan");
@@ -97,7 +112,8 @@ const StudyPlanWidget = ({ score, setScore }: any) => {
       .then((response) => {
         toast.success(response.data.message);
         dispatch(setUserStudyPlan(response.data.data));
-        navigate("/student/dashboard/home");
+        // navigate("/student/dashboard/home");
+        navigate(`/student/dashboard/exam/${exam_id}/to-assessment`);
       })
       .catch((error) => toast.error(error))
       .finally(() => {
@@ -109,11 +125,7 @@ const StudyPlanWidget = ({ score, setScore }: any) => {
   const onChange = () => {
     const schedules = plans.map((p) => p.ref.current?.getData());
     const validSchedules = schedules.filter((s) => s.schedules.length);
-    if (validSchedules.length) {
-      setContinueActive(true);
-    } else {
-      setContinueActive(false);
-    }
+    setContinueActive(!!validSchedules.length);
   };
 
   const replicate = (schedules: any, day: string) => {
@@ -148,7 +160,7 @@ const StudyPlanWidget = ({ score, setScore }: any) => {
               ref={plan.ref}
               replicate={replicate}
               onChange={onChange}
-              subjects={user?.metadata?.exam_data?.exam_subjects ?? []}
+              subjects={currentExam?.AccountExam?.subjects ?? []}
             />
           ))}
         </div>

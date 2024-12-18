@@ -28,7 +28,7 @@ export const studyPlanSlice = apiSlice.injectEndpoints({
       }),
     }),
 
-    getStudyPlan: builder.query<any | ErrorResult, any>({
+    getStudyPlans: builder.query<any | ErrorResult, any>({
       query: () => ({
         url: `${ENDPOINT.STUDY_PLAN}`,
         method: ENDPOINT.HTTP_METHODS.GET,
@@ -36,7 +36,7 @@ export const studyPlanSlice = apiSlice.injectEndpoints({
           Authorization: requestAuthorization(),
         },
       }),
-      keepUnusedDataFor: ENDPOINT.CACHE_LIFETIME.EXTENDED,
+      keepUnusedDataFor: ENDPOINT.CACHE_LIFETIME.DEFAULT,
     }),
   }),
   overrideExisting: true,
@@ -45,5 +45,5 @@ export const studyPlanSlice = apiSlice.injectEndpoints({
 export const {
   useSetTargetScoreMutation,
   useSaveStudyPlanMutation,
-  useGetStudyPlanQuery,
+  useGetStudyPlansQuery,
 } = studyPlanSlice;

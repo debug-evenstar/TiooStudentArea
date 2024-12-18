@@ -6,18 +6,20 @@ import moment from "moment";
 
 export interface PlanItemProps {
   day: string;
-  subjects: string[];
+  subjects: {id: number; name: string }[];
   onChange?: any;
   replicate?: any;
 }
 
 export interface ScheduleItemProps {
-  subject: string;
+  subject: {
+    name: string; id: number;
+  };
   index: number;
-  onRemove: (subject: string) => void;
+  onRemove: (subject_id: number) => void;
   start_time: string;
   end_time: string;
-  setTime: (name: string, subject: string, time: string) => void;
+  setTime: (name: string, subject: any, time: string) => void;
 }
 
 interface TimeSelectProps {
@@ -58,13 +60,13 @@ const SubjectScheduleItem: FC<ScheduleItemProps> = ({
   setTime,
 }) => (
   <div className="flex mb-3">
-    <button className="mt-3 h-fit w-fit" onClick={() => onRemove(subject)}>
+    <button className="mt-3 h-fit w-fit" onClick={() => onRemove(subject.id)}>
       <RemoveIcon />
     </button>
     <div className="border-b border-gray-400 ml-5 w-full">
       <div className="mb-3 mt-1 flex items-start gap-2 lg:gap-0 lg:items-center lg:flex-row flex-col justify-between">
         <span className="text-gray-600 inline-block outline-none font-semibold">
-          {subject}
+          {subject.name}
         </span>
         <div className="flex gap-3 items-center">
           <TimeSelect
@@ -92,15 +94,15 @@ const PlanItem = React.forwardRef(
     const [schedules, setSchedules] = useState<ScheduleItemProps[]>([]);
     const [open, setOpen] = useState(false);
 
-    const handleRemoval = (subject: string) => {
-      setSchedules((prev) => prev.filter((s) => s.subject !== subject));
+    const handleRemoval = (subject_id: number) => {
+      setSchedules((prev) => prev.filter((s) => s.subject.id !== subject_id));
     };
 
-    const setTime = (name: string, subject: string, time: string) => {
+    const setTime = (name: string, subject: any, time: string) => {
       onChange();
       setSchedules((prevSchedules) =>
         prevSchedules.map((s) =>
-          s.subject === subject ? { ...s, [name]: time } : s
+          s.subject.id === subject.id ? { ...s, [name]: time } : s
         )
       );
     };
@@ -108,9 +110,9 @@ const PlanItem = React.forwardRef(
     useEffect(() => {
     }, [schedules]);
     const addSchedule = () => {
-      const existingSubjects = schedules.map((s) => s.subject);
+      const existingSubjects = schedules.map((s: any) => s.subject);
       const newSubject = subjects.find(
-        (subject) => !existingSubjects.includes(subject)
+        (subject) => !existingSubjects.find((sub) => sub.id == subject.id)
       );
 
       if (newSubject) {
@@ -133,7 +135,7 @@ const PlanItem = React.forwardRef(
         return {
           day: day,
           schedules: schedules.filter(
-            (s) => s.end_time !== null && s.start_time != null
+            (s) => s?.end_time !== null && s?.start_time != null
           ),
         };
       },
@@ -142,8 +144,8 @@ const PlanItem = React.forwardRef(
           prev.map((sched: any, i: number) => {
             const temp = {
               ...sched,
-              start_time: values[i].start_time,
-              end_time: values[i].end_time,
+              start_time: values[i]?.start_time,
+              end_time: values[i]?.end_time,
             };
 
             return temp;

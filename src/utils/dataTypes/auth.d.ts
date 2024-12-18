@@ -30,4 +30,5 @@ export interface StudentProfile {
     independent: string | null;
     metadata?: any;
     studyPlan?: any;
+    studyPlans?: any;
 }
