@@ -14,7 +14,7 @@ export default function Assessment() {
   const user = useSelector(selectUser);
   const [loadingConfig, setLoadingConfig] = useState(true);
   const [fetchSet, { isLoading, data: examSetResponse }] =
-    examsApiSlice.useLazyGetActiveExamSetQuery();
+    examsApiSlice.useLazyGetExamSetQuery();
 
   useEffect(() => {
     if (exam_id) {
@@ -52,7 +52,7 @@ export default function Assessment() {
       </div>
       {exam_id && (
         <AssessmentPage
-          set_id={examSetResponse?.data?.id}
+          examData={examSetResponse?.data}
           studentName={
             (
               <span className="inline-block px-1 capitalize">

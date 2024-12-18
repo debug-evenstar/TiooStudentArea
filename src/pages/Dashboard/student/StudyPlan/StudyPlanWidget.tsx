@@ -9,7 +9,6 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
-  selectStudyPlan,
   selectStudyPlans,
   selectUser,
   setUserStudyPlan,
@@ -17,6 +16,7 @@ import {
 } from "../../../../redux/reducers/userReducer";
 import ConfirmationModal from "../../../../components/dashboard/StudyPlan/ConfirmationModal";
 import { PulseLoader } from "react-spinners";
+import { examsApiSlice } from "../../../../services/api/examsSlice";
 
 const days = [
   "Monday",
@@ -46,6 +46,9 @@ const StudyPlanWidget = ({ score, setScore }: any) => {
 
   const dispatch = useDispatch();
 
+  const accountExams = examsApiSlice.useGetAccountExamsQuery(null);
+
+  const currentExam = accountExams?.data?.data.find((e: any) => e.id == exam_id)
 
   useEffect(() => {
     setScore(plan?.target_score ?? 0);
@@ -157,7 +160,7 @@ const StudyPlanWidget = ({ score, setScore }: any) => {
               ref={plan.ref}
               replicate={replicate}
               onChange={onChange}
-              subjects={user?.metadata?.exam_data?.exam_subjects ?? []}
+              subjects={currentExam?.AccountExam?.subjects ?? []}
             />
           ))}
         </div>

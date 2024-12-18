@@ -31,7 +31,6 @@ const ExamDashboard = () => {
   }
 
 
-  console.log(sessionData);
   useEffect(() => {
     if (examData) {
       fetchSession(examData?.data?.exam_set?.id);

@@ -91,7 +91,6 @@ export default function AdmissionSetup() {
 
   const options = examData?.data.subjects;
 
-  console.log(options);
 
   useEffect(() => {
     if (userMeta) {

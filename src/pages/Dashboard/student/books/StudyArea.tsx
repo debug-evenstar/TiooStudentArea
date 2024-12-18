@@ -92,7 +92,6 @@ const CurrentLessonBar = ({ data, isFreshStart, hasSession }: any) => {
       setCurrentLesson(lesson);
       setCurrentChapter(chapter);
       setNextLesson(next_lesson);
-      console.log(lesson);
     } else {
       // setCurrentLesson(data?.chapters[0]?.lessons[0]);
     }
@@ -243,7 +242,6 @@ export default function StudyArea() {
   useEffect(() => {
     if (!sessionData) {
       refetch();
-      console.log("refetching");
       return;
     }
   }, [sessionData]);

@@ -119,6 +119,17 @@ export const examsApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 0,
     }),
+
+    getExamSet: builder.query<any | ErrorResult,  string | undefined>({
+      query: (id) => ({
+        url: `/exam-set/${id}`,
+        method: ENDPOINT.HTTP_METHODS.GET,
+        headers: {
+          Authorization: requestAuthorization(),
+        }
+      }),
+      keepUnusedDataFor: 0,
+    }),
     getExamSession: builder.query<any | ErrorResult,  string | undefined>({
       query: (id) => ({
         url: `/exams/session/${id}`,

@@ -27,7 +27,7 @@ const UniversityCard: FC<UniversityCardProps> = ({ name, id, image_path }) => {
 
     if (sidebar.examFlag) {
       // return navigate(`/student/dashboard/${id}`);
-    }
+    }1
     return navigate(`/student/dashboard/onboarding/university/${id}`);
   };
 
@@ -59,19 +59,21 @@ interface ExamCardProps {
   color?: string;
   image_path?: any;
   id?: any;
+  isRegistered?: boolean;
 }
 
-const ExamCard: FC<ExamCardProps> = ({ name, color, id, image_path }) => {
+const ExamCard: FC<ExamCardProps> = ({ name, color, id, image_path, isRegistered }) => {
   const navigate = useNavigate();
 
   const isDisabled = !name?.toLowerCase().includes("jamb");
+
 
   const sidebar = useSelector(selectSidebar);
 
   const handleClick = () => {
     if (isDisabled) return;
 
-    if (sidebar.examFlag) {
+    if (isRegistered) {
       return navigate(`/student/dashboard/exam/${id}`);
     }
     return navigate(`/student/dashboard/onboarding/admissions/${id}`, {
@@ -127,6 +129,10 @@ export default function Onboarding() {
   const { data: universities, isLoading: isLoadingUni } =
     examsApiSlice.useGetUniversitiesQuery("");
 
+  const accountExams = examsApiSlice.useGetAccountExamsQuery(null);
+
+  const registeredExams = accountExams?.data?.data?.map((e: any) => e.id) ?? []
+
   return (
     <div className="mt-7 pb-12">
       <div className=" mb-12">
@@ -137,11 +143,12 @@ export default function Onboarding() {
       <div>
         <p className="mb-4 text-2xl">Pre-University Exams</p>
         <div className="gap-5 grid grid-cols-1 lg:grid-cols-3">
-          {!isLoadingAdmissionExams ? (
+          {!isLoadingAdmissionExams && !accountExams.isLoading ? (
             admissionExams?.data?.map((exam: ExamCardProps, index: number) => (
               <ExamCard
                 key={exam.name}
                 id={exam.id}
+                isRegistered={registeredExams.includes(exam.id)}
                 {...exam}
                 color={exams[index % exams.length]?.color}
               />

@@ -18,10 +18,14 @@ import ParentRoutes from "./routes/parent.route";
 import { useToken } from "./hooks/useToken";
 import Assessment from "./pages/Dashboard/student/exams/Assessment";
 import { NoticeProvider } from "./hooks/useExamNotice";
+import { useDispatch } from "react-redux";
+import { examsApiSlice } from "./services/api/examsSlice";
 
 const env = import.meta.env;
 
 function App() {
+
+    const dispatch = useDispatch();
   useEffect(() => {
     const token = useToken();
     ConfigureLibrary.save({
@@ -29,6 +33,10 @@ function App() {
       authType: "student",
       token: token ? token : "",
     });
+
+    //@ts-ignore
+    dispatch(examsApiSlice.endpoints.getAccountExams.initiate());
+
   }, []);
 
   return (

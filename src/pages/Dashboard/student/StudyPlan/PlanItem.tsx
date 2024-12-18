@@ -115,8 +115,6 @@ const PlanItem = React.forwardRef(
         (subject) => !existingSubjects.find((sub) => sub.id == subject.id)
       );
 
-      console.log(subjects)
-
       if (newSubject) {
         setSchedules((prev) => [
           ...prev,
