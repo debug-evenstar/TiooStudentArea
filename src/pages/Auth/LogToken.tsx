@@ -46,6 +46,7 @@ const LogToken = () => {
               school: res.data.data.schoolStudent,
               independent: res.data.data.student_type,
               metadata: res.data.data.metadata,
+              display_image: res.data.data.display_image
             })
           );
           if (token) {

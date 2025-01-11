@@ -19,6 +19,7 @@ import ExamDashboard from "../pages/Dashboard/student/ExamDashboard";
 import PracticeExam from "../pages/Dashboard/student/exams/PractiveExam";
 import PasswordReset from "../pages/Dashboard/student/settings/PasswordReset";
 import SetStudyPlan from "../pages/Dashboard/student/settings/SetStudyPlan";
+import ProfileSettings from "../pages/Dashboard/student/settings/ProfileSettings";
 
 function StudentRoutes() {
   return (
@@ -53,6 +54,7 @@ function StudentRoutes() {
         <Route path="dashboard/referral" element={<Referral />} />
         <Route path="dashboard/settings">
           <Route path="" element={<Settings />} />
+          <Route path="profile" element={<ProfileSettings />} />
           <Route path="reset-password" element={<PasswordReset />} />
           <Route path="set-study-plan" element={<SetStudyPlan />} />
         </Route>

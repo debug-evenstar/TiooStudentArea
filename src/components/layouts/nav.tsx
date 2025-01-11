@@ -9,11 +9,25 @@ import { useState } from "react";
 import { logoutUser } from "../../utils/logout";
 import { FaArrowLeft } from "react-icons/fa6";
 import { HiBars3 } from "react-icons/hi2";
+import { userApiSlice } from "../../services/api/userSlice";
+import Skeleton from "react-loading-skeleton";
 
-const Profile = ({ user }: { user: any }) => {
+const Profile = () => {
+  const { user } = useSelector(selectUser);
+
+  const { data, isLoading } = userApiSlice.useGetUserInformationQuery();
+  console.log(user)
   return (
     <div className="flex items-center space-x-3">
-      <img src={profilePic} alt="" className="w-[38px] h-[38px] rounded-full" />
+      {isLoading ? (
+        <Skeleton circle className="w-[38px] h-[38px] rounded-full" />
+      ) : (
+        <img
+          src={data?.data?.display_image || profilePic}
+          alt=""
+          className="w-[38px] h-[38px] rounded-full"
+        />
+      )}
       <div className="text-sm hidden sm:block">
         <p className="font-[500] capitalize">{user?.name}</p>
         <button onClick={logoutUser} className="font-[300]">
@@ -35,8 +49,6 @@ export default function Nav({ pages, hasBack, sideOpen, setSideOpen }: any) {
   );
 
   const navigate = useNavigate();
-
-  const { user } = useSelector(selectUser);
 
   const [search, setSearchValue] = useState("");
   const handleSearchChange = (e: any) => {
@@ -74,7 +86,7 @@ export default function Nav({ pages, hasBack, sideOpen, setSideOpen }: any) {
       />
       <div className="flex items-center space-x-4">
         <Notifications />
-        <Profile user={user} />
+        <Profile />
       </div>
     </div>
   );

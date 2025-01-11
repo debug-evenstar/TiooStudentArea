@@ -1,4 +1,4 @@
-import { FaBook, FaLock } from "react-icons/fa6";
+import { FaBook, FaLock, FaUser } from "react-icons/fa6";
 import SettingsMenu from "../../../components/Common/SettingsMenu";
 
   
@@ -6,6 +6,7 @@ import SettingsMenu from "../../../components/Common/SettingsMenu";
     const settingsLinks = [
       { name: 'Reset Password', link: '/student/dashboard/settings/reset-password', icon: <FaLock /> },
       { name: 'Set Study Plan', link: '/student/dashboard/settings/set-study-plan', icon: <FaBook /> },
+      { name: 'Update profile', link: '/student/dashboard/settings/profile', icon: <FaUser /> },
     ];
 
 

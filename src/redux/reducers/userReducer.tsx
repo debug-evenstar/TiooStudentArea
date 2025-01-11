@@ -21,7 +21,8 @@ const initialState = {
     independent: "",
     metadata: null,
     studyPlan: null,
-    studyPlans: null
+    studyPlans: null,
+    display_image: null,
   } as StudentProfile,
   shelf: [] as number[],
 

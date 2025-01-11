@@ -31,4 +31,5 @@ export interface StudentProfile {
     metadata?: any;
     studyPlan?: any;
     studyPlans?: any;
+    display_image: null | string;
 }

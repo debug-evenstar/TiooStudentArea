@@ -8,6 +8,7 @@ export const FormInput = ({
   name,
   errorMessage,
   label,
+  value,
   className,
 }: any) => {
   const [visible, setVisible] = useState(false);
@@ -22,6 +23,7 @@ export const FormInput = ({
           type={type == "password" ? (!visible ? "password" : "text") : type}
           placeholder={placeholder}
           onChange={handleChange}
+          value={value}
           name={name}
           className="outline-none focus:border-main mt-2 w-full text-sm px-3 py-2.5 border border-gray-300 rounded"
         />

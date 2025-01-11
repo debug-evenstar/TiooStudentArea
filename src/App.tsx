@@ -20,6 +20,7 @@ import Assessment from "./pages/Dashboard/student/exams/Assessment";
 import { NoticeProvider } from "./hooks/useExamNotice";
 import { useDispatch } from "react-redux";
 import { examsApiSlice } from "./services/api/examsSlice";
+import Subscription from "./pages/Payment/Subscription";
 
 const env = import.meta.env;
 
@@ -46,6 +47,7 @@ function App() {
         <Routes>
           {/* auth routes */}
           <Route path="/auth/:token" element={<LogToken />} />
+          <Route path="/subscription" element={<Subscription/>}/>
           <Route element={<ProtectedRoutes />}>
             {StudentRoutes()}
             {/* {ParentRoutes()} */}
