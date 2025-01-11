@@ -46,7 +46,7 @@ const TargetScoreCard = ({
               className="w-10/12 h-8"
               thumbClassName="h-4 w-4 border shrink-0  bg-[#4285F4] bg-white outline-none shadow-md rounded-full -mt-1"
               trackClassName="h-2 bg-gray-200 rounded-full"
-              value={currentScore}
+              value={currentScore ?? 0}
               min={0}
               max={400}
               renderTrack={(props: any, state: any) => (

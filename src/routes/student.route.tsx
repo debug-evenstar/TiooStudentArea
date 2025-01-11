@@ -20,6 +20,7 @@ import PracticeExam from "../pages/Dashboard/student/exams/PractiveExam";
 import PasswordReset from "../pages/Dashboard/student/settings/PasswordReset";
 import SetStudyPlan from "../pages/Dashboard/student/settings/SetStudyPlan";
 import ProfileSettings from "../pages/Dashboard/student/settings/ProfileSettings";
+import Subscription from "../pages/Payment/Subscription";
 
 function StudentRoutes() {
   return (
@@ -61,8 +62,8 @@ function StudentRoutes() {
 
         <Route path="*" element={<Navigate to="dashboard/home" />} />
       </Route>
-      <Route path="/book" element={<StudyLayout pages={studentPages} />}>
-        <Route path="study-area/:bookId" element={<StudyArea />} />
+      <Route element={<StudyLayout pages={studentPages} />}>
+        <Route path="/book/study-area/:bookId" element={<StudyArea />} />
       </Route>
     </>
   );

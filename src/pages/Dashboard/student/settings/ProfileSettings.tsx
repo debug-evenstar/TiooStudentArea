@@ -35,13 +35,13 @@ export default function ProfileSettings() {
   }, [data]);
 
   useEffect(() => {
-    if (!user) return;
-    const [firstName, lastName] = user?.name?.split(" ");
+    if (!data) return;
+    const [firstName, lastName] = data?.data?.name?.split(" ");
     setFormData({
       first_name: firstName,
       last_name: lastName,
     });
-  }, [user]);
+  }, [data]);
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -62,8 +62,10 @@ export default function ProfileSettings() {
     e.preventDefault();
 
     const formdata = new FormData();
-    formdata.append("first_name", formData.first_name);
-    formdata.append("last_name", formData.last_name);
+    // formdata.append("first_name", formData.first_name);
+    // formdata.append("last_name", formData.last_name);
+    formdata.append('name',`${formData.first_name} ${formData.last_name}`)
+
     if (selectedImage) {
       formdata.append("file", selectedImage); // Append the selected file
     }

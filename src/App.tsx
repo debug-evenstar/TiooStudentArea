@@ -25,8 +25,7 @@ import Subscription from "./pages/Payment/Subscription";
 const env = import.meta.env;
 
 function App() {
-
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   useEffect(() => {
     const token = useToken();
     ConfigureLibrary.save({
@@ -37,7 +36,6 @@ function App() {
 
     //@ts-ignore
     dispatch(examsApiSlice.endpoints.getAccountExams.initiate());
-
   }, []);
 
   return (
@@ -47,8 +45,8 @@ function App() {
         <Routes>
           {/* auth routes */}
           <Route path="/auth/:token" element={<LogToken />} />
-          <Route path="/subscription" element={<Subscription/>}/>
           <Route element={<ProtectedRoutes />}>
+            <Route path="/subscription" element={<Subscription />} />
             {StudentRoutes()}
             {/* {ParentRoutes()} */}
             <Route path="/books/:bookId/study" element={<Study />} />
