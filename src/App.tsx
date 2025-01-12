@@ -3,29 +3,29 @@ import {
   Routes,
   Route,
   Navigate,
-  useNavigate,
 } from "react-router-dom";
 import "./App.css";
 import ScrollToTop from "./utils/scrollTop";
 import LogToken from "./pages/Auth/LogToken";
 import { ConfigureLibrary } from "@Praxeum-ai/LearnBlocks";
-import Study from "./pages/Dashboard/student/books/Study";
-import { useEffect } from "react";
-
+import { lazy, Suspense, useEffect } from "react";
 import ProtectedRoutes from "./components/Auth/ProtectedRoutes";
 import StudentRoutes from "./routes/student.route";
-import ParentRoutes from "./routes/parent.route";
 import { useToken } from "./hooks/useToken";
-import Assessment from "./pages/Dashboard/student/exams/Assessment";
 import { NoticeProvider } from "./hooks/useExamNotice";
 import { useDispatch } from "react-redux";
 import { examsApiSlice } from "./services/api/examsSlice";
 import Subscription from "./pages/Payment/Subscription";
 
+// Lazy load components
+const Study = lazy(() => import("./pages/Dashboard/student/books/Study"));
+const Assessment = lazy(() => import("./pages/Dashboard/student/exams/Assessment"));
+
 const env = import.meta.env;
 
 function App() {
   const dispatch = useDispatch();
+
   useEffect(() => {
     const token = useToken();
     ConfigureLibrary.save({
@@ -48,11 +48,25 @@ function App() {
           <Route element={<ProtectedRoutes />}>
             <Route path="/subscription" element={<Subscription />} />
             {StudentRoutes()}
-            {/* {ParentRoutes()} */}
-            <Route path="/books/:bookId/study" element={<Study />} />
+            {/* ParentRoutes can be included here */}
+            <Route
+              path="/books/:bookId/study"
+              element={
+                <Suspense fallback={<div>Loading Study...</div>}>
+                  <Study />
+                </Suspense>
+              }
+            />
           </Route>
+          <Route
+            path="/exams/assessment/:exam_id"
+            element={
+              <Suspense fallback={<div>Loading Assessment...</div>}>
+                <Assessment />
+              </Suspense>
+            }
+          />
           <Route path="*" element={<Navigate to="/student/dashboard/home" />} />
-          <Route path="exams/assessment/:exam_id" element={<Assessment />} />
         </Routes>
       </NoticeProvider>
     </BrowserRouter>

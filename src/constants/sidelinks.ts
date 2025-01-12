@@ -1,3 +1,4 @@
+import { FaCreditCard } from "react-icons/fa6";
 import { AnalyticsIcon, BooksIcon, DashboardIcon, ExamIcon, NetworkIcon, ReferralsIcon, SettingsIcon } from "../components/Icons";
 
 export const studentPages: any[] = [
@@ -11,6 +12,7 @@ export const studentPages: any[] = [
   {name: "Analytics",Icon: AnalyticsIcon,route: '/student/dashboard/analytics',submenu: []},
   {name: "Socials",Icon: NetworkIcon,route: '/student/dashboard/network',submenu: []},
   {name: "Referrals",Icon: ReferralsIcon,route: '/student/dashboard/referral',submenu: []},
+  {name: "Subscriptions",Icon: FaCreditCard,route: '/subscription',submenu: []},
   {name: "Settings",Icon: SettingsIcon,route: '/student/dashboard/settings',submenu: []},
 ];
 

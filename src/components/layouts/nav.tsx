@@ -18,7 +18,7 @@ const Profile = () => {
   const { user } = useSelector(selectUser);
 
   const { data, isLoading } = userApiSlice.useGetUserInformationQuery();
-  console.log(name);
+
   return (
     <div className="flex items-center space-x-3">
       {isLoading ? (
