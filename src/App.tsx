@@ -16,6 +16,7 @@ import { NoticeProvider } from "./hooks/useExamNotice";
 import { useDispatch } from "react-redux";
 import { examsApiSlice } from "./services/api/examsSlice";
 import Subscription from "./pages/Payment/Subscription";
+import CTOnboarding from "./pages/CT/Onboarding";
 
 // Lazy load components
 const Study = lazy(() => import("./pages/Dashboard/student/books/Study"));
@@ -47,6 +48,7 @@ function App() {
           <Route path="/auth/:token" element={<LogToken />} />
           <Route element={<ProtectedRoutes />}>
             <Route path="/subscription" element={<Subscription />} />
+            <Route path="/ct/onboarding" element={<CTOnboarding />} />
             {StudentRoutes()}
             {/* ParentRoutes can be included here */}
             <Route
