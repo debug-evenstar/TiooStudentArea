@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../redux/reducers/userReducer";
 
 const CTForm = () => {
   const [formData, setFormData] = useState({
@@ -27,6 +29,20 @@ const CTForm = () => {
     birthday: "",
     receiptFiles: [],
   });
+
+  const { user } = useSelector(selectUser);
+
+  useEffect(() => {
+    if (user) {
+      const [firstname, lastname] = user.name.split(" ");
+      setFormData({
+        ...formData,
+        firstName: firstname,
+        surname: lastname,
+        email: user.email,
+      });
+    }
+  }, [user]);
 
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
@@ -58,12 +74,11 @@ const CTForm = () => {
         </p>
 
         {/* Email */}
-        <label className="text-gray-700 block mb-2">
-          Email*
-        </label>
+        <label className="text-gray-700 block mb-2">Email*</label>
         <input
           type="email"
           name="email"
+          readOnly
           value={formData.email}
           onChange={handleInputChange}
           className="w-full p-2 border border-gray-300 rounded mb-4"
@@ -170,7 +185,9 @@ const CTForm = () => {
         />
 
         {/* File Upload */}
-        <label className="text-gray-700 block mb-2">UPLOAD YOUR PAYMENT RECEIPT*</label>
+        <label className="text-gray-700 block mb-2">
+          UPLOAD YOUR PAYMENT RECEIPT*
+        </label>
         <input
           type="file"
           accept="image/*,application/pdf"
@@ -180,7 +197,9 @@ const CTForm = () => {
         />
 
         {/* Referral */}
-        <label className="text-gray-700 block mb-2">HOW DID YOU COME ACROSS CT?*</label>
+        <label className="text-gray-700 block mb-2">
+          HOW DID YOU COME ACROSS CT?*
+        </label>
         <select
           name="referral"
           value={formData.referral}
