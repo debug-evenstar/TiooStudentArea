@@ -6,22 +6,20 @@ import { dashboardApiSlice } from "../../services/api/dashboardSlice";
 import { toast } from "react-toastify";
 import { FaCopy } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import StudentInfoModal from "../../components/dashboard/common/StudentInfoModal";
+import ProfileImageModal from "../../components/dashboard/common/ProfileImageModal";
+import WhatsAppPromptModal from "../../components/dashboard/common/WhatsapPrompt";
 
-const pricePerBook = 3500;
-const pricePerSubject = 3500;
+const perMonth = 8000;
+const perDuration = 2000;
 
-
-
-const BankTransferModal = ({ isOpen, onClose, amount, text }: any) => {
+const BankTransferModal = ({ isOpen, onClose, amount, next, text }: any) => {
   if (!isOpen) return null;
-  const navigate = useNavigate();
-
-  const template = `https://api.whatsapp.com/send?phone=2347018481060&text=${encodeURIComponent(text)}`
 
   const handleClick = () => {
-    const newTab = window.open(template,'_blank')
-    newTab?.focus();
-  }
+    next();
+    onClose();
+  };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center urbanist bg-black bg-opacity-50 z-50">
@@ -39,7 +37,8 @@ const BankTransferModal = ({ isOpen, onClose, amount, text }: any) => {
           Pay with Bank Transfer
         </h2>
         <p className="text-center text-sm text-gray-500 mb-4">
-          Amount to be paid <span className="text-gray-900">₦{amount?.toLocaleString()}</span>
+          Amount to be paid{" "}
+          <span className="text-gray-900">₦{amount?.toLocaleString()}</span>
         </p>
 
         {/* Account Details */}
@@ -47,20 +46,24 @@ const BankTransferModal = ({ isOpen, onClose, amount, text }: any) => {
           <p className="text-sm text-gray-500 mb-2">
             <span className="">Bank Name:</span>
             <br />
-            <span className="text-gray-800">First Bank</span>
+            <span className="text-gray-800">Access Bank</span>
           </p>
           <p className="text-sm text-gray-500 mb-2">
             <span className="">Account Name:</span>
             <br />
-            <span className="text-gray-800">Paul Patrick</span>
+            <span className="text-gray-800">Ajayi Michael Ilemobayo</span>
           </p>
           <div className="text-sm text-gray-500 ">
-            <span className="inline-block">Account Number:</span><br/>
+            <span className="inline-block">Account Number:</span>
+            <br />
             <div className="flex w-full items-center justify-between">
-              <span className="text-gray-800">0098765446</span>
+              <span className="text-gray-800">1522543372</span>
               <button
                 className="ml-2 p-1 rounded bg-gray-200 text-gray-600 hover:bg-gray-300"
-                onClick={() =>  { navigator.clipboard.writeText("0098765446") ; toast.info("copied") }}
+                onClick={() => {
+                  navigator.clipboard.writeText("0098765446");
+                  toast.info("copied");
+                }}
               >
                 <FaCopy />
               </button>
@@ -71,7 +74,7 @@ const BankTransferModal = ({ isOpen, onClose, amount, text }: any) => {
         {/* Note */}
         <p className="text-xs text-gray-900 text-center mb-4">
           Note: Kindly transfer the exact amount to the designated account
-          <br className="hidden lg:block"/>
+          <br className="hidden lg:block" />
           details
         </p>
 
@@ -87,9 +90,9 @@ const BankTransferModal = ({ isOpen, onClose, amount, text }: any) => {
   );
 };
 
-const SummaryCard = ({ selectedSubjects, selectedBooks }: any) => {
+const SummaryCard = ({ selectedSubjects, selectedBooks, target }: any) => {
   const totalCourses = selectedSubjects.length;
-  const totalBooks = selectedBooks.length;
+  // const totalBooks = selectedBooks.length;
 
   return (
     <div className="bg-white lg:rounded-[24px] shadow-lg p-6 ">
@@ -99,23 +102,23 @@ const SummaryCard = ({ selectedSubjects, selectedBooks }: any) => {
           <span>Total Subjects</span>
           <span className="font-medium">{totalCourses}</span>
         </div>
-        <div className="flex justify-between">
+        {/* <div className="flex justify-between">
           <span>Total Mock Exams</span>
           <span className="font-medium">{totalBooks}</span>
+        </div> */}
+        <div className="flex justify-between">
+          <span>Price per Month</span>
+          <span className="font-medium">₦ {perMonth.toLocaleString()}</span>
         </div>
         <div className="flex justify-between">
-          <span>Price per Subject</span>
-          <span className="font-medium">₦ {pricePerSubject.toLocaleString()}</span>
-        </div>
-        <div className="flex justify-between">
-          <span>Price per Past Question</span>
-          <span className="font-medium">₦ {pricePerBook.toLocaleString()}</span>
+          <span>Duration of tutorials(10 weeks)</span>
+          <span className="font-medium">₦ {perDuration.toLocaleString()}</span>
         </div>
       </div>
       <div className="mt-8 border-t pt-4 flex justify-between text-gray-700">
         <span className="font-medium text-lg">Total</span>
         <span className="font-semibold text-lg">
-          ₦ {(totalCourses * pricePerSubject + totalBooks * pricePerBook).toLocaleString()}
+          ₦ {(target == "monthly" ? perMonth : perDuration).toLocaleString()}
         </span>
       </div>
     </div>
@@ -160,11 +163,14 @@ function SubjectSelection({
   setSelectedSubjects,
   selectedBooks,
   setSelectedBooks,
+  target,
+  setTarget,
 }: any) {
-  const [selectAll, setSelectAll] = useState(false);
+  const [selectAll, setSelectAll] = useState(true);
   const [books, setBooks] = useState([]);
 
   const handleSubjectToggle = (subject: any) => {
+    return;
     if (selectedSubjects.some((s: any) => s.id === subject.id)) {
       setSelectedSubjects((prev: any) =>
         prev.filter((s: any) => s.id !== subject.id)
@@ -183,11 +189,11 @@ function SubjectSelection({
     setSelectAll(!selectAll);
   };
 
-  const handleBookToggle = (index: any) => {
-    if (selectedBooks.includes(index)) {
-      setSelectedBooks((prev: any) => prev.filter((i: any) => i !== index));
+  const handleBookToggle = (id: any) => {
+    if (selectedBooks.includes(id)) {
+      setSelectedBooks((prev: any) => prev.filter((i: any) => i !== id));
     } else {
-      setSelectedBooks((prev: any) => [...prev, index]);
+      setSelectedBooks((prev: any) => [...prev, id]);
     }
   };
 
@@ -201,6 +207,7 @@ function SubjectSelection({
 
   const { data, isLoading, refetch } =
     dashboardApiSlice.useGetLibraryBooksQuery(null);
+
   useEffect(() => {
     setBooks(
       data?.data?.filter(
@@ -209,19 +216,32 @@ function SubjectSelection({
     );
   }, [data]);
 
+  useEffect(() => {
+    setSelectedSubjects(subjects);
+    console.log(subjects, selectedSubjects);
+  }, [subjects]);
 
   return (
     <div className="p-6 rounded-lg quicksand text-gray-700">
       <h2 className="text-lg font-semibold mb-4">
-        Select the subjects to subscribe to!
+        These are the subjects you are subscribing to!
       </h2>
-      <div className="flex items-center justify-end gap-3 mb-4">
+      <div className="flex items-center gap-6 mb-4">
         <label className="cursor-pointer">
-          Select all
+          Monthly
           <input
             type="checkbox"
-            checked={selectAll}
-            onChange={handleSelectAll}
+            checked={target == "monthly"}
+            onChange={() => setTarget("monthly")}
+            className="accent-primary ml-2"
+          />
+        </label>
+        <label className="cursor-pointer">
+          Duration (10weeks)
+          <input
+            type="checkbox"
+            checked={target == "duration"}
+            onChange={() => setTarget("duration")}
             className="accent-primary ml-2"
           />
         </label>
@@ -240,6 +260,7 @@ function SubjectSelection({
             <span>{subject.name}</span>
             <input
               type="radio"
+              // checked={selectedSubjects.some((s: any) => s.id === subject.id)}
               checked={selectedSubjects.some((s: any) => s.id === subject.id)}
               readOnly
               className="accent-primary"
@@ -247,7 +268,7 @@ function SubjectSelection({
           </div>
         ))}
       </div>
-      <div className="mt-6">
+      {/* <div className="mt-6">
         <h3 className="font-semibold mb-3">Past Questions & Answers</h3>
         <div className="grid grid-cols-2 gap-4">
           {books?.map((book: any, index) => (
@@ -265,7 +286,7 @@ function SubjectSelection({
             </label>
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
@@ -275,10 +296,16 @@ export default function Subscription() {
   const [selectedSubjects, setSelectedSubjects] = useState<any>([]);
   const [selectedBooks, setSelectedBooks] = useState<any>([]);
   const [isChecked, setIsChecked] = useState(false);
+  2;
   const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
   const [total, setTotal] = useState(0);
-  const [text, setText ] = useState('');
+  const [text, setText] = useState("");
 
+  const [target, setTarget] = useState("monthly");
+
+  const [formModal, setFormModal] = useState(false);
+  const [photoModal, setPhotoModal] = useState(false);
+  const [whatsappModal, setWhatsappModal] = useState(false);
 
   useEffect(() => {
     const totalCourses = selectedSubjects.length;
@@ -286,21 +313,8 @@ export default function Subscription() {
     const total = totalCourses * 3500 + totalBooks * 1000;
     setTotal(total);
 
-    setText(
-      "*PAYMENT NOTIFICATION*\n\n" +
-      "*Subjects:*\n" +
-      `${selectedSubjects?.map((s: any) => s.name).join('\n')}\n\n` +
-    
-      "*Past Questions:*\n" +
-      `${selectedBooks?.map((s: any) => s.name).join('\n')}\n\n` +
-    
-      `*Amount per subject:* ${pricePerSubject}\n` +
-      `*Amount per book:* ${pricePerBook}\n` +
-      `*Total:* ${total}\n`
-    );
-    
+    setText("DOCUMENTATION");
   }, [selectedSubjects, selectedBooks]);
-
 
   const handleProceedToPayment = () => {
     if (isChecked) {
@@ -308,6 +322,15 @@ export default function Subscription() {
     } else {
       toast.error("You need to agree to the terms and conditions.");
     }
+  };
+
+  const template = `https://api.whatsapp.com/send?phone=2347018481060&text=${encodeURIComponent(
+    text
+  )}`;
+
+  const openWhatsapp = () => {
+    const newTab = window.open(template, "_blank");
+    newTab?.focus();
   };
 
   return (
@@ -326,11 +349,13 @@ export default function Subscription() {
                   setSelectedSubjects,
                   selectedBooks,
                   setSelectedBooks,
+                  target,
+                  setTarget,
                 }}
               />
             </div>
             <div className="flex flex-col gap-8 h-full lg:rounded-[24px] lg:ml-28">
-              <SummaryCard {...{ selectedSubjects, selectedBooks }} />
+              <SummaryCard {...{ selectedSubjects, target, selectedBooks }} />
               <TermsAndPayment
                 isChecked={isChecked}
                 onClick={handleProceedToPayment}
@@ -345,9 +370,33 @@ export default function Subscription() {
       <BankTransferModal
         isOpen={isModalOpen}
         text={text}
-        amount={total}
-        onClose={() => setIsModalOpen(false)} // Close the modal
+        next={() => setFormModal(true)}
+        amount={target == "monthly" ? perMonth : perDuration}
+        onClose={() => setIsModalOpen(false)} 
       />
+
+      {formModal && (
+        <StudentInfoModal
+          next={() => setPhotoModal(true)}
+          onClose={() => setFormModal(false)}
+        />
+      )}
+
+      {
+        <ProfileImageModal
+          isOpen={photoModal}
+          next={() => setWhatsappModal(true)}
+          onClose={() => setPhotoModal(false)}
+        />
+      }
+
+      {
+        <WhatsAppPromptModal
+          isOpen={whatsappModal}
+          onWhatsAppClick={openWhatsapp}
+          onClose={() => setWhatsappModal(false)}
+        />
+      }
     </div>
   );
 }

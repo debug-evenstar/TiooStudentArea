@@ -48,7 +48,7 @@ const StudentInfoModal = ({ close, next }: any) => {
         firstName: firstname,
         surname: lastname,
         email: user.email,
-        course: subjects?.map((s: any) => s.name).join(", "),
+        subjects: subjects?.map((s: any) => s.name).join(", "),
       });
     }
   }, [user]);
@@ -162,7 +162,22 @@ const StudentInfoModal = ({ close, next }: any) => {
           </label>
         </div>
 
-
+        <div>
+          <label className="text-gray-700 block mb-2">
+            SUBJECT COMBINATION*
+          </label>
+          <input
+            type="text"
+            name={"course"}
+            //@ts-ignore
+            value={formData.subjects}
+            onChange={handleInputChange}
+            className={`w-full p-2 border border-gray-300 rounded mb-4 text-gray-400
+              `}
+            required
+            readOnly
+          />
+        </div>
 
         <label className="text-gray-700 block mb-2">WEAK SUBJECT?*</label>
         <select
@@ -177,23 +192,6 @@ const StudentInfoModal = ({ close, next }: any) => {
           ))}
           <option value="">Select an option</option>
         </select>
-
-
-        <div >
-            <label className="text-gray-700 block mb-2">DESIRED COURSES*</label>
-            <input
-              type="text"
-              
-              name={'course'}
-              //@ts-ignore
-              value={formData.course}
-              onChange={handleInputChange}
-              className={`w-full p-2 border border-gray-300 rounded mb-4 text-gray-400
-              `}
-              required
-              readOnly
-            />
-          </div>
 
         {/* Other Fields */}
         {[
@@ -217,14 +215,14 @@ const StudentInfoModal = ({ close, next }: any) => {
             name: "parentPhone",
             readOnly: false,
           },
-          // { label: "DESIRED COURSE*", name: "course", readOnly: true },
+          { label: "DESIRED COURSE*", name: "course", readOnly: true },
           // { label: "DESIRED UTME SCORE*", name: "utmeScore", readOnly: false },
           {
             label: "INSTITUTION/SCHOOL OF CHOICE*",
             name: "institution",
             readOnly: false,
           },
-          { label: "SUBJECTS COMBINATION*", name: "subjects", readOnly: false },
+          // { label: "SUBJECTS COMBINATION*", name: "subjects", readOnly: false },
           // { label: "WEAK SUBJECT*", name: "weakSubject", readOnly: false },
           { label: "MAIN CHALLENGE*", name: "mainChallenge", readOnly: false },
           { label: "FEAR*", name: "fear", readOnly: false },
@@ -280,7 +278,6 @@ const StudentInfoModal = ({ close, next }: any) => {
           className="w-full p-2 border border-gray-300 rounded mb-4"
         />
 
-
         {/* Referral */}
         <label className="text-gray-700 block mb-2">
           HOW DID YOU COME ACROSS CT?*
@@ -300,6 +297,24 @@ const StudentInfoModal = ({ close, next }: any) => {
           <option value="THROUGH YOUR PARENTS/GUARDIAN">
             THROUGH YOUR PARENTS/GUARDIAN
           </option>
+
+          <option value="THROUGH THE FREE TUTORIAL">
+            THROUGH THE FREE TUTORIAL
+          </option>
+
+          <option value="THROUGH SOMEONE STATUS">THROUGH SOMEONE STATUS</option>
+
+          <option value="THROUGH FACEBOOK">THROUGH FACEBOOK</option>
+
+          <option value="THROUGH YOUTUBE">THROUGH YOUTUBE</option>
+
+          <option value="THROUGH INSTAGRAM">THROUGH INSTAGRAM</option>
+
+          <option value="THROUGH AN EX CT STUDENT">
+            THROUGH AN EX CT STUDENT
+          </option>
+
+          <option value="THROUGH TIKTOK">THROUGH TIKTOK</option>
         </select>
 
         <div>
