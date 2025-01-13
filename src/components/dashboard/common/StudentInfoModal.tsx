@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/reducers/userReducer";
+import { examsApiSlice } from "../../../services/api/examsSlice";
 
-const CTForm = () => {
+const StudentInfoModal = ({ close, next }: any) => {
   const [formData, setFormData] = useState({
     email: "",
     registrationNo: "",
@@ -31,6 +32,13 @@ const CTForm = () => {
   });
 
   const { user } = useSelector(selectUser);
+  const accountExams = examsApiSlice.useGetAccountExamsQuery(null);
+
+  const currentExam = accountExams?.data?.data.find((e: any) =>
+    e.name.toLowerCase().includes("jamb")
+  );
+  const subjects: { id: number; name: string }[] =
+    currentExam?.AccountExam.subjects ?? [];
 
   useEffect(() => {
     if (user) {
@@ -40,6 +48,7 @@ const CTForm = () => {
         firstName: firstname,
         surname: lastname,
         email: user.email,
+        course: subjects?.map((s: any) => s.name).join(", "),
       });
     }
   }, [user]);
@@ -81,7 +90,7 @@ const CTForm = () => {
           readOnly
           value={formData.email}
           onChange={handleInputChange}
-          className="w-full p-2 border border-gray-300 rounded mb-4"
+          className="w-full p-2 border text-gray-400 border-gray-300 rounded mb-4"
           required
         />
 
@@ -117,6 +126,17 @@ const CTForm = () => {
           required
         />
 
+        {/* First Name */}
+        <label className="text-gray-700 block mb-2">OTHER NAME*</label>
+        <input
+          type="text"
+          name="otherName"
+          value={formData.otherName}
+          onChange={handleInputChange}
+          className="w-full p-2 border border-gray-300 rounded mb-4"
+          required
+        />
+
         {/* Gender */}
         <label className="text-gray-700 block mb-2">GENDER*</label>
         <div className="mb-4">
@@ -142,22 +162,83 @@ const CTForm = () => {
           </label>
         </div>
 
+
+
+        <label className="text-gray-700 block mb-2">WEAK SUBJECT?*</label>
+        <select
+          name="weakSubject"
+          value={formData.weakSubject}
+          onChange={handleInputChange}
+          className="w-full p-2 border border-gray-300 rounded mb-4"
+          required
+        >
+          {subjects?.map((s: any) => (
+            <option value={s.name}>{s.name}</option>
+          ))}
+          <option value="">Select an option</option>
+        </select>
+
+
+        <div >
+            <label className="text-gray-700 block mb-2">DESIRED COURSES*</label>
+            <input
+              type="text"
+              
+              name={'course'}
+              //@ts-ignore
+              value={formData.course}
+              onChange={handleInputChange}
+              className={`w-full p-2 border border-gray-300 rounded mb-4 text-gray-400
+              `}
+              required
+              readOnly
+            />
+          </div>
+
         {/* Other Fields */}
         {[
-          { label: "TELEGRAM PHONE NUMBER*", name: "telegramPhone" },
-          { label: "WHATSAPP NUMBER*", name: "whatsappNumber" },
-          { label: "PARENT/GUARDIAN NAME*", name: "parentName" },
-          { label: "PARENT/GUARDIAN ACTIVE NO*", name: "parentPhone" },
-          { label: "DESIRED COURSE*", name: "course" },
-          { label: "DESIRED UTME SCORE*", name: "utmeScore" },
-          { label: "INSTITUTION/SCHOOL OF CHOICE*", name: "institution" },
-          { label: "SUBJECTS COMBINATION*", name: "subjects" },
-          { label: "WEAK SUBJECT*", name: "weakSubject" },
-          { label: "MAIN CHALLENGE*", name: "mainChallenge" },
-          { label: "FEAR*", name: "fear" },
-          { label: "PAYMENT DETAILS: SENDER'S FULL NAME*", name: "senderName" },
-          { label: "PAYMENT DETAILS: SENDER'S BANK NAME*", name: "bankName" },
-          { label: "YOUR BIRTHDAY DATE?", name: "birthday" },
+          {
+            label: "TELEGRAM PHONE NUMBER*",
+            name: "telegramPhone",
+            readOnly: false,
+          },
+          {
+            label: "WHATSAPP NUMBER*",
+            name: "whatsappNumber",
+            readOnly: false,
+          },
+          {
+            label: "PARENT/GUARDIAN NAME*",
+            name: "parentName",
+            readOnly: false,
+          },
+          {
+            label: "PARENT/GUARDIAN ACTIVE NO*",
+            name: "parentPhone",
+            readOnly: false,
+          },
+          // { label: "DESIRED COURSE*", name: "course", readOnly: true },
+          // { label: "DESIRED UTME SCORE*", name: "utmeScore", readOnly: false },
+          {
+            label: "INSTITUTION/SCHOOL OF CHOICE*",
+            name: "institution",
+            readOnly: false,
+          },
+          { label: "SUBJECTS COMBINATION*", name: "subjects", readOnly: false },
+          // { label: "WEAK SUBJECT*", name: "weakSubject", readOnly: false },
+          { label: "MAIN CHALLENGE*", name: "mainChallenge", readOnly: false },
+          { label: "FEAR*", name: "fear", readOnly: false },
+          {
+            label: "PAYMENT DETAILS: SENDER'S FULL NAME*",
+            name: "senderName",
+            readOnly: false,
+          },
+          {
+            label: "PAYMENT DETAILS: SENDER'S BANK NAME*",
+            name: "bankName",
+            readOnly: false,
+          },
+          { label: "YOUR BIRTHDAY DATE?", name: "birthday", readOnly: false },
         ].map((field) => (
           <div key={field.name}>
             <label className="text-gray-700 block mb-2">{field.label}</label>
@@ -167,8 +248,11 @@ const CTForm = () => {
               //@ts-ignore
               value={formData[field.name]}
               onChange={handleInputChange}
-              className="w-full p-2 border border-gray-300 rounded mb-4"
+              className={`w-full p-2 border border-gray-300 rounded mb-4 ${
+                field.readOnly && "text-gray-400"
+              }`}
               required
+              readOnly={field.readOnly}
             />
           </div>
         ))}
@@ -196,6 +280,7 @@ const CTForm = () => {
           className="w-full p-2 border border-gray-300 rounded mb-4"
         />
 
+
         {/* Referral */}
         <label className="text-gray-700 block mb-2">
           HOW DID YOU COME ACROSS CT?*
@@ -215,8 +300,23 @@ const CTForm = () => {
           <option value="THROUGH YOUR PARENTS/GUARDIAN">
             THROUGH YOUR PARENTS/GUARDIAN
           </option>
-          {/* Add other options */}
         </select>
+
+        <div>
+          <label className="text-gray-700 block mb-2">
+            {" "}
+            WHAT MADE YOU JOIN CT?*
+          </label>
+          <textarea
+            name={"joinReason"}
+            //@ts-ignore
+            value={formData.joinReason}
+            onChange={handleInputChange}
+            className="w-full p-2 border border-gray-300 rounded mb-4"
+            required
+            placeholder="Your answer"
+          />
+        </div>
 
         {/* Submit Button */}
         <button
@@ -230,4 +330,4 @@ const CTForm = () => {
   );
 };
 
-export default CTForm;
+export default StudentInfoModal;
