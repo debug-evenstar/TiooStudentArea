@@ -32,7 +32,7 @@ const Profile = () => {
       )}
       <div className="text-sm hidden sm:block">
         <p className="font-[500] capitalize">
-          {data?.data?.name ?? user?.name} (CT/UT/25002)
+          {data?.data?.name ?? user?.name}
         </p>
         <button onClick={logoutUser} className="font-[300]">
           logout
