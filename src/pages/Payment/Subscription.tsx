@@ -378,7 +378,7 @@ export default function Subscription() {
       {formModal && (
         <StudentInfoModal
           next={() => setPhotoModal(true)}
-          onClose={() => setFormModal(false)}
+          close={() => setFormModal(false)}
         />
       )}
 

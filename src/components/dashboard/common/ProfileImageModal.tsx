@@ -159,9 +159,8 @@ const ProfileImageModal = ({
                   onClick={() => { next(); onClose() ;}}
                   className="px-4 py-2 bg-primary rounded text-white font-bold"
                 >
-                 
                     <span>Next</span>
-                  
+                
                 </button>
               </div>
             </form>

@@ -2,34 +2,36 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/reducers/userReducer";
 import { examsApiSlice } from "../../../services/api/examsSlice";
+import { ctApiSlice } from "../../../services/api/ctSlice";
+import { toast } from "react-toastify";
 
 const StudentInfoModal = ({ close, next }: any) => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<any>({
     email: "",
-    registrationNo: "",
     surname: "",
-    firstName: "",
-    otherName: "",
+    first_name: "",
+    other_name: "",
     gender: "",
-    telegramPhone: "",
-    whatsappNumber: "",
-    parentName: "",
-    parentPhone: "",
-    course: "",
-    utmeScore: "",
+    telegram_phone: "",
+    whatsapp_number: "",
+    parent_name: "",
+    parent_phone: "",
+    desired_course: "",
     institution: "",
-    subjects: "",
-    weakSubject: "",
-    mainChallenge: "",
+    subject_combination: "",
+    weak_subject: "",
+    main_challenge: "",
     fear: "",
-    paymentDate: "",
-    senderName: "",
-    bankName: "",
-    referral: "",
-    reason: "",
+    payment_date: "",
+    sender_name: "",
+    bank_name: "",
+    referral_source: "",
+    reason_for_joining: "",
     birthday: "",
-    receiptFiles: [],
+    receipt_files: [],
   });
+
+  const [errors, setErrors] = useState<any>({});
 
   const { user } = useSelector(selectUser);
   const accountExams = examsApiSlice.useGetAccountExamsQuery(null);
@@ -45,10 +47,10 @@ const StudentInfoModal = ({ close, next }: any) => {
       const [firstname, lastname] = user.name.split(" ");
       setFormData({
         ...formData,
-        firstName: firstname,
+        first_name: firstname,
         surname: lastname,
         email: user.email,
-        subjects: subjects?.map((s: any) => s.name).join(", "),
+        subject_combination: subjects?.map((s: any) => s.name).join(", "),
       });
     }
   }, [user]);
@@ -62,10 +64,71 @@ const StudentInfoModal = ({ close, next }: any) => {
     setFormData({ ...formData, [key]: e.target.files });
   };
 
-  const handleSubmit = (e: any) => {
+  const [saveProfile] = ctApiSlice.useSaveProfileMutation();
+
+  const validatePhoneNumber = (phone: string) => {
+    // Basic phone number validation (ensure it's a number and has at least 10 digits)
+    const phoneRegex = /^[0-9]{10,15}$/;
+    return phoneRegex.test(phone);
+  };
+
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log("Form Data:", formData);
-    alert("Form submitted successfully!");
+
+    // Validation checks
+    const newErrors: any = {};
+    const requiredFields = [
+      "surname",
+      "first_name",
+      "other_name",
+      "gender",
+      "telegram_phone",
+      "whatsapp_number",
+      "parent_name",
+      "parent_phone",
+      "desired_course",
+      "institution",
+      "weak_subject",
+      "main_challenge",
+      "fear",
+      "payment_date",
+      "sender_name",
+      "bank_name",
+      "referral_source",
+      "reason_for_joining",
+    ];
+
+    requiredFields.forEach((field) => {
+      if (!formData[field]) {
+        newErrors[field] = "This field is required.";
+      }
+    });
+
+    // Phone number validation for telegram and whatsapp numbers
+    if (formData.telegram_phone && !validatePhoneNumber(formData.telegram_phone)) {
+      newErrors.telegram_phone = "Please enter a valid phone number (10-15 digits).";
+    }
+    if (formData.whatsapp_number && !validatePhoneNumber(formData.whatsapp_number)) {
+      newErrors.whatsapp_number = "Please enter a valid phone number (10-15 digits).";
+    }
+
+    console.log(newErrors);
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return; // stop form submission if there are errors
+    }
+
+    try {
+      const response = await saveProfile(formData as any);
+      if (!response.data.error) {
+        toast.success(response.data.message);
+        close();
+        next();
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("An error occurred while submitting the form.");
+    }
   };
 
   return (
@@ -83,7 +146,7 @@ const StudentInfoModal = ({ close, next }: any) => {
         </p>
 
         {/* Email */}
-        <label className="text-gray-700 block mb-2">Email*</label>
+        <label className="text-gray-700 block mb-0">Email*</label>
         <input
           type="email"
           name="email"
@@ -91,54 +154,44 @@ const StudentInfoModal = ({ close, next }: any) => {
           value={formData.email}
           onChange={handleInputChange}
           className="w-full p-2 border text-gray-400 border-gray-300 rounded mb-4"
-          required
         />
-
-        {/* Registration Number */}
-        <label className="text-gray-700 block mb-2">REGISTRATION NO</label>
-        <input
-          type="text"
-          name="registrationNo"
-          value={formData.registrationNo}
-          onChange={handleInputChange}
-          className="w-full p-2 border border-gray-300 rounded mb-4"
-        />
+        {errors.email && <p className="text-red-500 text-sm mb-4">{errors.email}</p>}
 
         {/* Surname */}
-        <label className="text-gray-700 block mb-2">SURNAME*</label>
+        <label className="text-gray-700 block mb-0">SURNAME*</label>
         <input
           type="text"
           name="surname"
           value={formData.surname}
           onChange={handleInputChange}
           className="w-full p-2 border border-gray-300 rounded mb-4"
-          required
         />
+        {errors.surname && <p className="text-red-500 text-sm mb-4">{errors.surname}</p>}
 
         {/* First Name */}
-        <label className="text-gray-700 block mb-2">FIRST NAME*</label>
+        <label className="text-gray-700 block mb-0">FIRST NAME*</label>
         <input
           type="text"
-          name="firstName"
-          value={formData.firstName}
+          name="first_name"
+          value={formData.first_name}
           onChange={handleInputChange}
           className="w-full p-2 border border-gray-300 rounded mb-4"
-          required
         />
+        {errors.first_name && <p className="text-red-500 text-sm mb-4">{errors.first_name}</p>}
 
-        {/* First Name */}
-        <label className="text-gray-700 block mb-2">OTHER NAME*</label>
+        {/* Other Name */}
+        <label className="text-gray-700 block mb-0">OTHER NAME*</label>
         <input
           type="text"
-          name="otherName"
-          value={formData.otherName}
+          name="other_name"
+          value={formData.other_name}
           onChange={handleInputChange}
           className="w-full p-2 border border-gray-300 rounded mb-4"
-          required
         />
+        {errors.other_name && <p className="text-red-500 text-sm mb-4">{errors.other_name}</p>}
 
         {/* Gender */}
-        <label className="text-gray-700 block mb-2">GENDER*</label>
+        <label className="text-gray-700 block mb-0">GENDER*</label>
         <div className="mb-4">
           <label className="mr-4">
             <input
@@ -146,8 +199,7 @@ const StudentInfoModal = ({ close, next }: any) => {
               name="gender"
               value="MALE"
               onChange={handleInputChange}
-              required
-            />{" "}
+            />
             MALE
           </label>
           <label>
@@ -156,138 +208,189 @@ const StudentInfoModal = ({ close, next }: any) => {
               name="gender"
               value="FEMALE"
               onChange={handleInputChange}
-              required
-            />{" "}
+            />
             FEMALE
           </label>
         </div>
+        {errors.gender && <p className="text-red-500 text-sm mb-4">{errors.gender}</p>}
 
+        {/* Subject Combination */}
+        <label className="text-gray-700 block mb-0">SUBJECT COMBINATION*</label>
+        <input
+          type="text"
+          name="subject_combination"
+          value={formData.subject_combination}
+          onChange={handleInputChange}
+          className="w-full p-2 border border-gray-300 rounded mb-4 text-gray-400"
+          readOnly
+        />
+        {errors.subject_combination && <p className="text-red-500 text-sm mb-4">{errors.subject_combination}</p>}
+
+        {/* Weak Subject */}
+        <label className="text-gray-700 block mb-0">WEAK SUBJECT?*</label>
+        <select
+          name="weak_subject"
+          value={formData.weak_subject}
+          onChange={handleInputChange}
+          className="w-full p-2 border border-gray-300 rounded mb-4"
+        >
+          <option value="">Select an option</option>
+          {subjects?.map((s: any) => (
+            <option key={s.id} value={s.name}>
+              {s.name}
+            </option>
+          ))}
+        </select>
+        {errors.weak_subject && <p className="text-red-500 text-sm mb-4">{errors.weak_subject}</p>}
+
+        {/* Phone Number Fields */}
         <div>
-          <label className="text-gray-700 block mb-2">
-            SUBJECT COMBINATION*
-          </label>
+          <label className="text-gray-700 block mb-0">TELEGRAM PHONE NUMBER*</label>
           <input
             type="text"
-            name={"course"}
-            //@ts-ignore
-            value={formData.subjects}
+            name="telegram_phone"
+            value={formData.telegram_phone}
             onChange={handleInputChange}
-            className={`w-full p-2 border border-gray-300 rounded mb-4 text-gray-400
-              `}
-            required
-            readOnly
+            className="w-full p-2 border border-gray-300 rounded mb-4"
           />
+          {errors.telegram_phone && <p className="text-red-500 text-sm mb-4">{errors.telegram_phone}</p>}
         </div>
 
-        <label className="text-gray-700 block mb-2">WEAK SUBJECT?*</label>
-        <select
-          name="weakSubject"
-          value={formData.weakSubject}
+        <div>
+          <label className="text-gray-700 block mb-0">WHATSAPP NUMBER*</label>
+          <input
+            type="text"
+            name="whatsapp_number"
+            value={formData.whatsapp_number}
+            onChange={handleInputChange}
+            className="w-full p-2 border border-gray-300 rounded mb-4"
+          />
+          {errors.whatsapp_number && <p className="text-red-500 text-sm mb-4">{errors.whatsapp_number}</p>}
+        </div>
+        {/* Parent Name */}
+        <label className="text-gray-700 block mb-0">PARENT/GUARDIAN NAME*</label>
+        <input
+          type="text"
+          name="parent_name"
+          value={formData.parent_name}
           onChange={handleInputChange}
           className="w-full p-2 border border-gray-300 rounded mb-4"
-          required
-        >
-          {subjects?.map((s: any) => (
-            <option value={s.name}>{s.name}</option>
-          ))}
-          <option value="">Select an option</option>
-        </select>
+        />
+        {errors.parent_name && <p className="text-red-500 text-sm mb-4">{errors.parent_name}</p>}
 
-        {/* Other Fields */}
-        {[
-          {
-            label: "TELEGRAM PHONE NUMBER*",
-            name: "telegramPhone",
-            readOnly: false,
-          },
-          {
-            label: "WHATSAPP NUMBER*",
-            name: "whatsappNumber",
-            readOnly: false,
-          },
-          {
-            label: "PARENT/GUARDIAN NAME*",
-            name: "parentName",
-            readOnly: false,
-          },
-          {
-            label: "PARENT/GUARDIAN ACTIVE NO*",
-            name: "parentPhone",
-            readOnly: false,
-          },
-          { label: "DESIRED COURSE*", name: "course", readOnly: true },
-          // { label: "DESIRED UTME SCORE*", name: "utmeScore", readOnly: false },
-          {
-            label: "INSTITUTION/SCHOOL OF CHOICE*",
-            name: "institution",
-            readOnly: false,
-          },
-          // { label: "SUBJECTS COMBINATION*", name: "subjects", readOnly: false },
-          // { label: "WEAK SUBJECT*", name: "weakSubject", readOnly: false },
-          { label: "MAIN CHALLENGE*", name: "mainChallenge", readOnly: false },
-          { label: "FEAR*", name: "fear", readOnly: false },
-          {
-            label: "PAYMENT DETAILS: SENDER'S FULL NAME*",
-            name: "senderName",
-            readOnly: false,
-          },
-          {
-            label: "PAYMENT DETAILS: SENDER'S BANK NAME*",
-            name: "bankName",
-            readOnly: false,
-          },
-          { label: "YOUR BIRTHDAY DATE?", name: "birthday", readOnly: false },
-        ].map((field) => (
-          <div key={field.name}>
-            <label className="text-gray-700 block mb-2">{field.label}</label>
-            <input
-              type="text"
-              name={field.name}
-              //@ts-ignore
-              value={formData[field.name]}
-              onChange={handleInputChange}
-              className={`w-full p-2 border border-gray-300 rounded mb-4 ${
-                field.readOnly && "text-gray-400"
-              }`}
-              required
-              readOnly={field.readOnly}
-            />
-          </div>
-        ))}
+        {/* Parent Phone */}
+        <label className="text-gray-700 block mb-0">PARENT/GUARDIAN ACTIVE NO*</label>
+        <input
+          type="text"
+          name="parent_phone"
+          value={formData.parent_phone}
+          onChange={handleInputChange}
+          className="w-full p-2 border border-gray-300 rounded mb-4"
+        />
+        {errors.parent_phone && <p className="text-red-500 text-sm mb-4">{errors.parent_phone}</p>}
 
-        {/* Date of Payment */}
-        <label className="text-gray-700 block mb-2">DATE OF PAYMENT*</label>
+        {/* Desired Course */}
+        <label className="text-gray-700 block mb-0">DESIRED COURSE*</label>
+        <input
+          type="text"
+          name="desired_course"
+          value={formData.desired_course}
+          onChange={handleInputChange}
+          className="w-full p-2 border border-gray-300 rounded mb-4"
+        />
+        {errors.desired_course && <p className="text-red-500 text-sm mb-4">{errors.desired_course}</p>}
+
+        {/* Institution */}
+        <label className="text-gray-700 block mb-0">INSTITUTION/SCHOOL OF CHOICE*</label>
+        <input
+          type="text"
+          name="institution"
+          value={formData.institution}
+          onChange={handleInputChange}
+          className="w-full p-2 border border-gray-300 rounded mb-4"
+        />
+        {errors.institution && <p className="text-red-500 text-sm mb-4">{errors.institution}</p>}
+
+        {/* Main Challenge */}
+        <label className="text-gray-700 block mb-0">MAIN CHALLENGE*</label>
+        <input
+          type="text"
+          name="main_challenge"
+          value={formData.main_challenge}
+          onChange={handleInputChange}
+          className="w-full p-2 border border-gray-300 rounded mb-4"
+        />
+        {errors.main_challenge && <p className="text-red-500 text-sm mb-4">{errors.main_challenge}</p>}
+
+        {/* Fear */}
+        <label className="text-gray-700 block mb-0">FEAR*</label>
+        <input
+          type="text"
+          name="fear"
+          value={formData.fear}
+          onChange={handleInputChange}
+          className="w-full p-2 border border-gray-300 rounded mb-4"
+        />
+        {errors.fear && <p className="text-red-500 text-sm mb-4">{errors.fear}</p>}
+
+        {/* Payment Date */}
+        <label className="text-gray-700 block mb-0">DATE OF PAYMENT*</label>
         <input
           type="date"
-          name="paymentDate"
-          value={formData.paymentDate}
+          name="payment_date"
+          value={formData.payment_date}
           onChange={handleInputChange}
           className="w-full p-2 border border-gray-300 rounded mb-4"
-          required
         />
+        {errors.payment_date && <p className="text-red-500 text-sm mb-4">{errors.payment_date}</p>}
 
-        {/* File Upload */}
-        <label className="text-gray-700 block mb-2">
+
+        {/* Payment Date */}
+        <label className="text-gray-700 block mb-0">SENDER NAME*</label>
+        <input
+          type="text"
+          name="sender_name"
+          value={formData.sender_name}
+          onChange={handleInputChange}
+          className="w-full p-2 border border-gray-300 rounded mb-4"
+        />
+        {errors.sender_name && <p className="text-red-500 text-sm mb-4">{errors.sender_name}</p>}
+
+        {/* Payment Date */}
+        <label className="text-gray-700 block mb-0">BANK NAME*</label>
+        <input
+          type="text"
+          name="bank_name"
+          value={formData.bank_name}
+          onChange={handleInputChange}
+          className="w-full p-2 border border-gray-300 rounded mb-4"
+        />
+        {errors.bank_name && <p className="text-red-500 text-sm mb-4">{errors.bank_name}</p>}
+
+
+
+        {/* Payment Receipt Upload */}
+        <label className="text-gray-700 block mb-0">
           UPLOAD YOUR PAYMENT RECEIPT*
         </label>
         <input
           type="file"
           accept="image/*,application/pdf"
           multiple
-          onChange={(e: any) => handleFileChange(e, "receiptFiles")}
+          onChange={(e: any) => handleFileChange(e, "receipt_files")}
           className="w-full p-2 border border-gray-300 rounded mb-4"
         />
+        {errors.receipt_files && <p className="text-red-500 text-sm mb-4">{errors.receipt_files}</p>}
 
-        {/* Referral */}
-        <label className="text-gray-700 block mb-2">
+        {/* Referral Source */}
+        <label className="text-gray-700 block mb-0">
           HOW DID YOU COME ACROSS CT?*
         </label>
         <select
-          name="referral"
-          value={formData.referral}
+          name="referral_source"
+          value={formData.referral_source}
           onChange={handleInputChange}
           className="w-full p-2 border border-gray-300 rounded mb-4"
-          required
         >
           <option value="">Select an option</option>
           <option value="THROUGH YOUR CLASSMATE/FRIEND">
@@ -297,40 +400,33 @@ const StudentInfoModal = ({ close, next }: any) => {
           <option value="THROUGH YOUR PARENTS/GUARDIAN">
             THROUGH YOUR PARENTS/GUARDIAN
           </option>
-
           <option value="THROUGH THE FREE TUTORIAL">
             THROUGH THE FREE TUTORIAL
           </option>
-
           <option value="THROUGH SOMEONE STATUS">THROUGH SOMEONE STATUS</option>
-
           <option value="THROUGH FACEBOOK">THROUGH FACEBOOK</option>
-
           <option value="THROUGH YOUTUBE">THROUGH YOUTUBE</option>
-
           <option value="THROUGH INSTAGRAM">THROUGH INSTAGRAM</option>
-
           <option value="THROUGH AN EX CT STUDENT">
             THROUGH AN EX CT STUDENT
           </option>
-
           <option value="THROUGH TIKTOK">THROUGH TIKTOK</option>
         </select>
+        {errors.referral_source && <p className="text-red-500 text-sm mb-4">{errors.referral_source}</p>}
 
+        {/* Reason for Joining */}
         <div>
-          <label className="text-gray-700 block mb-2">
-            {" "}
+          <label className="text-gray-700 block mb-0">
             WHAT MADE YOU JOIN CT?*
           </label>
           <textarea
-            name={"joinReason"}
-            //@ts-ignore
-            value={formData.joinReason}
+            name={"reason_for_joining"}
+            value={formData.reason_for_joining}
             onChange={handleInputChange}
             className="w-full p-2 border border-gray-300 rounded mb-4"
-            required
             placeholder="Your answer"
           />
+          {errors.reason_for_joining && <p className="text-red-500 text-sm mb-4">{errors.reason_for_joining}</p>}
         </div>
 
         {/* Submit Button */}
