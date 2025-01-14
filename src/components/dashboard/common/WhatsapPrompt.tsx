@@ -1,13 +1,16 @@
 import React from "react";
+import { FaArrowLeft } from "react-icons/fa6";
 
 const WhatsAppPromptModal = ({
   isOpen,
   onClose,
   onWhatsAppClick,
+  back,
 }: {
   isOpen: boolean;
   onClose: () => void;
   onWhatsAppClick: () => void;
+  back: () => void;
 }) => {
   return (
     <div
@@ -16,7 +19,8 @@ const WhatsAppPromptModal = ({
       }`}
     >
       <div className=" text-center bg-white rounded-[24px] p-6">
-        <div className="flex justify-end">
+        <div className="flex justify-between items-center">
+          <button onClick={back}><FaArrowLeft/></button>
           <button onClick={onClose}>
           ✕
           </button>

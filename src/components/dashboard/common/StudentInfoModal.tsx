@@ -4,8 +4,11 @@ import { selectUser } from "../../../redux/reducers/userReducer";
 import { examsApiSlice } from "../../../services/api/examsSlice";
 import { ctApiSlice } from "../../../services/api/ctSlice";
 import { toast } from "react-toastify";
+import { PulseLoader } from "react-spinners";
 
 const StudentInfoModal = ({ close, next }: any) => {
+  const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState<any>({
     email: "",
     surname: "",
@@ -47,10 +50,12 @@ const StudentInfoModal = ({ close, next }: any) => {
       const [firstname, lastname] = user.name.split(" ");
       setFormData({
         ...formData,
-        first_name: firstname,
-        surname: lastname,
-        email: user.email,
-        subject_combination: subjects?.map((s: any) => s.name).join(", "),
+        first_name: firstname?.toUpperCase(),
+        surname: lastname?.toUpperCase(),
+        email: user.email.toUpperCase(),
+        subject_combination: subjects
+          ?.map((s: any) => s.name?.toUpperCase())
+          .join(", "),
       });
     }
   }, [user]);
@@ -74,6 +79,7 @@ const StudentInfoModal = ({ close, next }: any) => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    setLoading(true);
 
     // Validation checks
     const newErrors: any = {};
@@ -105,16 +111,25 @@ const StudentInfoModal = ({ close, next }: any) => {
     });
 
     // Phone number validation for telegram and whatsapp numbers
-    if (formData.telegram_phone && !validatePhoneNumber(formData.telegram_phone)) {
-      newErrors.telegram_phone = "Please enter a valid phone number (10-15 digits).";
+    if (
+      formData.telegram_phone &&
+      !validatePhoneNumber(formData.telegram_phone)
+    ) {
+      newErrors.telegram_phone =
+        "Please enter a valid phone number (10-15 digits).";
     }
-    if (formData.whatsapp_number && !validatePhoneNumber(formData.whatsapp_number)) {
-      newErrors.whatsapp_number = "Please enter a valid phone number (10-15 digits).";
+    if (
+      formData.whatsapp_number &&
+      !validatePhoneNumber(formData.whatsapp_number)
+    ) {
+      newErrors.whatsapp_number =
+        "Please enter a valid phone number (10-15 digits).";
     }
 
     console.log(newErrors);
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
+      setLoading(false);
       return; // stop form submission if there are errors
     }
 
@@ -129,6 +144,7 @@ const StudentInfoModal = ({ close, next }: any) => {
       console.error(err);
       toast.error("An error occurred while submitting the form.");
     }
+    setLoading(false);
   };
 
   return (
@@ -137,6 +153,11 @@ const StudentInfoModal = ({ close, next }: any) => {
         className="bg-white p-6 h-[90%] overflow-y-auto rounded shadow-md w-full max-w-2xl"
         onSubmit={handleSubmit}
       >
+        <div className="flex justify-end  ">
+          <button className="text-black text-2xl" onClick={close}>
+            &times;
+          </button>
+        </div>
         <h1 className="text-xl font-bold text-gray-700 text-center mb-4">
           CT 2025 UTME (PHASE 2)
         </h1>
@@ -155,7 +176,9 @@ const StudentInfoModal = ({ close, next }: any) => {
           onChange={handleInputChange}
           className="w-full p-2 border text-gray-400 border-gray-300 rounded mb-4"
         />
-        {errors.email && <p className="text-red-500 text-sm mb-4">{errors.email}</p>}
+        {errors.email && (
+          <p className="text-red-500 text-sm mb-4">{errors.email}</p>
+        )}
 
         {/* Surname */}
         <label className="text-gray-700 block mb-0">SURNAME*</label>
@@ -166,7 +189,9 @@ const StudentInfoModal = ({ close, next }: any) => {
           onChange={handleInputChange}
           className="w-full p-2 border border-gray-300 rounded mb-4"
         />
-        {errors.surname && <p className="text-red-500 text-sm mb-4">{errors.surname}</p>}
+        {errors.surname && (
+          <p className="text-red-500 text-sm mb-4">{errors.surname}</p>
+        )}
 
         {/* First Name */}
         <label className="text-gray-700 block mb-0">FIRST NAME*</label>
@@ -177,7 +202,9 @@ const StudentInfoModal = ({ close, next }: any) => {
           onChange={handleInputChange}
           className="w-full p-2 border border-gray-300 rounded mb-4"
         />
-        {errors.first_name && <p className="text-red-500 text-sm mb-4">{errors.first_name}</p>}
+        {errors.first_name && (
+          <p className="text-red-500 text-sm mb-4">{errors.first_name}</p>
+        )}
 
         {/* Other Name */}
         <label className="text-gray-700 block mb-0">OTHER NAME*</label>
@@ -188,7 +215,9 @@ const StudentInfoModal = ({ close, next }: any) => {
           onChange={handleInputChange}
           className="w-full p-2 border border-gray-300 rounded mb-4"
         />
-        {errors.other_name && <p className="text-red-500 text-sm mb-4">{errors.other_name}</p>}
+        {errors.other_name && (
+          <p className="text-red-500 text-sm mb-4">{errors.other_name}</p>
+        )}
 
         {/* Gender */}
         <label className="text-gray-700 block mb-0">GENDER*</label>
@@ -212,7 +241,9 @@ const StudentInfoModal = ({ close, next }: any) => {
             FEMALE
           </label>
         </div>
-        {errors.gender && <p className="text-red-500 text-sm mb-4">{errors.gender}</p>}
+        {errors.gender && (
+          <p className="text-red-500 text-sm mb-4">{errors.gender}</p>
+        )}
 
         {/* Subject Combination */}
         <label className="text-gray-700 block mb-0">SUBJECT COMBINATION*</label>
@@ -224,7 +255,11 @@ const StudentInfoModal = ({ close, next }: any) => {
           className="w-full p-2 border border-gray-300 rounded mb-4 text-gray-400"
           readOnly
         />
-        {errors.subject_combination && <p className="text-red-500 text-sm mb-4">{errors.subject_combination}</p>}
+        {errors.subject_combination && (
+          <p className="text-red-500 text-sm mb-4">
+            {errors.subject_combination}
+          </p>
+        )}
 
         {/* Weak Subject */}
         <label className="text-gray-700 block mb-0">WEAK SUBJECT?*</label>
@@ -236,16 +271,20 @@ const StudentInfoModal = ({ close, next }: any) => {
         >
           <option value="">Select an option</option>
           {subjects?.map((s: any) => (
-            <option key={s.id} value={s.name}>
-              {s.name}
+            <option key={s.id} value={s.name?.toUpperCase()}>
+              {s.name?.toUpperCase()}
             </option>
           ))}
         </select>
-        {errors.weak_subject && <p className="text-red-500 text-sm mb-4">{errors.weak_subject}</p>}
+        {errors.weak_subject && (
+          <p className="text-red-500 text-sm mb-4">{errors.weak_subject}</p>
+        )}
 
         {/* Phone Number Fields */}
         <div>
-          <label className="text-gray-700 block mb-0">TELEGRAM PHONE NUMBER*</label>
+          <label className="text-gray-700 block mb-0">
+            TELEGRAM PHONE NUMBER*
+          </label>
           <input
             type="text"
             name="telegram_phone"
@@ -253,7 +292,9 @@ const StudentInfoModal = ({ close, next }: any) => {
             onChange={handleInputChange}
             className="w-full p-2 border border-gray-300 rounded mb-4"
           />
-          {errors.telegram_phone && <p className="text-red-500 text-sm mb-4">{errors.telegram_phone}</p>}
+          {errors.telegram_phone && (
+            <p className="text-red-500 text-sm mb-4">{errors.telegram_phone}</p>
+          )}
         </div>
 
         <div>
@@ -265,10 +306,16 @@ const StudentInfoModal = ({ close, next }: any) => {
             onChange={handleInputChange}
             className="w-full p-2 border border-gray-300 rounded mb-4"
           />
-          {errors.whatsapp_number && <p className="text-red-500 text-sm mb-4">{errors.whatsapp_number}</p>}
+          {errors.whatsapp_number && (
+            <p className="text-red-500 text-sm mb-4">
+              {errors.whatsapp_number}
+            </p>
+          )}
         </div>
         {/* Parent Name */}
-        <label className="text-gray-700 block mb-0">PARENT/GUARDIAN NAME*</label>
+        <label className="text-gray-700 block mb-0">
+          PARENT/GUARDIAN NAME*
+        </label>
         <input
           type="text"
           name="parent_name"
@@ -276,10 +323,14 @@ const StudentInfoModal = ({ close, next }: any) => {
           onChange={handleInputChange}
           className="w-full p-2 border border-gray-300 rounded mb-4"
         />
-        {errors.parent_name && <p className="text-red-500 text-sm mb-4">{errors.parent_name}</p>}
+        {errors.parent_name && (
+          <p className="text-red-500 text-sm mb-4">{errors.parent_name}</p>
+        )}
 
         {/* Parent Phone */}
-        <label className="text-gray-700 block mb-0">PARENT/GUARDIAN ACTIVE NO*</label>
+        <label className="text-gray-700 block mb-0">
+          PARENT/GUARDIAN ACTIVE NO*
+        </label>
         <input
           type="text"
           name="parent_phone"
@@ -287,7 +338,9 @@ const StudentInfoModal = ({ close, next }: any) => {
           onChange={handleInputChange}
           className="w-full p-2 border border-gray-300 rounded mb-4"
         />
-        {errors.parent_phone && <p className="text-red-500 text-sm mb-4">{errors.parent_phone}</p>}
+        {errors.parent_phone && (
+          <p className="text-red-500 text-sm mb-4">{errors.parent_phone}</p>
+        )}
 
         {/* Desired Course */}
         <label className="text-gray-700 block mb-0">DESIRED COURSE*</label>
@@ -298,10 +351,14 @@ const StudentInfoModal = ({ close, next }: any) => {
           onChange={handleInputChange}
           className="w-full p-2 border border-gray-300 rounded mb-4"
         />
-        {errors.desired_course && <p className="text-red-500 text-sm mb-4">{errors.desired_course}</p>}
+        {errors.desired_course && (
+          <p className="text-red-500 text-sm mb-4">{errors.desired_course}</p>
+        )}
 
         {/* Institution */}
-        <label className="text-gray-700 block mb-0">INSTITUTION/SCHOOL OF CHOICE*</label>
+        <label className="text-gray-700 block mb-0">
+          INSTITUTION/SCHOOL OF CHOICE*
+        </label>
         <input
           type="text"
           name="institution"
@@ -309,7 +366,9 @@ const StudentInfoModal = ({ close, next }: any) => {
           onChange={handleInputChange}
           className="w-full p-2 border border-gray-300 rounded mb-4"
         />
-        {errors.institution && <p className="text-red-500 text-sm mb-4">{errors.institution}</p>}
+        {errors.institution && (
+          <p className="text-red-500 text-sm mb-4">{errors.institution}</p>
+        )}
 
         {/* Main Challenge */}
         <label className="text-gray-700 block mb-0">MAIN CHALLENGE*</label>
@@ -320,7 +379,9 @@ const StudentInfoModal = ({ close, next }: any) => {
           onChange={handleInputChange}
           className="w-full p-2 border border-gray-300 rounded mb-4"
         />
-        {errors.main_challenge && <p className="text-red-500 text-sm mb-4">{errors.main_challenge}</p>}
+        {errors.main_challenge && (
+          <p className="text-red-500 text-sm mb-4">{errors.main_challenge}</p>
+        )}
 
         {/* Fear */}
         <label className="text-gray-700 block mb-0">FEAR*</label>
@@ -331,7 +392,9 @@ const StudentInfoModal = ({ close, next }: any) => {
           onChange={handleInputChange}
           className="w-full p-2 border border-gray-300 rounded mb-4"
         />
-        {errors.fear && <p className="text-red-500 text-sm mb-4">{errors.fear}</p>}
+        {errors.fear && (
+          <p className="text-red-500 text-sm mb-4">{errors.fear}</p>
+        )}
 
         {/* Payment Date */}
         <label className="text-gray-700 block mb-0">DATE OF PAYMENT*</label>
@@ -342,8 +405,9 @@ const StudentInfoModal = ({ close, next }: any) => {
           onChange={handleInputChange}
           className="w-full p-2 border border-gray-300 rounded mb-4"
         />
-        {errors.payment_date && <p className="text-red-500 text-sm mb-4">{errors.payment_date}</p>}
-
+        {errors.payment_date && (
+          <p className="text-red-500 text-sm mb-4">{errors.payment_date}</p>
+        )}
 
         {/* Payment Date */}
         <label className="text-gray-700 block mb-0">SENDER NAME*</label>
@@ -354,7 +418,9 @@ const StudentInfoModal = ({ close, next }: any) => {
           onChange={handleInputChange}
           className="w-full p-2 border border-gray-300 rounded mb-4"
         />
-        {errors.sender_name && <p className="text-red-500 text-sm mb-4">{errors.sender_name}</p>}
+        {errors.sender_name && (
+          <p className="text-red-500 text-sm mb-4">{errors.sender_name}</p>
+        )}
 
         {/* Payment Date */}
         <label className="text-gray-700 block mb-0">BANK NAME*</label>
@@ -365,9 +431,9 @@ const StudentInfoModal = ({ close, next }: any) => {
           onChange={handleInputChange}
           className="w-full p-2 border border-gray-300 rounded mb-4"
         />
-        {errors.bank_name && <p className="text-red-500 text-sm mb-4">{errors.bank_name}</p>}
-
-
+        {errors.bank_name && (
+          <p className="text-red-500 text-sm mb-4">{errors.bank_name}</p>
+        )}
 
         {/* Payment Receipt Upload */}
         <label className="text-gray-700 block mb-0">
@@ -380,7 +446,9 @@ const StudentInfoModal = ({ close, next }: any) => {
           onChange={(e: any) => handleFileChange(e, "receipt_files")}
           className="w-full p-2 border border-gray-300 rounded mb-4"
         />
-        {errors.receipt_files && <p className="text-red-500 text-sm mb-4">{errors.receipt_files}</p>}
+        {errors.receipt_files && (
+          <p className="text-red-500 text-sm mb-4">{errors.receipt_files}</p>
+        )}
 
         {/* Referral Source */}
         <label className="text-gray-700 block mb-0">
@@ -412,7 +480,9 @@ const StudentInfoModal = ({ close, next }: any) => {
           </option>
           <option value="THROUGH TIKTOK">THROUGH TIKTOK</option>
         </select>
-        {errors.referral_source && <p className="text-red-500 text-sm mb-4">{errors.referral_source}</p>}
+        {errors.referral_source && (
+          <p className="text-red-500 text-sm mb-4">{errors.referral_source}</p>
+        )}
 
         {/* Reason for Joining */}
         <div>
@@ -426,7 +496,11 @@ const StudentInfoModal = ({ close, next }: any) => {
             className="w-full p-2 border border-gray-300 rounded mb-4"
             placeholder="Your answer"
           />
-          {errors.reason_for_joining && <p className="text-red-500 text-sm mb-4">{errors.reason_for_joining}</p>}
+          {errors.reason_for_joining && (
+            <p className="text-red-500 text-sm mb-4">
+              {errors.reason_for_joining}
+            </p>
+          )}
         </div>
 
         {/* Submit Button */}
@@ -434,7 +508,11 @@ const StudentInfoModal = ({ close, next }: any) => {
           type="submit"
           className="bg-primary text-white w-full py-2 rounded mt-4"
         >
-          Submit
+          {loading ? (
+            <PulseLoader color="white" size={12} />
+          ) : (
+            <span>Submit</span>
+          )}
         </button>
       </form>
     </div>

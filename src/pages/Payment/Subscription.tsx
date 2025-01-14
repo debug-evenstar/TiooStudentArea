@@ -393,6 +393,7 @@ export default function Subscription() {
       {
         <WhatsAppPromptModal
           isOpen={whatsappModal}
+          back={() => { setPhotoModal(true); setWhatsappModal(false)}}
           onWhatsAppClick={openWhatsapp}
           onClose={() => setWhatsappModal(false)}
         />
