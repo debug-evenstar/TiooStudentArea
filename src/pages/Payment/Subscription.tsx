@@ -11,7 +11,7 @@ import ProfileImageModal from "../../components/dashboard/common/ProfileImageMod
 import WhatsAppPromptModal from "../../components/dashboard/common/WhatsapPrompt";
 
 const perMonth = 8000;
-const perDuration = 2000;
+const perDuration = 20000;
 
 const BankTransferModal = ({ isOpen, onClose, amount, next, text }: any) => {
   if (!isOpen) return null;
